@@ -1,6 +1,6 @@
 # Raw Data
 
-[Planilha](https://docs.google.com/spreadsheets/d/1wZaiO_AeL9jSK8vC1ECI-aGfr7l-37uKzIdM__cwAlI/edit?usp=sharing) online com os valores sem Outliers
+[Planilha](https://docs.google.com/spreadsheets/d/1wZaiO_AeL9jSK8vC1ECI-aGfr7l-37uKzIdM__cwAlI/edit?usp=sharing) online com os valores sem Outliers (WIP)
 
 ## [Iris Data](http://archive.ics.uci.edu/ml/datasets/Iris)
  - 150 instancias
@@ -27,7 +27,7 @@
  - 32 atributos
  - - [ ] missing values
  
- ## [Abalone Cancer Wisconsin Data](http://archive.ics.uci.edu/ml/datasets/Abalone)
+ ## [Abalone Data](http://archive.ics.uci.edu/ml/datasets/Abalone)
  - 4177 instâncias
  - 8 atributos
  - - [ ] missing values
