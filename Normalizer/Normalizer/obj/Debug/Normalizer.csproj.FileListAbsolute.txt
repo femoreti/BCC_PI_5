@@ -1,0 +1,6 @@
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\bin\Debug\Normalizer.exe.config
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\bin\Debug\Normalizer.exe
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\bin\Debug\Normalizer.pdb
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\obj\Debug\Normalizer.csproj.CoreCompileInputs.cache
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\obj\Debug\Normalizer.exe
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\obj\Debug\Normalizer.pdb
