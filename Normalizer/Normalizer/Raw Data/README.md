@@ -31,3 +31,6 @@
  - 4177 instâncias
  - 8 atributos
  - - [ ] missing values
+
+### referencias
+https://www.youtube.com/watch?v=LuWNAMefndc
