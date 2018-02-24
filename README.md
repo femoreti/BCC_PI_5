@@ -12,4 +12,4 @@ nosso pi de machine learning
 > - Os 06 conjuntos de dados pré-processados (normalizados de acordo com o descrito neste enunciado).
 > - Formato: arquivo compactado contendo planilha Excel, CSV ou outro tipo de planilha.
 
-- [Dados da Raw Data](https://github.com/femoreti/BCC_PI_5/blob/master/Raw%20Data/README.md)
+- [Dados da Raw Data](https://github.com/femoreti/BCC_PI_5/blob/master/Normalizer/Normalizer/Raw%20Data/README.md)
