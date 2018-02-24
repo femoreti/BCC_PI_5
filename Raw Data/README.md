@@ -27,7 +27,7 @@
  - 32 atributos
  - - [ ] missing values
  
- ## [Abalone Cancer Wisconsin Data](http://archive.ics.uci.edu/ml/datasets/Abalone)
+ ## [Abalone Data](http://archive.ics.uci.edu/ml/datasets/Abalone)
  - 4177 instâncias
  - 8 atributos
  - - [ ] missing values
