@@ -4,3 +4,10 @@ C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\bin\Debug\Normalize
 C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\obj\Debug\Normalizer.csproj.CoreCompileInputs.cache
 C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\obj\Debug\Normalizer.exe
 C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Normalizer\Normalizer\obj\Debug\Normalizer.pdb
+C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Normalizer\Normalizer\bin\Debug\Normalizer.exe.config
+C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Normalizer\Normalizer\bin\Debug\Normalizer.exe
+C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Normalizer\Normalizer\bin\Debug\Normalizer.pdb
+C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Normalizer\Normalizer\obj\Debug\Normalizer.csproj.CoreCompileInputs.cache
+C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Normalizer\Normalizer\obj\Debug\Normalizer.exe
+C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Normalizer\Normalizer\obj\Debug\Normalizer.pdb
+C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Normalizer\Normalizer\obj\Debug\Normalizer.csprojResolveAssemblyReference.cache

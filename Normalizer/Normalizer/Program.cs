@@ -10,26 +10,174 @@ namespace Normalizer
     {
         static void Main(string[] args)
         {
-            string FilePath = FileSystem.GetAllFilesInFolder(@"../../Raw Data/Wine")[0];
+            /*string FilePath = FileSystem.GetAllFilesInFolder(@"../../Raw Data/iris")[0];
             List<string> FileLines = GetFileLines(FilePath);
             ClearEmptyValues(ref FileLines);
-            ClearOutliers(ref FileLines);
 
+            List<string> newCSV = ClearOutliers(ref FileLines);
+            foreach (string s in newCSV)
+                Console.WriteLine(s);*/
+                
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Adult");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Breast cancer");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/iris");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Wine");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Wine Quality");
             Console.ReadLine();
+
         }
 
-        /** Vai dar ruim caso tenha letra em uma linha
-         *  TODO: Limpar outliers e melhorar o metodo para funcionar por coluna
-         */
-        private static List<double> ClearOutliers(ref List<string> FileLines)
+        public static void saveCsvFileWithoutOutliers(string path)
         {
-            List<double> ConvertedList = new List<double>();
-            foreach(string Item in FileLines)
+            Console.WriteLine("This could take a while, please wait until complete");
+            
+            string[] FilesPath = FileSystem.GetAllFilesInFolder(path);
+            foreach (string s in FilesPath)
             {
-                ConvertedList.AddRange(Item.Split(',').Select(item => double.Parse(item)).ToList());
+                string[] fileName = s.Split('\\');
+
+                List<string> FileLines = GetFileLines(s);
+                ClearEmptyValues(ref FileLines);
+
+                List<string> newCSV = ClearOutliers(ref FileLines);
+
+                string sFile = string.Empty;
+                foreach (string str in newCSV)
+                {
+                    sFile += str + "\n";
+                }
+
+                FileSystem.SaveFileContents(sFile, path, fileName[1]);
+
+                //Console.WriteLine(fileName[1]);
             }
 
-            return ConvertedList;
+            Console.WriteLine("complete\n");
+        }
+
+        /** 
+         *  Remove os outliers e retorna a estrutura montada para exportar em csv
+         */
+        private static List<string> ClearOutliers(ref List<string> FileLines)
+        {
+            List<List<string>> listOfColums = new List<List<string>>();
+
+            foreach (string Item in FileLines)
+            {
+                string[] colums = Item.Split(',');
+
+                for (int i = 0; i < colums.Length; i++)
+                {
+                    if (listOfColums.Count < colums.Length)
+                    {
+                        listOfColums.Add(new List<string>());
+                        
+                        //TODO Gambiarra para ordenar q nao funcionou
+                        float testString = 0;
+                        if (!float.TryParse(colums[i], out testString))
+                            listOfColums[i].Add(colums[i]);
+                        else
+                        {
+                            if (colums[i].Length == 1)
+                                colums[i] = "0" + colums[i];
+
+
+                            listOfColums[i].Add(colums[i]);
+                        }
+                    }
+                    else
+                    {
+                        //TODO Gambiarra para ordenar q nao funcionou
+                        float testString = 0;
+                        if (!float.TryParse(colums[i], out testString))
+                            listOfColums[i].Add(colums[i]);
+                        else
+                        {
+                            if (colums[i].Length == 1)
+                                colums[i] = "0" + colums[i];
+                            
+                            listOfColums[i].Add(colums[i]);
+                        }
+                    }
+                }
+            }
+
+            List<int> outlierIndex = new List<int>();
+            for (int i = 0; i < listOfColums.Count; i++)
+            {
+                float testString = 0;
+                if (!float.TryParse(listOfColums[i][0], out testString))
+                    continue;
+
+                List<string> tempOrderedList = new List<string>();
+                tempOrderedList.AddRange(listOfColums[i]);
+                //TODO ordenar a lista de string em ordem, nao ta funcionando ainda
+                tempOrderedList.Sort();
+
+                double media = 0;
+                string q1 = tempOrderedList[(int)Math.Round((float)tempOrderedList.Count * 0.25f)].Replace('.', ',');
+                string q3 = tempOrderedList[(int)Math.Round((float)tempOrderedList.Count * 0.75f)].Replace('.', ',');
+
+                foreach (string s in tempOrderedList)
+                {
+                    string n = s.Replace('.', ',');
+                    media += double.Parse(n);
+                }
+                media = Math.Round(media / tempOrderedList.Count,2);
+
+                float iqr = float.Parse(q3) - float.Parse(q1);
+                float l_sup = (float)media + 1.5f * iqr;
+                float l_inf = (float)media - 1.5f * iqr;
+                
+                Console.WriteLine("Coluna " + i);
+                /*Console.WriteLine("media = " + media);
+                Console.WriteLine("q1 = " + q1 + "\nq3 = " + q3);
+                Console.WriteLine("iqr = " + iqr.ToString());
+                Console.WriteLine("l_sup = " + l_sup + "\nl_inf = " + l_inf);*/
+
+                if (q1 == q3 || iqr < 0)
+                    continue;
+
+                Console.WriteLine("removendo outliers");
+
+                for (int l = 0; l < listOfColums[i].Count; l++) //para cada elemento da coluna
+                {
+                    string n = listOfColums[i][l].Replace('.', ',');
+                    float lineValue = float.Parse(n);
+                    
+                    if (lineValue > l_sup || lineValue < l_inf) //Ira remover o index
+                    {
+                        for (int j = 0; j < listOfColums.Count; j++) //ira remover de todas as colunas no index
+                        {
+                            listOfColums[j].RemoveAt(l);
+                        }
+                        l--;
+                    }
+                }
+            }
+
+            List<string> newCSV = new List<string>();
+            for (int i = 0; i < listOfColums.Count; i++) //ira remontar as linhas sem os outliers
+            {
+                //Console.WriteLine("colum size = " + listOfColums[i].Count);
+                for (int k = 0; k < listOfColums[i].Count; k++)
+                {
+                    string newLine = string.Empty;
+                    if (newCSV.Count < listOfColums[i].Count)
+                    {
+                        newLine = listOfColums[i][k];
+                        newCSV.Add(newLine);
+                    }
+                    else
+                    {
+                        newLine = newCSV[k] + "," + listOfColums[i][k];
+                        newCSV[k] = newLine;
+                    }
+                }
+            }
+
+            return newCSV;
         }
 
         private static void ClearEmptyValues(ref List<string> FileLines)
@@ -45,6 +193,27 @@ namespace Normalizer
             FileLines.RemoveAll(item => item == "");
 
             return FileLines;
+        }
+    }
+
+    public class CustomComparer : IComparer<string>
+    {
+        public int Compare(string x, string y)
+        {
+            var regex = new System.Text.RegularExpressions.Regex("^(d+)");
+
+            // run the regex on both strings
+            var xRegexResult = regex.Match(x);
+            var yRegexResult = regex.Match(y);
+
+            // check if they are both numbers
+            if (xRegexResult.Success && yRegexResult.Success)
+            {
+                return int.Parse(xRegexResult.Groups[1].Value).CompareTo(int.Parse(yRegexResult.Groups[1].Value));
+            }
+
+            // otherwise return as string comparison
+            return x.CompareTo(y);
         }
     }
 }
