@@ -141,6 +141,8 @@ namespace Normalizer
 
                 Console.WriteLine("removendo outliers");
 
+                NormalizeData(listOfColums);
+
                 for (int l = 0; l < listOfColums[i].Count; l++) //para cada elemento da coluna
                 {
                     string n = listOfColums[i][l].Replace('.', ',');
@@ -178,6 +180,41 @@ namespace Normalizer
             }
 
             return newCSV;
+        }
+
+        private static void NormalizeData(List<List<string>> ListOfColumns)
+        {
+            List<List<string>> NormalizedColumns = new List<List<string>>();
+            for (int i = 0; i < ListOfColumns.Count; i++)
+            {
+                int NewCategory = 0;
+                NormalizedColumns.Add(new List<string>());
+                Dictionary<string, int> StringConverter = new Dictionary<string, int>();
+
+                float MinimumValue = 0, MaximumValue = 0, Divider = 1;
+                if (float.TryParse(ListOfColumns[i].Max(), out MaximumValue) && float.TryParse(ListOfColumns[i].Min(), out MinimumValue))
+                    Divider = MaximumValue - MinimumValue;
+
+                for (int j = 0; j < ListOfColumns[i].Count; j++)
+                {
+                    float ParseResult;
+                    if (!float.TryParse(ListOfColumns[i][j], out ParseResult))
+                    {
+                        if (StringConverter.ContainsKey(ListOfColumns[i][j]))
+                            NormalizedColumns[i].Add(StringConverter[ListOfColumns[i][j]].ToString());
+                        else
+                        {
+                            StringConverter.Add(ListOfColumns[i][j], NewCategory);
+                            NormalizedColumns[i].Add(NewCategory.ToString());
+                            NewCategory++;
+                        }
+                    } else
+                    {
+                        float NormalizedValue = (ParseResult - MinimumValue) / Divider;
+                        NormalizedColumns[i].Add(NormalizedValue.ToString());
+                    }
+                }
+            }
         }
 
         private static void ClearEmptyValues(ref List<string> FileLines)
