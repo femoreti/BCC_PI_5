@@ -113,7 +113,7 @@ namespace Normalizer
                 List<string> tempOrderedList = new List<string>();
                 tempOrderedList.AddRange(listOfColums[i]);
                 //TODO ordenar a lista de string em ordem, nao ta funcionando ainda
-                tempOrderedList.Sort();
+                tempOrderedList = tempOrderedList.OrderBy(n => n).ToList();
 
                 double media = 0;
                 string q1 = tempOrderedList[(int)Math.Round((float)tempOrderedList.Count * 0.25f)].Replace('.', ',');
@@ -131,10 +131,10 @@ namespace Normalizer
                 float l_inf = (float)media - 1.5f * iqr;
                 
                 Console.WriteLine("Coluna " + i);
-                /*Console.WriteLine("media = " + media);
+                Console.WriteLine("media = " + media);
                 Console.WriteLine("q1 = " + q1 + "\nq3 = " + q3);
                 Console.WriteLine("iqr = " + iqr.ToString());
-                Console.WriteLine("l_sup = " + l_sup + "\nl_inf = " + l_inf);*/
+                Console.WriteLine("l_sup = " + l_sup + "\nl_inf = " + l_inf);
 
                 if (q1 == q3 || iqr < 0)
                     continue;
