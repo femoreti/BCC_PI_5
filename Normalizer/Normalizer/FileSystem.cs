@@ -21,11 +21,6 @@ namespace Normalizer
             return File.ReadAllText(Path);
         }
 
-        public static string[] getSubFolders(string path)
-        {
-            return Directory.GetDirectories(path);
-        }
-
         public static void SaveFileContents(string data, string Path, string filename)
         {
             Console.WriteLine("Salvando arquivo - " + filename);
