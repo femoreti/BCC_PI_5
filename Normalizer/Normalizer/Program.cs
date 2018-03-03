@@ -17,7 +17,7 @@ namespace Normalizer
             List<string> newCSV = ClearOutliers(ref FileLines);
             foreach (string s in newCSV)
                 Console.WriteLine(s);*/
-                
+
             saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
             saveCsvFileWithoutOutliers(@"../../Raw Data/Adult");
             saveCsvFileWithoutOutliers(@"../../Raw Data/Breast cancer");
@@ -38,15 +38,15 @@ namespace Normalizer
                 List<string> FileLines = GetFileLines(s);
                 ClearEmptyValues(ref FileLines);
 
-                List<string> newCSV = ClearOutliers(ref FileLines, fileName[0]);
+                List<string> newCSV = ClearOutliers(ref FileLines, fileName[0] + "/", fileName[1]);
 
                 string sFile = string.Empty;
                 foreach (string str in newCSV)
                 {
                     sFile += str + "\n";
                 }
-
-                FileSystem.SaveFileContents(sFile, path, fileName[1]);
+                
+                FileSystem.SaveFileContents(sFile, path + "/output/", fileName[1]);
             }
 
             Console.WriteLine("Completed Succesfully");
@@ -55,7 +55,7 @@ namespace Normalizer
         /** 
          *  Remove os outliers e retorna a estrutura montada para exportar em csv
          */
-        private static List<string> ClearOutliers(ref List<string> FileLines, string DatasetFolderPath)
+        private static List<string> ClearOutliers(ref List<string> FileLines, string DatasetFolderPath, string fileName)
         {
             List<List<string>> listOfColums = GetListOfColumns(FileLines);
             Dictionary<int, List<string>> outlierList = new Dictionary<int, List<string>>();
@@ -65,8 +65,24 @@ namespace Normalizer
                 Console.WriteLine("Column: " + i + " of " + listOfColums.Count);
 
                 float testString = 0;
-                if (!float.TryParse(listOfColums[i][0], out testString))
+                if (!float.TryParse(listOfColums[i][0], out testString)) //Se for string ira transformar em classe
+                {
+                    Dictionary<string, int> StringConverter = new Dictionary<string, int>();
+                    int NewCategory = 0;
+
+                    for (int q = 0; q < listOfColums[i].Count; q++)
+                    {
+                        if (StringConverter.ContainsKey(listOfColums[i][q]))
+                            listOfColums[i][q] = StringConverter[listOfColums[i][q]].ToString();
+                        else
+                        {
+                            StringConverter.Add(listOfColums[i][q], NewCategory);
+                            listOfColums[i][q] = NewCategory.ToString();
+                            NewCategory++;
+                        }
+                    }
                     continue;
+                }
 
                 List<string> tempOrderedList = new List<string>();
                 tempOrderedList.AddRange(listOfColums[i]);
@@ -118,9 +134,16 @@ namespace Normalizer
                 }
 
                 SaveOutlierReport(ref outlierList, DatasetFolderPath);
-                NormalizeData(listOfColums);
-            }
 
+            }
+            string[] newFileName = fileName.Split('.');
+                NormalizeData(listOfColums, newFileName[0] + "-Normalized." + newFileName[1]);
+
+            return remountLine(listOfColums);
+        }
+
+        private static List<string> remountLine(List<List<string>> listOfColums)
+        {
             List<string> newCSV = new List<string>();
             for (int i = 0; i < listOfColums.Count; i++) //ira remontar as linhas sem os outliers
             {
@@ -130,12 +153,12 @@ namespace Normalizer
                     string newLine = string.Empty;
                     if (newCSV.Count < listOfColums[i].Count)
                     {
-                        newLine = listOfColums[i][k];
+                        newLine = listOfColums[i][k].Replace(',','.');
                         newCSV.Add(newLine);
                     }
                     else
                     {
-                        newLine = newCSV[k] + "," + listOfColums[i][k];
+                        newLine = newCSV[k] + "," + listOfColums[i][k].Replace(',', '.');
                         newCSV[k] = newLine;
                     }
                 }
@@ -164,39 +187,57 @@ namespace Normalizer
             return ListOfColums;
         }
 
-        private static void NormalizeData(List<List<string>> ListOfColumns)
+        private static void NormalizeData(List<List<string>> ListOfColumns, string fileName)
         {
             List<List<string>> NormalizedColumns = new List<List<string>>();
             for (int i = 0; i < ListOfColumns.Count; i++)
             {
-                int NewCategory = 0;
+                //Console.WriteLine("coluna " + i);
+                
                 NormalizedColumns.Add(new List<string>());
-                Dictionary<string, int> StringConverter = new Dictionary<string, int>();
 
-                float MinimumValue = 0, MaximumValue = 0, Divider = 1;
-                if (float.TryParse(ListOfColumns[i].Max(), out MaximumValue) && float.TryParse(ListOfColumns[i].Min(), out MinimumValue))
-                    Divider = MaximumValue - MinimumValue;
+                float MinimumValue = 999999, MaximumValue = 0, Divider = 1;
+
+                for (int n = 0; n < ListOfColumns[i].Count; n++)// pega maior e menor valor
+                {
+                    float curr = 0;
+                    if (float.TryParse(ListOfColumns[i][n], out curr)){
+                        if (curr < MinimumValue)
+                            MinimumValue = curr;
+                        if (curr > MaximumValue)
+                            MaximumValue = curr;
+                    }
+                }
+                //if (float.TryParse(ListOfColumns[i].Max(), out MaximumValue) && float.TryParse(ListOfColumns[i].Min(), out MinimumValue))
+                //{
+                    Divider = Math.Abs(MaximumValue - MinimumValue);
+                    //Console.WriteLine("max " + MaximumValue + " min " + MinimumValue);
+                //}
 
                 for (int j = 0; j < ListOfColumns[i].Count; j++)
                 {
                     float ParseResult;
-                    if (!float.TryParse(ListOfColumns[i][j], out ParseResult))
+                    if (float.TryParse(ListOfColumns[i][j], out ParseResult))
                     {
-                        if (StringConverter.ContainsKey(ListOfColumns[i][j]))
-                            NormalizedColumns[i].Add(StringConverter[ListOfColumns[i][j]].ToString());
-                        else
-                        {
-                            StringConverter.Add(ListOfColumns[i][j], NewCategory);
-                            NormalizedColumns[i].Add(NewCategory.ToString());
-                            NewCategory++;
-                        }
-                    } else
-                    {
-                        float NormalizedValue = (ParseResult - MinimumValue) / Divider;
+                        float minorValue = (MinimumValue < MaximumValue) ? MinimumValue : MaximumValue;
+
+                        float NormalizedValue = Math.Abs(ParseResult - minorValue) / Divider;
                         NormalizedColumns[i].Add(NormalizedValue.ToString());
+
+
+                        //Console.WriteLine("NormalizedValue " + NormalizedValue);
                     }
                 }
             }
+
+            List<string> newCSV = remountLine(NormalizedColumns);
+            string sFile = string.Empty;
+            foreach (string str in newCSV)
+            {
+                sFile += str + "\n";
+            }
+
+            FileSystem.SaveFileContents(sFile, @"../../Raw Data/Normalized/", fileName);
         }
 
         private static void ClearEmptyValues(ref List<string> FileLines)
@@ -220,7 +261,7 @@ namespace Normalizer
 
             foreach (KeyValuePair<int, List<string>> Item in OutlierList)
             {
-                FileReport += "--------" + Environment.NewLine + Item.Key + Environment.NewLine;
+                FileReport += "--------" + Environment.NewLine + "Coluna " + Item.Key + Environment.NewLine;
                 foreach (string Outlier in Item.Value)
                 {
                     FileReport += Outlier + Environment.NewLine;

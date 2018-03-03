@@ -23,8 +23,8 @@ namespace Normalizer
 
         public static void SaveFileContents(string data, string Path, string filename)
         {
-            Console.WriteLine("Salvando arquivo - " + filename);
-            string outputFolder = Path + "/output/";
+            //Console.WriteLine("Salvando arquivo - " + filename);
+            string outputFolder = Path;
             if (!File.Exists(outputFolder)) {
                 Directory.CreateDirectory(outputFolder);
             }
