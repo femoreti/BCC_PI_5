@@ -13,3 +13,4 @@ nosso pi de machine learning
 > - Formato: arquivo compactado contendo planilha Excel, CSV ou outro tipo de planilha.
 
 - [Dados da Raw Data](https://github.com/femoreti/BCC_PI_5/blob/master/Normalizer/Normalizer/Raw%20Data/README.md)
+- [Referência knn](https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/)
