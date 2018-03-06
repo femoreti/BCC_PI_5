@@ -18,14 +18,18 @@ namespace Normalizer
             foreach (string s in newCSV)
                 Console.WriteLine(s);*/
 
-            saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
-            saveCsvFileWithoutOutliers(@"../../Raw Data/Adult");
-            saveCsvFileWithoutOutliers(@"../../Raw Data/Breast cancer");
-            saveCsvFileWithoutOutliers(@"../../Raw Data/iris");
-            saveCsvFileWithoutOutliers(@"../../Raw Data/Wine");
-            saveCsvFileWithoutOutliers(@"../../Raw Data/Wine Quality");
-            Console.ReadLine();
+            KNN knn = new KNN();
+            List<double> TrainingSet, TestingSet;
+            knn.GetSetsForColumn(@"../../Raw Data/Normalized/adult-Normalized.csv", 0.5f, 0, out TrainingSet, out TestingSet);
 
+            //saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
+            //saveCsvFileWithoutOutliers(@"../../Raw Data/Adult");
+            //saveCsvFileWithoutOutliers(@"../../Raw Data/Breast cancer");
+            //saveCsvFileWithoutOutliers(@"../../Raw Data/iris");
+            //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine");
+            //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine Quality");
+            Console.WriteLine(TestingSet.Last());
+            Console.ReadLine();
         }
 
         public static void saveCsvFileWithoutOutliers(string path)
@@ -38,7 +42,7 @@ namespace Normalizer
                 List<string> FileLines = GetFileLines(s);
                 ClearEmptyValues(ref FileLines);
 
-                List<string> newCSV = ClearOutliers(ref FileLines, fileName[0] + "/", fileName[1]);
+                List<string> newCSV = ClearOutliers(ref FileLines, fileName[0] + " / ", fileName[1]);
 
                 string sFile = string.Empty;
                 foreach (string str in newCSV)
