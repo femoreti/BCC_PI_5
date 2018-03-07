@@ -8,9 +8,10 @@ namespace Normalizer
 {
     class KNN
     {
-        public Dictionary<string, double> GetNeighbours(List<List<string>> TrainingSet, List<List<string>> TestingSet) 
+        public void GetNeighbours(List<List<string>> TrainingSet, List<List<string>> TestingSet, int K) 
         {
-            Dictionary<string, double> NearestNeighbours = new Dictionary<string, double>();
+            //Dictionary<string, double> NearestNeighbours = new Dictionary<string, double>();
+            List<LineDistance> Neighbours = new List<LineDistance>();
 
             int TestKey = 0; // Substituir pela classe depois
 
@@ -19,12 +20,24 @@ namespace Normalizer
                 foreach (var TrainLine in TrainingSet)
                 {
                     double EuclideanDistance = GetEuclideanDistance(TrainLine, TestLine);
-                    NearestNeighbours.Add(TestKey.ToString(), EuclideanDistance);
+                    Neighbours.Add(new LineDistance(TestKey.ToString(), EuclideanDistance));
                     TestKey++;
                 }
-            }
 
-            return NearestNeighbours;
+                Neighbours = Neighbours.OrderBy(item => item.Distance).Take(K).ToList();
+
+                // Extrair para outra classe, chosen label é a classe do item em questao.
+                string ChosenLabel = "";
+                int LastCount = 0;
+                foreach (var Item in Neighbours)
+                {
+                    int CurrentCount = Neighbours.Count(i => i.Label == Item.Label);
+                    if (CurrentCount <= LastCount) { continue; }
+
+                    ChosenLabel = Item.Label;
+                    LastCount = CurrentCount;
+                }
+            }
         }
 
         private double GetEuclideanDistance(List<string> TrainingSet, List<string> TestingSet) 

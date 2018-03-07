@@ -20,9 +20,9 @@ namespace Normalizer
 
             KNN knn = new KNN();
             List<List<string>> TrainingSet, TestingSet;
-            Dictionary<string, double> Neighbours;
+            //Dictionary<string, double> Neighbours;
             knn.GetSetsForColumn(@"../../Raw Data/Normalized/abalone-Normalized.csv", 0.7f, out TrainingSet, out TestingSet);
-            Neighbours = knn.GetNeighbours(TrainingSet, TestingSet);
+            knn.GetNeighbours(TrainingSet, TestingSet, 5);
 
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Adult");
