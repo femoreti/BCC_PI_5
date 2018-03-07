@@ -14,5 +14,4 @@ nosso pi de machine learning
 
 - [Dados da Raw Data](https://github.com/femoreti/BCC_PI_5/blob/master/Normalizer/Normalizer/Raw%20Data/README.md)
 - [Referência knn](https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/)
-
--[Referência knn 2](http://dataaspirant.com/2016/12/27/k-nearest-neighbor-algorithm-implementaion-python-scratch/)
+- [Referência knn 2](http://dataaspirant.com/2016/12/27/k-nearest-neighbor-algorithm-implementaion-python-scratch/)
