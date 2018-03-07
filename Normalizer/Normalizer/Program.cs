@@ -19,8 +19,8 @@ namespace Normalizer
                 Console.WriteLine(s);*/
 
             KNN knn = new KNN();
-            List<double> TrainingSet, TestingSet;
-            knn.GetSetsForColumn(@"../../Raw Data/Normalized/adult-Normalized.csv", 0.5f, 0, out TrainingSet, out TestingSet);
+            List<List<string>> TrainingSet, TestingSet;
+            knn.GetSetsForColumn(@"../../Raw Data/Normalized/adult-Normalized.csv", 0.7f, out TrainingSet, out TestingSet);
 
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Adult");
@@ -28,7 +28,6 @@ namespace Normalizer
             //saveCsvFileWithoutOutliers(@"../../Raw Data/iris");
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine");
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine Quality");
-            Console.WriteLine(TestingSet.Last());
             Console.ReadLine();
         }
 

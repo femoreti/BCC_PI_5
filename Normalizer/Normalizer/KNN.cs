@@ -8,20 +8,20 @@ namespace Normalizer
 {
     class KNN
     {
-        public void GetSetsForColumn(string FilePath, float TrainingPercentage, int ColumnIndex, out List<double> TrainingSet, out List<double> TestingSet)
+        public void GetSetsForColumn(string FilePath, float TrainingPercentage, out List<List<string>> TrainingSet, out List<List<string>> TestingSet)
         {
-            TrainingSet = new List<double>();
-            TestingSet = new List<double>();
+            TrainingSet = new List<List<string>>();
+            TestingSet = new List<List<string>>();
 
             List<List<string>> FullDataset = PrepareDataset(FilePath);
-            int TrainingIndex = (int) Math.Floor(FullDataset[ColumnIndex].Count() * TrainingPercentage);
+            int TrainingIndex = (int) Math.Floor(FullDataset.Count() * TrainingPercentage);
 
-            for ( int i = 0; i < FullDataset[ColumnIndex].Count() - 1; i++)
+            for ( int i = 0; i < FullDataset.Count() - 1; i++)
             {
                 if (i < TrainingIndex)
-                    TrainingSet.Add(Convert.ToDouble(FullDataset[ColumnIndex][i]));
+                    TrainingSet.Add(FullDataset[i]);
                 else
-                    TestingSet.Add(Convert.ToDouble(FullDataset[ColumnIndex][i]));
+                    TestingSet.Add(FullDataset[i]);
             }
         }
 
@@ -30,20 +30,13 @@ namespace Normalizer
             List<List<string>> FullDataset = new List<List<string>>();
             string FileContents = FileSystem.GetFileContents(FilePath);
             List<string> SplitLines = FileContents.Split(Environment.NewLine.ToCharArray()).ToList();
+            SplitLines.RemoveAll(item => item == "");
 
             for (int i = 0; i < SplitLines.Count(); i++)
-                if (SplitLines[i].Split(',').Contains("")) { SplitLines.RemoveAt(i); }
-
-            foreach (var Line in SplitLines)
             {
-                string[] SplitColumns = Line.Split(',');
-                for (int i = 0; i < SplitColumns.Count(); i++)
-                {
-                    if (FullDataset.Count() < SplitColumns.Count())
-                        FullDataset.Add(new List<string>() { SplitColumns[i] });
-                    else
-                        FullDataset[i].Add(SplitColumns[i]);
-                }
+                List<string> NewLine = new List<string>();
+                NewLine.AddRange(SplitLines[i].Split(','));
+                FullDataset.Add(NewLine);
             }
 
             return FullDataset;
