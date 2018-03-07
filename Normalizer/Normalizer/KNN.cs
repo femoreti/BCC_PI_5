@@ -8,6 +8,44 @@ namespace Normalizer
 {
     class KNN
     {
+        public Dictionary<string, double> GetNeighbours(List<List<string>> TrainingSet, List<List<string>> TestingSet) 
+        {
+            Dictionary<string, double> NearestNeighbours = new Dictionary<string, double>();
+
+            int TestKey = 0; // Substituir pela classe depois
+
+            foreach (var TestLine in TestingSet)
+            {
+                foreach (var TrainLine in TrainingSet)
+                {
+                    double EuclideanDistance = GetEuclideanDistance(TrainLine, TestLine);
+                    NearestNeighbours.Add(TestKey.ToString(), EuclideanDistance);
+                    TestKey++;
+                }
+            }
+
+            return NearestNeighbours;
+        }
+
+        private double GetEuclideanDistance(List<string> TrainingSet, List<string> TestingSet) 
+        {
+            if (TrainingSet.Count != TestingSet.Count) { Console.WriteLine("ERROR: Sets do not have same size."); Environment.Exit(-1); }
+            double distance = 0;
+            for (int i = 0; i < TestingSet.Count; i++)
+            {
+                double Testing = 0, Training = 0;
+                if (!double.TryParse(TestingSet[i], out Testing) || !double.TryParse(TrainingSet[i], out Training)) 
+                {
+                    Console.WriteLine("ERROR: Unable to cast string to double.");
+                    Environment.Exit(-1);
+                }
+
+                distance += Math.Pow((Testing - Training), 2);
+            }
+
+            return Math.Sqrt(distance);
+        }
+
         public void GetSetsForColumn(string FilePath, float TrainingPercentage, out List<List<string>> TrainingSet, out List<List<string>> TestingSet)
         {
             TrainingSet = new List<List<string>>();
