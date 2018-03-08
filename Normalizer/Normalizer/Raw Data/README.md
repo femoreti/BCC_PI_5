@@ -1,6 +1,6 @@
 # Raw Data
 
-[Planilha](https://docs.google.com/spreadsheets/d/1wZaiO_AeL9jSK8vC1ECI-aGfr7l-37uKzIdM__cwAlI/edit?usp=sharing) online com os valores sem Outliers (WIP)
+[Planilha](https://docs.google.com/spreadsheets/d/1wZaiO_AeL9jSK8vC1ECI-aGfr7l-37uKzIdM__cwAlI/edit?usp=sharing) online com os dados de tabela (WIP)
 
 ## [Abalone Data](http://archive.ics.uci.edu/ml/datasets/Abalone)
  - 4177 instâncias
