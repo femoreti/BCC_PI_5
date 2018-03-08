@@ -30,6 +30,7 @@ namespace Normalizer
             //saveCsvFileWithoutOutliers(@"../../Raw Data/iris");
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine");
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine Quality");
+            Console.WriteLine("Finish");
             Console.ReadLine();
         }
 

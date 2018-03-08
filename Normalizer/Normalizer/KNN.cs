@@ -38,6 +38,7 @@ namespace Normalizer
                     LastCount = CurrentCount;
                 }
             }
+            Console.WriteLine("GetNeighbours");
         }
 
         private double GetEuclideanDistance(List<string> TrainingSet, List<string> TestingSet) 
@@ -82,6 +83,8 @@ namespace Normalizer
 
         private List<List<string>> PrepareDataset(string FilePath)
         {
+            Console.WriteLine("Starting KNN from " + FilePath);
+
             List<List<string>> FullDataset = new List<List<string>>();
             string FileContents = FileSystem.GetFileContents(FilePath);
             List<string> SplitLines = FileContents.Split(Environment.NewLine.ToCharArray()).ToList();
