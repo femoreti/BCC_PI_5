@@ -30,7 +30,7 @@ namespace Normalizer
             //saveCsvFileWithoutOutliers(@"../../Raw Data/iris");
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine");
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine Quality");
-            Console.WriteLine("Finish");
+            Console.WriteLine("Finish Program");
             Console.ReadLine();
         }
 
@@ -93,15 +93,18 @@ namespace Normalizer
 
                 List<string> tempOrderedList = new List<string>();
                 tempOrderedList.AddRange(listOfColums[i]);
-                tempOrderedList = tempOrderedList.OrderBy(n => n).ToList();
+                tempOrderedList = tempOrderedList.OrderBy(n => decimal.Parse(n)).ToList();
 
                 double avg = 0;
-                string q1 = tempOrderedList[(int)Math.Round((float)tempOrderedList.Count * 0.25f)].Replace('.', ',');
-                string q3 = tempOrderedList[(int)Math.Round((float)tempOrderedList.Count * 0.75f)].Replace('.', ',');
+                //string q1 = tempOrderedList[(int)Math.Round((float)tempOrderedList.Count * 0.25f)].Replace('.', ',');
+                //string q3 = tempOrderedList[(int)Math.Round((float)tempOrderedList.Count * 0.75f)].Replace('.', ',');
+                string q1 = tempOrderedList[(int)Math.Round((float)tempOrderedList.Count * 0.25f)];
+                string q3 = tempOrderedList[(int)Math.Round((float)tempOrderedList.Count * 0.75f)];
 
                 foreach (string s in tempOrderedList)
                 {
-                    string n = s.Replace('.', ',');
+                    //string n = s.Replace('.', ',');
+                    string n = s;
                     avg += double.Parse(n);
                 }
                 avg = Math.Round(avg / tempOrderedList.Count,2);
@@ -111,18 +114,24 @@ namespace Normalizer
                 float l_inf = (float)avg - 1.5f * iqr;
                 
                 //Console.WriteLine("Coluna " + i);
-                //Console.WriteLine("media = " + media);
+                //Console.WriteLine("media = " + avg);
                 //Console.WriteLine("q1 = " + q1 + "\nq3 = " + q3);
                 //Console.WriteLine("iqr = " + iqr.ToString());
                 //Console.WriteLine("l_sup = " + l_sup + "\nl_inf = " + l_inf);
 
-                if (q1 == q3 || iqr < 0)
+                if (q1 == q3 || Math.Abs(l_sup - l_inf) < 2f)
                     continue;
+                if(iqr < 0)
+                {
+                    Console.WriteLine("Ops, Q3 veio maior do que Q1");
+                    continue;
+                }
 
                 Console.WriteLine("Removendo outliers...");
                 for (int l = 0; l < listOfColums[i].Count; l++) //para cada elemento da coluna
                 {
-                    string n = listOfColums[i][l].Replace('.', ',');
+                    //string n = listOfColums[i][l].Replace('.', ',');
+                    string n = listOfColums[i][l];
                     float lineValue = float.Parse(n);
                     
                     if (lineValue > l_sup || lineValue < l_inf) //Ira remover o index
@@ -160,12 +169,14 @@ namespace Normalizer
                     string newLine = string.Empty;
                     if (newCSV.Count < listOfColums[i].Count)
                     {
-                        newLine = listOfColums[i][k].Replace(',','.');
+                        //newLine = listOfColums[i][k].Replace(',','.');
+                        newLine = listOfColums[i][k];
                         newCSV.Add(newLine);
                     }
                     else
                     {
-                        newLine = newCSV[k] + "," + listOfColums[i][k].Replace(',', '.');
+                        //newLine = newCSV[k] + "," + listOfColums[i][k].Replace(',', '.');
+                        newLine = newCSV[k] + "," + listOfColums[i][k];
                         newCSV[k] = newLine;
                     }
                 }
