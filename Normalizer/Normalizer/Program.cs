@@ -21,7 +21,7 @@ namespace Normalizer
             KNN knn = new KNN();
             List<List<string>> TrainingSet, TestingSet;
             //Dictionary<string, double> Neighbours;
-            knn.GetSetsForColumn(@"../../Raw Data/Normalized/abalone-Normalized.csv", 0.7f, out TrainingSet, out TestingSet);
+            knn.GetSetsForColumn(@"../../Raw Data/Normalized/iris-Normalized.csv", 0.7f, out TrainingSet, out TestingSet);
             knn.GetNeighbours(TrainingSet, TestingSet, 5);
 
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
@@ -43,6 +43,7 @@ namespace Normalizer
                 List<string> FileLines = GetFileLines(s);
                 ClearEmptyValues(ref FileLines);
 
+                
                 List<string> newCSV = ClearOutliers(ref FileLines, fileName[0] + " / ", fileName[1]);
 
                 string sFile = string.Empty;
@@ -138,7 +139,7 @@ namespace Normalizer
                     }
                 }
 
-                SaveOutlierReport(ref outlierList, DatasetFolderPath);
+                SaveOutlierReport(ref outlierList, DatasetFolderPath + "/output/");
 
             }
             string[] newFileName = fileName.Split('.');
@@ -203,7 +204,7 @@ namespace Normalizer
 
                 float MinimumValue = 999999, MaximumValue = 0, Divider = 1;
 
-                for (int n = 0; n < ListOfColumns[i].Count; n++)// pega maior e menor valor
+                for (int n = 0; n < ListOfColumns[i].Count - 1; n++)// pega maior e menor valor
                 {
                     float curr = 0;
                     if (float.TryParse(ListOfColumns[i][n], out curr)){
@@ -224,6 +225,12 @@ namespace Normalizer
                     float ParseResult;
                     if (float.TryParse(ListOfColumns[i][j], out ParseResult))
                     {
+                        if(i == ListOfColumns.Count - 1)
+                        {
+                            NormalizedColumns[i].Add(ParseResult.ToString());
+                            continue;
+                        }
+
                         float minorValue = (MinimumValue < MaximumValue) ? MinimumValue : MaximumValue;
 
                         float NormalizedValue = Math.Abs(ParseResult - minorValue) / Divider;

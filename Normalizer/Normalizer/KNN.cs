@@ -31,7 +31,7 @@ namespace Normalizer
                 int LastCount = 0;
                 foreach (var Item in Neighbours)
                 {
-                    int CurrentCount = Neighbours.Count(i => i.Label == Item.Label);
+                    int CurrentCount = Neighbours.Count(i => i.Label == Item.Label); //For no neighbors de novo
                     if (CurrentCount <= LastCount) { continue; }
 
                     ChosenLabel = Item.Label;
@@ -42,7 +42,11 @@ namespace Normalizer
 
         private double GetEuclideanDistance(List<string> TrainingSet, List<string> TestingSet) 
         {
-            if (TrainingSet.Count != TestingSet.Count) { Console.WriteLine("ERROR: Sets do not have same size."); Environment.Exit(-1); }
+            if (TrainingSet.Count != TestingSet.Count)
+            {
+                Console.WriteLine("ERROR: Sets do not have same size.");
+                //Environment.Exit(-1);
+            }
             double distance = 0;
             for (int i = 0; i < TestingSet.Count; i++)
             {
@@ -50,7 +54,7 @@ namespace Normalizer
                 if (!double.TryParse(TestingSet[i], out Testing) || !double.TryParse(TrainingSet[i], out Training)) 
                 {
                     Console.WriteLine("ERROR: Unable to cast string to double.");
-                    Environment.Exit(-1);
+                    //Environment.Exit(-1);
                 }
 
                 distance += Math.Pow((Testing - Training), 2);
@@ -65,9 +69,9 @@ namespace Normalizer
             TestingSet = new List<List<string>>();
 
             List<List<string>> FullDataset = PrepareDataset(FilePath);
-            int TrainingIndex = (int) Math.Floor(FullDataset.Count() * TrainingPercentage);
+            int TrainingIndex = (int) Math.Floor(FullDataset.Count * TrainingPercentage);
 
-            for ( int i = 0; i < FullDataset.Count() - 1; i++)
+            for ( int i = 0; i < FullDataset.Count - 1; i++)
             {
                 if (i < TrainingIndex)
                     TrainingSet.Add(FullDataset[i]);
