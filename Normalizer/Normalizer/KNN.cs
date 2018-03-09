@@ -95,14 +95,14 @@ namespace Normalizer
 
             List<List<string>> FullDataset = new List<List<string>>();
             string FileContents = FileSystem.GetFileContents(FilePath);
-            List<string> SplitLines = FileContents.Split(Environment.NewLine.ToCharArray()).ToList();
-            SplitLines.RemoveAll(item => item == "");
+            List<string> lines = FileContents.Split(Environment.NewLine.ToCharArray()).ToList();
+            lines.RemoveAll(item => item == "");
 
-            for (int i = 0; i < SplitLines.Count(); i++)
+            for (int i = 0; i < lines.Count(); i++)
             {
-                List<string> NewLine = new List<string>();
-                NewLine.AddRange(SplitLines[i].Split(','));
-                FullDataset.Add(NewLine);
+                List<string> columns = new List<string>();
+                columns.AddRange(lines[i].Split(','));
+                FullDataset.Add(columns);
             }
             var rnd = new Random();
 
