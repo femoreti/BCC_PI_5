@@ -18,32 +18,49 @@ namespace Normalizer
             foreach (string s in newCSV)
                 Console.WriteLine(s);*/
 
-            KNN knn = new KNN();
+            //KNN knn = new KNN();
             List<List<string>> TrainingSet, TestingSet;
-            knn.GetSetsForColumn(@"../../Raw Data/Normalized/iris-Normalized.csv", 0.7f, out TrainingSet, out TestingSet);
-            knn.GetNeighbours(TrainingSet, TestingSet, 5);
+            //knn.GetSetsForColumn(@"../../Raw Data/Normalized/iris-Normalized.csv", 0.7f, out TrainingSet, out TestingSet);
+            //knn.GetNeighbours(TrainingSet, TestingSet, 5);
             //TrainingSet.Clear(); TestingSet.Clear();
 
-            //KNNTest kt = new KNNTest();
-            //kt.PrepareTrainingAndTesting(@"../../Raw Data/Normalized/iris-Normalized.csv", 0.66f, out TestingSet, out TrainingSet);
-            //TrainingSet = new List<List<string>>();
-            //TrainingSet.Add(new List<string>(new string[] { "2.0","2.0","2.0","a"}));
-            //TrainingSet.Add(new List<string>(new string[] { "4.0", "2.0", "1.0", "b" }));
-            //TrainingSet.Add(new List<string>(new string[] { "7.0", "7.0", "7.0", "a" }));
-            //TrainingSet.Add(new List<string>(new string[] { "4.0", "5.0", "3.0", "b" }));
-            //TrainingSet.Add(new List<string>(new string[] { "4.0", "2.0", "3.0", "a" }));
-            //TestingSet = new List<List<string>>();
-            //List<LineDistance> t = kt.GetNeighbors(TrainingSet, new List<string>(new string[] {"5.0","5.0","5.0","c"}), 5);
-            //kt.getResponses(t);
+            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", 1);
 
-            //saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
-            //saveCsvFileWithoutOutliers(@"../../Raw Data/Adult");
-            //saveCsvFileWithoutOutliers(@"../../Raw Data/Breast cancer");
-            //saveCsvFileWithoutOutliers(@"../../Raw Data/iris");
-            //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine");
-            //saveCsvFileWithoutOutliers(@"../../Raw Data/Wine Quality");
-            Console.WriteLine("Finish Program");
+            //ExecuteOutliers();
+
+            Console.WriteLine("\nFinish Program");
             Console.ReadLine();
+        }
+
+        public static void TestKNN(string path, int K)
+        {
+            List<List<string>> TrainingSet, TestingSet;
+
+            KNNTest kt = new KNNTest();
+            kt.PrepareDataset(path, 0.7f, out TestingSet, out TrainingSet);
+
+            //Gera previsoes
+            List<string> predictions = new List<string>();
+            int k = K;
+
+            for (int x = 0; x < TestingSet.Count; x++)
+            {
+                List<LineDistance> neighbors = kt.GetNeighbors(TrainingSet, TestingSet[x], k);
+                string result = kt.getResponses(neighbors);
+                predictions.Add(result);
+            }
+            float acc = kt.getAccuracy(TestingSet, predictions);
+            Console.WriteLine("acc " + acc.ToString() + "%");
+        }
+
+        public static void ExecuteOutliers()
+        {
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Adult");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Breast cancer");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/iris");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Wine");
+            saveCsvFileWithoutOutliers(@"../../Raw Data/Wine Quality");
         }
 
         public static void saveCsvFileWithoutOutliers(string path)

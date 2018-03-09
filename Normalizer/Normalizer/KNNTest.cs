@@ -8,6 +8,11 @@ namespace Normalizer
 {
     class KNNTest
     {
+        /// <summary>
+        /// Ira carregar um CSV e transformalo em uma lista de colunas contida em uma lista de linhas
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public List<List<string>> LoadCSVData(string path)
         {
 
@@ -30,14 +35,21 @@ namespace Normalizer
             return FullDataset;
         }
 
-        public void PrepareTrainingAndTesting(string path, float split, out List<List<string>> TestList, out List<List<string>> TrainingList)
+        /// <summary>
+        /// Ira preparar o dataset de treino e de testes de acordo com a porcentagem escolhida
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="percentage"></param>
+        /// <param name="TestList"></param>
+        /// <param name="TrainingList"></param>
+        public void PrepareDataset(string path, float percentage, out List<List<string>> TestList, out List<List<string>> TrainingList)
         {
             TestList = new List<List<string>>();
             TrainingList = new List<List<string>>();
 
             List<List<string>> DataSet = LoadCSVData(path);
 
-            int trainingIndex = (int)Math.Floor(DataSet.Count * split);
+            int trainingIndex = (int)Math.Floor(DataSet.Count * percentage);
 
             for (int x = 0; x < DataSet.Count; x++)
             {
@@ -50,17 +62,21 @@ namespace Normalizer
                     TestList.Add(DataSet[x]);
                 }
             }
-
-            Console.WriteLine("Finish prepare");
         }
 
-        double GetEuclideanDistance(List<string> linha1, List<string> linha2)
+        /// <summary>
+        /// Calcula a distancia euclidiana entre as colunas de cada linha
+        /// </summary>
+        /// <param name="trainingLine"></param>
+        /// <param name="testingLine"></param>
+        /// <returns></returns>
+        double GetEuclideanDistance(List<string> trainingLine, List<string> testingLine)
         {
             double distance = 0;
-            for (int i = 0; i < linha1.Count-1; i++)
+            for (int i = 0; i < trainingLine.Count-1; i++)
             {
                 double Testing = 0, Training = 0;
-                if (!double.TryParse(linha1[i], out Training) || !double.TryParse(linha2[i], out Testing))
+                if (!double.TryParse(trainingLine[i], out Training) || !double.TryParse(testingLine[i], out Testing))
                 {
                     Console.WriteLine("ERROR: Unable to cast string to double.");
                 }
@@ -69,7 +85,14 @@ namespace Normalizer
 
             return Math.Sqrt(distance);
         }
-
+        
+        /// <summary>
+        /// apos calcular a distancia euclidiana entre todas as linhas, escolhe as K mais proximas e considera como vizinho
+        /// </summary>
+        /// <param name="TrainingLines"></param>
+        /// <param name="TestLines"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
         public List<LineDistance> GetNeighbors(List<List<string>> TrainingLines, List<string> TestLines, int k)
         {
             List<LineDistance> Distance = new List<LineDistance>();
@@ -84,7 +107,7 @@ namespace Normalizer
             return neighbors;
         }
 
-        public void getResponses(List<LineDistance> neighbors)
+        public string getResponses(List<LineDistance> neighbors)
         {
             Dictionary<string, int> classVotes = new Dictionary<string, int>();
             for (int x = 0; x < neighbors.Count; x++)
@@ -100,7 +123,22 @@ namespace Normalizer
                 }
             }
 
-            string test = classVotes.OrderBy(n => n.Value).ToList().Last().Key;
+            string predictedKey = classVotes.OrderBy(n => n.Value).ToList().Last().Key;
+
+            return predictedKey;
+        }
+
+        public float getAccuracy(List<List<string>> testSet, List<string> predictions)
+        {
+            int correct = 0;
+
+            for (int x = 0; x < testSet.Count; x++)
+            {
+                if (testSet[x].Last() == predictions[x])
+                    correct++;
+            }
+
+            return ((float)correct / (float)testSet.Count) * 100f;
         }
     }
 }
