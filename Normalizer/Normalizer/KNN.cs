@@ -11,6 +11,7 @@ namespace Normalizer
         public void GetNeighbours(List<List<string>> TrainingSet, List<List<string>> TestingSet, int K) 
         {
             List<LineDistance> Neighbours = new List<LineDistance>();
+            List<string> labels = new List<string>();
 
             foreach (var TestLine in TestingSet)
             {
@@ -33,7 +34,19 @@ namespace Normalizer
                     ChosenLabel = Item.Label;
                     LastCount = CurrentCount;
                 }
+
+                labels.Add(ChosenLabel);
             }
+
+            int corrects = 0;
+            for (int i = 0; i < TestingSet.Count; i++)
+            {
+                if (TestingSet[i].Last() == labels[i])
+                    corrects++;
+
+            }
+
+            Console.WriteLine("% certa = " + ((float)corrects / (float)TestingSet.Count) * 100 + "%");
             Console.WriteLine("GetNeighbours");
         }
 
@@ -91,7 +104,9 @@ namespace Normalizer
                 NewLine.AddRange(SplitLines[i].Split(','));
                 FullDataset.Add(NewLine);
             }
+            var rnd = new Random();
 
+            FullDataset = FullDataset.OrderBy(n => rnd.Next()).ToList();
             return FullDataset;
         }
     }

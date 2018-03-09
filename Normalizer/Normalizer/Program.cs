@@ -23,6 +23,7 @@ namespace Normalizer
             //Dictionary<string, double> Neighbours;
             knn.GetSetsForColumn(@"../../Raw Data/Normalized/iris-Normalized.csv", 0.7f, out TrainingSet, out TestingSet);
             knn.GetNeighbours(TrainingSet, TestingSet, 5);
+            TrainingSet.Clear(); TestingSet.Clear();
 
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Abalone");
             //saveCsvFileWithoutOutliers(@"../../Raw Data/Adult");
