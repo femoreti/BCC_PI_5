@@ -49,7 +49,9 @@ namespace Normalizer
             //GET KNN VERSION
             K = GetKNNVersion(DataSet, KNNVersion);
 
-            List<float> listOfErroAmostral = new List<float>(); //TODO
+            List<float> listOfErroAmostral = new List<float>();
+
+            // Calcula dataset de traino e teste
             while (StartIndex < DataSet.Count)
             {
                 StartIndex = kt.PrepareDataset(path, StartIndex, KFold, ref DataSet, out TestingSet, out TrainingSet);
@@ -57,6 +59,7 @@ namespace Normalizer
                 //Gera previsoes
                 List<string> predictions = new List<string>();
 
+                // Calcula label da primeira linha do set de teste
                 for (int x = 0; x < TestingSet.Count; x++)
                 {
                     List<LineDistance> neighbors = kt.GetNeighbors(TrainingSet, TestingSet[x], K);
@@ -64,10 +67,14 @@ namespace Normalizer
                     predictions.Add(result);
                 }
 
+                // Calcula precisao da label calculada
                 float acc = kt.getAccuracy(TestingSet, predictions);
                 AccuracyRatings.Add(acc);
-                //Console.WriteLine("acc " + acc.ToString() + "%");
 
+                // Exibe precisao media
+                Console.WriteLine("Precisao Media: " + AccuracyRatings.Average() + "%");
+
+                // Guarda erro amostral da linha
                 listOfErroAmostral.Add(erroAmostral(TestingSet, predictions));
             }
 
@@ -77,19 +84,18 @@ namespace Normalizer
                 crossValidation += f;
 
             crossValidation /= listOfErroAmostral.Count;
-            Console.WriteLine("erro de CROSS VALIDATION: " + (crossValidation * 100).ToString() + "%");
+            Console.WriteLine("Erro de CROSS VALIDATION: " + (crossValidation * 100).ToString() + "%");
         }
 
         public static int GetKNNVersion(List<List<string>> Dataset, KNNVersion Version)
         {
-            Console.WriteLine("Doing " + Version.ToString());
-
             List<string> DistinctClasses = new List<string>();
             foreach (var Item in Dataset)
             {
                 DistinctClasses.Add(Item.Last());
             }
 
+            // Guarda todas as classes sem repeticao
             DistinctClasses = DistinctClasses.Distinct().ToList();
 
             int P = DistinctClasses.Count; //Quantidade de Classes
