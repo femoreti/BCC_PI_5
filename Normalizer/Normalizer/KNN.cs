@@ -24,18 +24,14 @@ namespace Normalizer
                 Neighbours = Neighbours.OrderBy(item => item.Distance).Take(K).ToList();
 
                 // Extrair para outra classe, chosen label é a classe do item em questao.
-                string ChosenLabel = "";
-                int LastCount = 0;
+                Dictionary<string, int> ClassVotes = new Dictionary<string, int>();
                 foreach (var Item in Neighbours)
                 {
-                    int CurrentCount = Neighbours.Count(i => i.Label == Item.Label); //For no neighbors de novo
-                    if (CurrentCount <= LastCount) { continue; }
-
-                    ChosenLabel = Item.Label;
-                    LastCount = CurrentCount;
+                    if (ClassVotes.ContainsKey(Item.Label)) { ClassVotes[Item.Label]++; }
+                    else { ClassVotes.Add(Item.Label, 1); }
                 }
 
-                labels.Add(ChosenLabel);
+                labels.Add(ClassVotes.OrderBy(Item => Item.Value).Last().Key);
             }
 
             int corrects = 0;
@@ -66,7 +62,7 @@ namespace Normalizer
                     Console.WriteLine("ERROR: Unable to cast string to double.");
                 }
 
-                distance += Math.Pow((Testing - Training), 2);
+                distance += Math.Pow((Training - Testing), 2);
             }
 
             return Math.Sqrt(distance);

@@ -10,23 +10,7 @@ namespace Normalizer
     {
         static void Main(string[] args)
         {
-            /*string FilePath = FileSystem.GetAllFilesInFolder(@"../../Raw Data/iris")[0];
-            List<string> FileLines = GetFileLines(FilePath);
-            ClearEmptyValues(ref FileLines);
-
-            List<string> newCSV = ClearOutliers(ref FileLines);
-            foreach (string s in newCSV)
-                Console.WriteLine(s);*/
-
-            //KNN knn = new KNN();
-            List<List<string>> TrainingSet, TestingSet;
-            //knn.GetSetsForColumn(@"../../Raw Data/Normalized/iris-Normalized.csv", 0.7f, out TrainingSet, out TestingSet);
-            //knn.GetNeighbours(TrainingSet, TestingSet, 5);
-            //TrainingSet.Clear(); TestingSet.Clear();
-
-            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", 1);
-
-            //ExecuteOutliers();
+            TestKNN(@"../../Raw Data/Normalized/adult-Normalized.csv", 1);
 
             Console.WriteLine("\nFinish Program");
             Console.ReadLine();
@@ -34,23 +18,34 @@ namespace Normalizer
 
         public static void TestKNN(string path, int K)
         {
-            List<List<string>> TrainingSet, TestingSet;
+            List<List<string>> TrainingSet, TestingSet, DataSet;
+            List<float> AccuracyRatings = new List<float>();
+            int StartIndex = 0, KFold = 10;;
 
             KNNTest kt = new KNNTest();
-            kt.PrepareDataset(path, 0.7f, out TestingSet, out TrainingSet);
+            DataSet = kt.LoadCSVData(path);
 
-            //Gera previsoes
-            List<string> predictions = new List<string>();
-            int k = K;
-
-            for (int x = 0; x < TestingSet.Count; x++)
+            while (StartIndex < DataSet.Count)
             {
-                List<LineDistance> neighbors = kt.GetNeighbors(TrainingSet, TestingSet[x], k);
-                string result = kt.getResponses(neighbors);
-                predictions.Add(result);
+                StartIndex = kt.PrepareDataset(path, StartIndex, KFold, ref DataSet, out TestingSet, out TrainingSet);
+
+                //Gera previsoes
+                List<string> predictions = new List<string>();
+                int k = K;
+
+                for (int x = 0; x < TestingSet.Count; x++)
+                {
+                    List<LineDistance> neighbors = kt.GetNeighbors(TrainingSet, TestingSet[x], k);
+                    string result = kt.getResponses(neighbors);
+                    predictions.Add(result);
+                }
+
+                float acc = kt.getAccuracy(TestingSet, predictions);
+                AccuracyRatings.Add(acc);
+                Console.WriteLine("acc " + acc.ToString() + "%");   
             }
-            float acc = kt.getAccuracy(TestingSet, predictions);
-            Console.WriteLine("acc " + acc.ToString() + "%");
+
+            Console.WriteLine("Accuracy after CROSS VALIDATION: " + AccuracyRatings.Average().ToString() + "%");
         }
 
         public static void ExecuteOutliers()

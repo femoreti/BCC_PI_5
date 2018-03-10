@@ -42,26 +42,20 @@ namespace Normalizer
         /// <param name="percentage"></param>
         /// <param name="TestList"></param>
         /// <param name="TrainingList"></param>
-        public void PrepareDataset(string path, float percentage, out List<List<string>> TestList, out List<List<string>> TrainingList)
+        public int PrepareDataset(string path, int StartIndex, int KFold, ref List<List<string>> DataSet, out List<List<string>> TestList, out List<List<string>> TrainingList)
         {
             TestList = new List<List<string>>();
             TrainingList = new List<List<string>>();
 
-            List<List<string>> DataSet = LoadCSVData(path);
+            int EndIndex = (DataSet.Count / KFold) + StartIndex;
+            EndIndex = EndIndex > DataSet.Count ? DataSet.Count : EndIndex;
 
-            int trainingIndex = (int)Math.Floor(DataSet.Count * percentage);
+            TestList = DataSet.GetRange(StartIndex, EndIndex - StartIndex);
 
-            for (int x = 0; x < DataSet.Count; x++)
-            {
-                if (x < trainingIndex)
-                {
-                    TrainingList.Add(DataSet[x]);
-                }
-                else
-                {
-                    TestList.Add(DataSet[x]);
-                }
-            }
+            if (StartIndex > 0) { TrainingList = DataSet.GetRange(0, StartIndex - 1); }
+            if (EndIndex < DataSet.Count) { TrainingList.AddRange(DataSet.GetRange((EndIndex + 1), (DataSet.Count - (EndIndex + 1)))); }
+
+            return StartIndex = EndIndex + 1;
         }
 
         /// <summary>
