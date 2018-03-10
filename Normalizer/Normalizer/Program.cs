@@ -28,6 +28,9 @@ namespace Normalizer
         static void Main(string[] args)
         {
             TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.OneNN);
+            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.M2NN);
+            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.M10NN);
+            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.QNN);
 
             //ExecuteOutliers();
             Console.WriteLine("\nFinish Program");
@@ -43,17 +46,8 @@ namespace Normalizer
             KNNTest kt = new KNNTest();
             DataSet = kt.LoadCSVData(path);
 
-            // Version 1
-            //K = GetKNNVersion(DataSet, KNNVersion.OneNN);
-
-            // Version 2
-            //K = GetKNNVersion(DataSet, KNNVersion.M2NN);
-
-            // Version 3
-            K = GetKNNVersion(DataSet, KNNVersion.M10NN);
-
-            // Version 4
-            //K = GetKNNVersion(DataSet, KNNVersion.QNN);
+            //GET KNN VERSION
+            K = GetKNNVersion(DataSet, KNNVersion);
 
             List<float> listOfErroAmostral = new List<float>(); //TODO
             while (StartIndex < DataSet.Count)
@@ -72,7 +66,7 @@ namespace Normalizer
 
                 float acc = kt.getAccuracy(TestingSet, predictions);
                 AccuracyRatings.Add(acc);
-                Console.WriteLine("acc " + acc.ToString() + "%");
+                //Console.WriteLine("acc " + acc.ToString() + "%");
 
                 listOfErroAmostral.Add(erroAmostral(TestingSet, predictions));
             }
@@ -88,6 +82,8 @@ namespace Normalizer
 
         public static int GetKNNVersion(List<List<string>> Dataset, KNNVersion Version)
         {
+            Console.WriteLine("Doing " + Version.ToString());
+
             List<string> DistinctClasses = new List<string>();
             foreach (var Item in Dataset)
             {
@@ -96,19 +92,26 @@ namespace Normalizer
 
             DistinctClasses = DistinctClasses.Distinct().ToList();
 
+            int P = DistinctClasses.Count; //Quantidade de Classes
+            int Q = Dataset.Count; //Quantidade de linhas
+            int M = P % 2 == 0 ? P + 1 : P;
             switch (Version)
             {
                 case KNNVersion.OneNN:
                     return 1;
 
                 case KNNVersion.M2NN:
-                    return DistinctClasses.Count % 2 == 0 ? DistinctClasses.Count + 1 : DistinctClasses.Count;
+                    {
+                    return M + 2;
+                    }
 
                 case KNNVersion.M10NN:
-                    return DistinctClasses.Count * 10 + 1;
+                    {
+                        return M * 10 + 1;
+                    }
 
                 case KNNVersion.QNN:
-                    return (Dataset.Count / 2) % 2 == 0 ? Dataset.Count / 2 + 1 : Dataset.Count / 2;
+                    return (Q / 2) % 2 == 0 ? Q / 2 + 1 : Q / 2;
             }
 
             return -1;
