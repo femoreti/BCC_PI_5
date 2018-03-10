@@ -29,6 +29,7 @@ namespace Normalizer
         {
             TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.OneNN);
 
+            //ExecuteOutliers();
             Console.WriteLine("\nFinish Program");
             Console.ReadLine();
         }
@@ -146,7 +147,8 @@ namespace Normalizer
         }
 
         public static void saveCsvFileWithoutOutliers(string path)
-        {            
+        {
+            Console.WriteLine("########### Starting " + path);
             string[] FilesPath = FileSystem.GetAllFilesInFolder(path);
             foreach (string s in FilesPath)
             {
@@ -180,7 +182,7 @@ namespace Normalizer
 
             for (int i = 0; i < listOfColums.Count; i++)
             {
-                Console.WriteLine("Column: " + i + " of " + listOfColums.Count);
+                Console.WriteLine("Column: " + (i+1).ToString() + " of " + listOfColums.Count);
 
                 float testString = 0;
                 if (!float.TryParse(listOfColums[i][0], out testString)) //Se for string ira transformar em classe
@@ -188,6 +190,8 @@ namespace Normalizer
                     Dictionary<string, int> StringConverter = new Dictionary<string, int>();
                     int NewCategory = 0;
 
+                    string classDATA = "Classe\tValor\n";
+                    bool canSaveClassData = false;
                     for (int q = 0; q < listOfColums[i].Count; q++)
                     {
                         if (StringConverter.ContainsKey(listOfColums[i][q]))
@@ -195,10 +199,22 @@ namespace Normalizer
                         else
                         {
                             StringConverter.Add(listOfColums[i][q], NewCategory);
+
+                            if(i == listOfColums.Count-1)
+                            {
+                                canSaveClassData = true;
+                                classDATA += listOfColums[i][q] + "\t" + NewCategory.ToString() + "\n";
+                            }
                             listOfColums[i][q] = NewCategory.ToString();
                             NewCategory++;
                         }
                     }
+                    if(canSaveClassData)
+                    {
+                        string[] classDataFileName = fileName.Split('.');
+                        FileSystem.SaveFileContents(classDATA, DatasetFolderPath + "/output/", classDataFileName[0] + "-classDATA.csv");
+                    }
+                    //Console.WriteLine(classDATA);
                     continue;
                 }
 
