@@ -15,7 +15,6 @@ namespace Normalizer
         /// <returns></returns>
         public List<List<string>> LoadCSVData(string path)
         {
-
             Console.WriteLine("Starting KNN from " + path);
 
             List<List<string>> FullDataset = new List<List<string>>();

@@ -10,7 +10,7 @@ namespace Normalizer
     {
         static void Main(string[] args)
         {
-            TestKNN(@"../../Raw Data/Normalized/adult-Normalized.csv", 1);
+            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", 1);
 
             Console.WriteLine("\nFinish Program");
             Console.ReadLine();
@@ -25,6 +25,7 @@ namespace Normalizer
             KNNTest kt = new KNNTest();
             DataSet = kt.LoadCSVData(path);
 
+            List<float> listOfErroAmostral = new List<float>(); //TODO
             while (StartIndex < DataSet.Count)
             {
                 StartIndex = kt.PrepareDataset(path, StartIndex, KFold, ref DataSet, out TestingSet, out TrainingSet);
@@ -42,10 +43,40 @@ namespace Normalizer
 
                 float acc = kt.getAccuracy(TestingSet, predictions);
                 AccuracyRatings.Add(acc);
-                Console.WriteLine("acc " + acc.ToString() + "%");   
+                Console.WriteLine("acc " + acc.ToString() + "%");
+
+                listOfErroAmostral.Add(erroAmostral(TestingSet, predictions));
             }
 
-            Console.WriteLine("Accuracy after CROSS VALIDATION: " + AccuracyRatings.Average().ToString() + "%");
+            //Calcula a validacao cruzada
+            float crossValidation = 0;
+            foreach (float f in listOfErroAmostral)
+                crossValidation += f;
+
+            crossValidation /= listOfErroAmostral.Count;
+            Console.WriteLine("erro de CROSS VALIDATION: " + (crossValidation * 100).ToString() + "%");
+        }
+
+        /// <summary>
+        /// Calcula o Erro amostral
+        /// </summary>
+        /// <param name="TestSet"></param>
+        /// <param name="predictions"></param>
+        /// <returns></returns>
+        public static float erroAmostral(List<List<string>> TestSet, List<string> predictions)
+        {
+            float erro = 0;
+            for (int i = 0; i < TestSet.Count; i++)
+            {
+                erro += (delta(TestSet[i].Last(), predictions[i]));
+            }
+
+            return erro / (float)TestSet.Count;
+        }
+
+        private static int delta(string a, string b)
+        {
+            return (a == b) ? 0 : 1;
         }
 
         public static void ExecuteOutliers()
