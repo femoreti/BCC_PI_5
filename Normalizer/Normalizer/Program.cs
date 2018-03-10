@@ -6,24 +6,53 @@ using System.Threading.Tasks;
 
 namespace Normalizer
 {
+
+    enum KNNVersion
+    {
+        // 1-NN
+        OneNN = 1,
+
+        // M+2-NN
+        M2NN = 2,
+
+        // M*10+1-NN
+        M10NN = 3,
+
+        // Q/2 = even -> (Q/2+1)-NN
+        // Q/2 = odd -> (Q/2)-NN
+        QNN = 4
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", 1);
+            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.OneNN);
 
             Console.WriteLine("\nFinish Program");
             Console.ReadLine();
         }
 
-        public static void TestKNN(string path, int K)
+        public static void TestKNN(string path, KNNVersion KNNVersion)
         {
             List<List<string>> TrainingSet, TestingSet, DataSet;
             List<float> AccuracyRatings = new List<float>();
-            int StartIndex = 0, KFold = 10;;
+            int StartIndex = 0, KFold = 10, K = 1;
 
             KNNTest kt = new KNNTest();
             DataSet = kt.LoadCSVData(path);
+
+            // Version 1
+            //K = GetKNNVersion(DataSet, KNNVersion.OneNN);
+
+            // Version 2
+            //K = GetKNNVersion(DataSet, KNNVersion.M2NN);
+
+            // Version 3
+            K = GetKNNVersion(DataSet, KNNVersion.M10NN);
+
+            // Version 4
+            //K = GetKNNVersion(DataSet, KNNVersion.QNN);
 
             List<float> listOfErroAmostral = new List<float>(); //TODO
             while (StartIndex < DataSet.Count)
@@ -32,11 +61,10 @@ namespace Normalizer
 
                 //Gera previsoes
                 List<string> predictions = new List<string>();
-                int k = K;
 
                 for (int x = 0; x < TestingSet.Count; x++)
                 {
-                    List<LineDistance> neighbors = kt.GetNeighbors(TrainingSet, TestingSet[x], k);
+                    List<LineDistance> neighbors = kt.GetNeighbors(TrainingSet, TestingSet[x], K);
                     string result = kt.getResponses(neighbors);
                     predictions.Add(result);
                 }
@@ -55,6 +83,34 @@ namespace Normalizer
 
             crossValidation /= listOfErroAmostral.Count;
             Console.WriteLine("erro de CROSS VALIDATION: " + (crossValidation * 100).ToString() + "%");
+        }
+
+        public static int GetKNNVersion(List<List<string>> Dataset, KNNVersion Version)
+        {
+            List<string> DistinctClasses = new List<string>();
+            foreach (var Item in Dataset)
+            {
+                DistinctClasses.Add(Item.Last());
+            }
+
+            DistinctClasses = DistinctClasses.Distinct().ToList();
+
+            switch (Version)
+            {
+                case KNNVersion.OneNN:
+                    return 1;
+
+                case KNNVersion.M2NN:
+                    return DistinctClasses.Count % 2 == 0 ? DistinctClasses.Count + 1 : DistinctClasses.Count;
+
+                case KNNVersion.M10NN:
+                    return DistinctClasses.Count * 10 + 1;
+
+                case KNNVersion.QNN:
+                    return (Dataset.Count / 2) % 2 == 0 ? Dataset.Count / 2 + 1 : Dataset.Count / 2;
+            }
+
+            return -1;
         }
 
         /// <summary>
