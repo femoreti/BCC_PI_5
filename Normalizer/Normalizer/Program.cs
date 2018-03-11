@@ -85,7 +85,7 @@ namespace Normalizer
                 string fileName = path.Split('/').Last().Split('-')[0];
                 FileSystem.SaveFileContents(CrossValidation.GeraMatrizBinaria(), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Matriz-Binaria-Confusao-" + KNNVersion.ToString() +".txt");
             }
-            if(CrossValidation.multiClassConfusionMatrix.Count > 0)
+            if(CrossValidation.multiClassConfusionMatrix.Count > 0) //Se for matriz multi-classe irá salvar aqui
             {
                 string fileName = path.Split('/').Last().Split('-')[0];
                 FileSystem.SaveFileContents(CrossValidation.GeraMatrizMultiClasse(), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Matriz-MultiClasse-Confusao-" + KNNVersion.ToString() + ".txt");
