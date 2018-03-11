@@ -1,0 +1,95 @@
+OneNN
+KFold 1 / 10... 100%
+Precisao Media: 100%
+KFold 2 / 10... 100%
+Precisao Media: 100%
+KFold 3 / 10... 100%
+Precisao Media: 96.9697%
+KFold 4 / 10... 100%
+Precisao Media: 93.93939%
+KFold 5 / 10... 100%
+Precisao Media: 94.54546%
+KFold 6 / 10... 100%
+Precisao Media: 95.45454%
+KFold 7 / 10... 100%
+Precisao Media: 95.671%
+KFold 8 / 10... 100%
+Precisao Media: 95.45454%
+KFold 9 / 10... 100%
+Precisao Media: 94.94949%
+KFold 10 / 10... 100%
+Precisao Media: 95.12121%
+Saved file wdbc-Matriz-Binaria-Confusao-OneNN.txt
+erro de CROSS VALIDATION: 4.878788%
+
+M2NN
+KFold 1 / 10... 100%
+Precisao Media: 100%
+KFold 2 / 10... 100%
+Precisao Media: 96.9697%
+KFold 3 / 10... 100%
+Precisao Media: 96.9697%
+KFold 4 / 10... 100%
+Precisao Media: 97.72727%
+KFold 5 / 10... 100%
+Precisao Media: 97.57576%
+KFold 6 / 10... 100%
+Precisao Media: 97.9798%
+KFold 7 / 10... 100%
+Precisao Media: 98.26839%
+KFold 8 / 10... 100%
+Precisao Media: 98.10606%
+KFold 9 / 10... 100%
+Precisao Media: 97.6431%
+KFold 10 / 10... 100%
+Precisao Media: 96.54546%
+Saved file wdbc-Matriz-Binaria-Confusao-M2NN.txt
+erro de CROSS VALIDATION: 3.454546%
+
+M10NN
+KFold 1 / 10... 100%
+Precisao Media: 93.93939%
+KFold 2 / 10... 100%
+Precisao Media: 96.9697%
+KFold 3 / 10... 100%
+Precisao Media: 95.95959%
+KFold 4 / 10... 100%
+Precisao Media: 95.45454%
+KFold 5 / 10... 100%
+Precisao Media: 93.93939%
+KFold 6 / 10... 100%
+Precisao Media: 94.44444%
+KFold 7 / 10... 100%
+Precisao Media: 93.93939%
+KFold 8 / 10... 100%
+Precisao Media: 94.69697%
+KFold 9 / 10... 100%
+Precisao Media: 94.94949%
+KFold 10 / 10... 100%
+Precisao Media: 94.45454%
+Saved file wdbc-Matriz-Binaria-Confusao-M10NN.txt
+erro de CROSS VALIDATION: 5.545455%
+
+QNN
+KFold 1 / 10... 100%
+Precisao Media: 84.84849%
+KFold 2 / 10... 100%
+Precisao Media: 89.39394%
+KFold 3 / 10... 100%
+Precisao Media: 90.90909%
+KFold 4 / 10... 100%
+Precisao Media: 91.66666%
+KFold 5 / 10... 100%
+Precisao Media: 93.33334%
+KFold 6 / 10... 100%
+Precisao Media: 94.44444%
+KFold 7 / 10... 100%
+Precisao Media: 93.93939%
+KFold 8 / 10... 100%
+Precisao Media: 93.18182%
+KFold 9 / 10... 100%
+Precisao Media: 92.59259%
+KFold 10 / 10... 100%
+Precisao Media: 91.33333%
+Saved file wdbc-Matriz-Binaria-Confusao-QNN.txt
+erro de CROSS VALIDATION: 8.666667%

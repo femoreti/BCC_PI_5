@@ -9,6 +9,7 @@ namespace Normalizer
     class CrossValidation
     {
         public static Dictionary<string, int> binaryConfusionMatrix = new Dictionary<string, int>();
+        public static Dictionary<string, int> multiClassConfusionMatrix = new Dictionary<string, int>();
 
         /// <summary>
         /// Calcula o Erro amostral
@@ -57,7 +58,15 @@ namespace Normalizer
 
             if(DistinctClasses.Count > 2) // Multiclasses
             {
+                for (int i = 0; i < TestSet.Count; i++)
+                {
+                    string testClas = TestSet[i].Last();
 
+                    if (!multiClassConfusionMatrix.ContainsKey(testClas + "-" + Predictions[i]))
+                        multiClassConfusionMatrix.Add(testClas + "-" + Predictions[i], 1);
+                    else
+                        multiClassConfusionMatrix[testClas + "-" + Predictions[i]]++;
+                }
             }
             else //Binario
             {
@@ -120,6 +129,20 @@ namespace Normalizer
 
             //Console.WriteLine(confusionOUT);
             binaryConfusionMatrix.Clear(); //Limpa todos resultados de classe binaria
+
+            return confusionOUT;
+        }
+
+        public static string GeraMatrizMultiClasse()
+        {
+            string confusionOUT = string.Empty;
+            List<string> keys = multiClassConfusionMatrix.Keys.ToList();
+            for (int i = 0; i < keys.Count; i++)
+            {
+                confusionOUT += keys[i] + "\t" + multiClassConfusionMatrix[keys[i]].ToString() + "\n";
+            }
+
+            multiClassConfusionMatrix.Clear();
 
             return confusionOUT;
         }

@@ -27,10 +27,7 @@ namespace Normalizer
     {
         static void Main(string[] args)
         {
-            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.OneNN);
-            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.M2NN);
-            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.M10NN);
-            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.QNN);
+            ExecuteKNNForAll();
 
             //ExecuteOutliers();
             Console.WriteLine("\nFinish Program");
@@ -80,12 +77,18 @@ namespace Normalizer
 				listOfErroAmostral.Add(CrossValidation.erroAmostral(TestingSet, predictions));
 
                 CrossValidation.prepareConfusionMatrix(DataSet, TestingSet, predictions);
-                etapa++;            }
+                etapa++;
+            }
 
             if (CrossValidation.binaryConfusionMatrix.Count > 0) //Se for matriz binaria ira salvar os dados aqui
             {
                 string fileName = path.Split('/').Last().Split('-')[0];
-                FileSystem.SaveFileContents(CrossValidation.GeraMatrizBinaria(), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Matriz-Binaria-Confusao-" + KNNVersion.ToString() +".csv");
+                FileSystem.SaveFileContents(CrossValidation.GeraMatrizBinaria(), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Matriz-Binaria-Confusao-" + KNNVersion.ToString() +".txt");
+            }
+            if(CrossValidation.multiClassConfusionMatrix.Count > 0)
+            {
+                string fileName = path.Split('/').Last().Split('-')[0];
+                FileSystem.SaveFileContents(CrossValidation.GeraMatrizMultiClasse(), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Matriz-MultiClasse-Confusao-" + KNNVersion.ToString() + ".txt");
             }
 
             CrossValidation.erroDeValidacaoCruzada(listOfErroAmostral);//Verifica a taxa de erro da validacao cruzada
@@ -125,6 +128,24 @@ namespace Normalizer
             }
 
             return -1;
+        }
+
+        public static void ExecuteKNNForAll()
+        {
+            //ExecuteAllKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv");
+            //ExecuteAllKNN(@"../../Raw Data/Normalized/adult-Normalized.csv");
+            ExecuteAllKNN(@"../../Raw Data/Normalized/iris-Normalized.csv");
+            //ExecuteAllKNN(@"../../Raw Data/Normalized/wdbc-Normalized.csv");
+            //ExecuteAllKNN(@"../../Raw Data/Normalized/wine-Normalized.csv");
+            //ExecuteAllKNN(@"../../Raw Data/Normalized/winequality-red-Normalized.csv");
+        }
+
+        public static void ExecuteAllKNN(string path)
+        {
+            TestKNN(path, KNNVersion.OneNN);
+            TestKNN(path, KNNVersion.M2NN);
+            TestKNN(path, KNNVersion.M10NN);
+            TestKNN(path, KNNVersion.QNN);
         }
 
         public static void ExecuteOutliers()
