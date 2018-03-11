@@ -27,10 +27,10 @@ namespace Normalizer
     {
         static void Main(string[] args)
         {
-            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.OneNN);
-            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.M2NN);
-            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.M10NN);
-            TestKNN(@"../../Raw Data/Normalized/wine-Normalized.csv", KNNVersion.QNN);
+            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.OneNN);
+            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.M2NN);
+            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.M10NN);
+            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.QNN);
 
             //ExecuteOutliers();
             Console.WriteLine("\nFinish Program");
@@ -52,6 +52,7 @@ namespace Normalizer
             List<float> listOfErroAmostral = new List<float>();
 
             // Calcula dataset de traino e teste
+            int etapa = 1;
             while (StartIndex < DataSet.Count)
             {
                 StartIndex = kt.PrepareDataset(StartIndex, KFold, ref DataSet, out TestingSet, out TrainingSet);
@@ -65,6 +66,8 @@ namespace Normalizer
                     List<LineDistance> neighbors = kt.GetNeighbors(TrainingSet, TestingSet[x], K);
                     string result = kt.getResponses(neighbors);
                     predictions.Add(result);
+
+                    Console.Write("\rKFold {0} / {1}... {2}%", etapa, KFold, Math.Round(((float)(x + 1) / (float)TestingSet.Count) * 100));
                 }
 
                 // Calcula precisao da label calculada
@@ -72,19 +75,20 @@ namespace Normalizer
                 AccuracyRatings.Add(acc);
 
                 // Exibe precisao media
-                Console.WriteLine("Precisao Media: " + AccuracyRatings.Average() + "%");
-
+                Console.WriteLine("\nPrecisao Media: " + AccuracyRatings.Average() + "%");
                 // Guarda erro amostral da linha
-                listOfErroAmostral.Add(erroAmostral(TestingSet, predictions));
+				listOfErroAmostral.Add(CrossValidation.erroAmostral(TestingSet, predictions));
+
+                CrossValidation.prepareConfusionMatrix(DataSet, TestingSet, predictions);
+                etapa++;            }
+
+            if (CrossValidation.binaryConfusionMatrix.Count > 0) //Se for matriz binaria ira salvar os dados aqui
+            {
+                string fileName = path.Split('/').Last().Split('-')[0];
+                FileSystem.SaveFileContents(CrossValidation.GeraMatrizBinaria(), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Matriz-Binaria-Confusao-" + KNNVersion.ToString() +".csv");
             }
 
-            //Calcula a validacao cruzada
-            float crossValidation = 0;
-            foreach (float f in listOfErroAmostral)
-                crossValidation += f;
-
-            crossValidation /= listOfErroAmostral.Count;
-            Console.WriteLine("Erro de CROSS VALIDATION: " + (crossValidation * 100).ToString() + "%");
+            CrossValidation.erroDeValidacaoCruzada(listOfErroAmostral);//Verifica a taxa de erro da validacao cruzada
         }
 
         public static int GetKNNVersion(List<List<string>> Dataset, KNNVersion Version)
@@ -121,28 +125,6 @@ namespace Normalizer
             }
 
             return -1;
-        }
-
-        /// <summary>
-        /// Calcula o Erro amostral
-        /// </summary>
-        /// <param name="TestSet"></param>
-        /// <param name="predictions"></param>
-        /// <returns></returns>
-        public static float erroAmostral(List<List<string>> TestSet, List<string> predictions)
-        {
-            float erro = 0;
-            for (int i = 0; i < TestSet.Count; i++)
-            {
-                erro += (delta(TestSet[i].Last(), predictions[i]));
-            }
-
-            return erro / (float)TestSet.Count;
-        }
-
-        private static int delta(string a, string b)
-        {
-            return (a == b) ? 0 : 1;
         }
 
         public static void ExecuteOutliers()

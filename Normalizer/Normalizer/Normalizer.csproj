@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrossValidation.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="KNN.cs" />
     <Compile Include="KNNTest.cs" />
