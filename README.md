@@ -5,6 +5,8 @@ nosso pi de machine learning
 
 ## [Videos aula](https://www.youtube.com/playlist?list=PLbbFJ2MmYjeOcPXXvZkRj-ouaIboUX2mH) para consulta
 
+## [Planilha](https://docs.google.com/spreadsheets/d/1wZaiO_AeL9jSK8vC1ECI-aGfr7l-37uKzIdM__cwAlI/edit?usp=sharing) online com os dados de tabela para o RELATÓRIO (Incluso relatorios de Cross Validation)
+
 ## [Relatório](https://docs.google.com/document/d/105m8H7JdKH5iDZQW9n43j-WAvwfn_TA_WCCC6BRGKac/edit?usp=sharing) dos dados processados pelo algoritmo kNN
 
 ### Para entregar dia 11/03
