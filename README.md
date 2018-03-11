@@ -7,6 +7,8 @@ nosso pi de machine learning
 
 ## [Planilha](https://docs.google.com/spreadsheets/d/1wZaiO_AeL9jSK8vC1ECI-aGfr7l-37uKzIdM__cwAlI/edit?usp=sharing) online com os dados de tabela para o RELATÓRIO (Incluso relatorios de Cross Validation)
 
+## [LINK](https://github.com/femoreti/BCC_PI_5/tree/master/Normalizer/Normalizer/PDF-Cross%20Validation) Para visualizar os dados de Validação Cruzada
+
 ## [Relatório](https://docs.google.com/document/d/105m8H7JdKH5iDZQW9n43j-WAvwfn_TA_WCCC6BRGKac/edit?usp=sharing) dos dados processados pelo algoritmo kNN
 
 ### Para entregar dia 11/03
