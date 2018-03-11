@@ -5,12 +5,15 @@ nosso pi de machine learning
 
 ## [Videos aula](https://www.youtube.com/playlist?list=PLbbFJ2MmYjeOcPXXvZkRj-ouaIboUX2mH) para consulta
 
-### Para entregar dia 4/03
-> Nesta entrega parcial, deverão ser entregues:
+## [Relatório](https://docs.google.com/document/d/105m8H7JdKH5iDZQW9n43j-WAvwfn_TA_WCCC6BRGKac/edit?usp=sharing) dos dados processados pelo algoritmo kNN
+
+### Para entregar dia 11/03
+> Devem ser entregues:
 >
-> - nome dos integrantes da equipe.
-> - Os 06 conjuntos de dados pré-processados (normalizados de acordo com o descrito neste enunciado).
-> - Formato: arquivo compactado contendo planilha Excel, CSV ou outro tipo de planilha.
+> - Nome e os integrantes da equipe
+> - O relatório do projeto
+> - Vídeo (ou link para onde ele está hospedado)
+> - Todos os arquivos descritos no enunciado
 
 - [Dados da Raw Data](https://github.com/femoreti/BCC_PI_5/blob/master/Normalizer/Normalizer/Raw%20Data/README.md)
 - [Referência knn](https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/)
