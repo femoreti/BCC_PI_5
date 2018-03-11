@@ -54,7 +54,7 @@ namespace Normalizer
             // Calcula dataset de traino e teste
             while (StartIndex < DataSet.Count)
             {
-                StartIndex = kt.PrepareDataset(path, StartIndex, KFold, ref DataSet, out TestingSet, out TrainingSet);
+                StartIndex = kt.PrepareDataset(StartIndex, KFold, ref DataSet, out TestingSet, out TrainingSet);
 
                 //Gera previsoes
                 List<string> predictions = new List<string>();

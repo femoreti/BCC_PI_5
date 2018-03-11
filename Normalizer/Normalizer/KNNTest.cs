@@ -46,7 +46,7 @@ namespace Normalizer
         /// <param name="percentage"></param>
         /// <param name="TestList"></param>
         /// <param name="TrainingList"></param>
-        public int PrepareDataset(string path, int StartIndex, int KFold, ref List<List<string>> DataSet, out List<List<string>> TestList, out List<List<string>> TrainingList)
+        public int PrepareDataset(int StartIndex, int KFold, ref List<List<string>> DataSet, out List<List<string>> TestList, out List<List<string>> TrainingList)
         {
             TestList = new List<List<string>>();
             TrainingList = new List<List<string>>();
