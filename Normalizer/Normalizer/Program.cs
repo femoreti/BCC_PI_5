@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ INTEGRANTES DO GRUPO:
+    Caio Rosa
+    Felipe Moreti
+*/
+
 namespace Normalizer
 {
 
@@ -27,10 +33,10 @@ namespace Normalizer
     {
         static void Main(string[] args)
         {
-            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.OneNN);
-            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.M2NN);
-            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.M10NN);
-            TestKNN(@"../../Raw Data/Normalized/abalone-Normalized.csv", KNNVersion.QNN);
+            TestKNN(@"../../Raw Data/Normalized/iris-Normalized.csv", KNNVersion.OneNN);
+            TestKNN(@"../../Raw Data/Normalized/iris-Normalized.csv", KNNVersion.M2NN);
+            TestKNN(@"../../Raw Data/Normalized/iris-Normalized.csv", KNNVersion.M10NN);
+            TestKNN(@"../../Raw Data/Normalized/iris-Normalized.csv", KNNVersion.QNN);
 
             //ExecuteOutliers();
             Console.WriteLine("\nFinish Program");
@@ -43,7 +49,7 @@ namespace Normalizer
             List<float> AccuracyRatings = new List<float>();
             int StartIndex = 0, KFold = 10, K = 1;
 
-            KNNTest kt = new KNNTest();
+            KNN kt = new KNN();
             DataSet = kt.LoadCSVData(path);
 
             //GET KNN VERSION
@@ -76,11 +82,13 @@ namespace Normalizer
 
                 // Exibe precisao media
                 Console.WriteLine("\nPrecisao Media: " + AccuracyRatings.Average() + "%");
+
                 // Guarda erro amostral da linha
 				listOfErroAmostral.Add(CrossValidation.erroAmostral(TestingSet, predictions));
 
                 CrossValidation.prepareConfusionMatrix(DataSet, TestingSet, predictions);
-                etapa++;            }
+                etapa++;            
+            }
 
             if (CrossValidation.binaryConfusionMatrix.Count > 0) //Se for matriz binaria ira salvar os dados aqui
             {

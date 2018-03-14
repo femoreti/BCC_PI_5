@@ -45,7 +45,6 @@
     <Compile Include="CrossValidation.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="KNN.cs" />
-    <Compile Include="KNNTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LineDistance.cs" />
