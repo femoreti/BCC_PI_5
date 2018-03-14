@@ -1,0 +1,95 @@
+OneNN
+KFold 1 / 10... 100%
+Precisao Media: 44.35028%
+KFold 2 / 10... 100%
+Precisao Media: 46.89265%
+KFold 3 / 10... 100%
+Precisao Media: 47.2693%
+KFold 4 / 10... 100%
+Precisao Media: 46.96328%
+KFold 5 / 10... 100%
+Precisao Media: 46.0452%
+KFold 6 / 10... 100%
+Precisao Media: 46.61017%
+KFold 7 / 10... 100%
+Precisao Media: 47.29621%
+KFold 8 / 10... 100%
+Precisao Media: 47.56356%
+KFold 9 / 10... 100%
+Precisao Media: 47.83427%
+KFold 10 / 10... 100%
+Precisao Media: 48.23925%
+Saved file abalone-Matriz-MultiClasse-Confusao-OneNN.txt
+erro de CROSS VALIDATION: 51.76075%
+
+M2NN
+KFold 1 / 10... 100%
+Precisao Media: 47.45763%
+KFold 2 / 10... 100%
+Precisao Media: 47.88136%
+KFold 3 / 10... 100%
+Precisao Media: 50.09416%
+KFold 4 / 10... 100%
+Precisao Media: 50.49435%
+KFold 5 / 10... 100%
+Precisao Media: 50.90395%
+KFold 6 / 10... 100%
+Precisao Media: 50.04708%
+KFold 7 / 10... 100%
+Precisao Media: 49.6368%
+KFold 8 / 10... 100%
+Precisao Media: 49.85876%
+KFold 9 / 10... 100%
+Precisao Media: 50.31387%
+KFold 10 / 10... 100%
+Precisao Media: 50.55785%
+Saved file abalone-Matriz-MultiClasse-Confusao-M2NN.txt
+erro de CROSS VALIDATION: 49.44215%
+
+M10NN
+KFold 1 / 10... 100%
+Precisao Media: 55.36723%
+KFold 2 / 10... 100%
+Precisao Media: 51.12994%
+KFold 3 / 10... 100%
+Precisao Media: 51.69492%
+KFold 4 / 10... 100%
+Precisao Media: 51.62429%
+KFold 5 / 10... 100%
+Precisao Media: 52.42938%
+KFold 6 / 10... 100%
+Precisao Media: 53.43691%
+KFold 7 / 10... 100%
+Precisao Media: 53.67232%
+KFold 8 / 10... 100%
+Precisao Media: 53.31921%
+KFold 9 / 10... 100%
+Precisao Media: 53.82925%
+KFold 10 / 10... 100%
+Precisao Media: 53.80865%
+Saved file abalone-Matriz-MultiClasse-Confusao-M10NN.txt
+erro de CROSS VALIDATION: 46.19135%
+
+QNN
+KFold 1 / 10... 100%
+Precisao Media: 54.23729%
+KFold 2 / 10... 100%
+Precisao Media: 51.69492%
+KFold 3 / 10... 100%
+Precisao Media: 52.07156%
+KFold 4 / 10... 100%
+Precisao Media: 51.62429%
+KFold 5 / 10... 100%
+Precisao Media: 52.54237%
+KFold 6 / 10... 100%
+Precisao Media: 52.91902%
+KFold 7 / 10... 100%
+Precisao Media: 53.06699%
+KFold 8 / 10... 100%
+Precisao Media: 52.71893%
+KFold 9 / 10... 100%
+Precisao Media: 52.4796%
+KFold 10 / 10... 100%
+Precisao Media: 52.18816%
+Saved file abalone-Matriz-MultiClasse-Confusao-QNN.txt
+erro de CROSS VALIDATION: 47.81184%
