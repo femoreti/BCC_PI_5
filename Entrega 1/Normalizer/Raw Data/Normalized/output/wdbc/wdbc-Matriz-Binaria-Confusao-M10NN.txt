@@ -1,0 +1,8 @@
+True Positive	298
+False Positive	18
+False Negative	0
+True Negative	11
+Sensibilidade	1
+Especificidade	0.3793103
+Precisão	0.943038
+Revocação	1
