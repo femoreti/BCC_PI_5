@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Normalizer
+namespace Learning_Vector_Quantization
 {
     class FileSystem
     {
