@@ -1,0 +1,95 @@
+OneNN
+KFold 1 / 10... 100%
+Precisao Media: 100%
+KFold 2 / 10... 100%
+Precisao Media: 96.15385%
+KFold 3 / 10... 100%
+Precisao Media: 97.4359%
+KFold 4 / 10... 100%
+Precisao Media: 98.07692%
+KFold 5 / 10... 100%
+Precisao Media: 96.92308%
+KFold 6 / 10... 100%
+Precisao Media: 96.15385%
+KFold 7 / 10... 100%
+Precisao Media: 95.60439%
+KFold 8 / 10... 100%
+Precisao Media: 96.15385%
+KFold 9 / 10... 100%
+Precisao Media: 96.5812%
+KFold 10 / 10... 100%
+Precisao Media: 96.08974%
+Saved file wine-Matriz-MultiClasse-Confusao-OneNN.txt
+erro de CROSS VALIDATION: 3.910257%
+
+M2NN
+KFold 1 / 10... 100%
+Precisao Media: 92.30769%
+KFold 2 / 10... 100%
+Precisao Media: 96.15385%
+KFold 3 / 10... 100%
+Precisao Media: 92.30769%
+KFold 4 / 10... 100%
+Precisao Media: 92.30769%
+KFold 5 / 10... 100%
+Precisao Media: 93.84615%
+KFold 6 / 10... 100%
+Precisao Media: 93.58974%
+KFold 7 / 10... 100%
+Precisao Media: 94.50549%
+KFold 8 / 10... 100%
+Precisao Media: 95.19231%
+KFold 9 / 10... 100%
+Precisao Media: 95.72649%
+KFold 10 / 10... 100%
+Precisao Media: 96.15385%
+Saved file wine-Matriz-MultiClasse-Confusao-M2NN.txt
+erro de CROSS VALIDATION: 3.846154%
+
+M10NN
+KFold 1 / 10... 100%
+Precisao Media: 100%
+KFold 2 / 10... 100%
+Precisao Media: 96.15385%
+KFold 3 / 10... 100%
+Precisao Media: 94.8718%
+KFold 4 / 10... 100%
+Precisao Media: 96.15385%
+KFold 5 / 10... 100%
+Precisao Media: 96.92308%
+KFold 6 / 10... 100%
+Precisao Media: 97.4359%
+KFold 7 / 10... 100%
+Precisao Media: 97.8022%
+KFold 8 / 10... 100%
+Precisao Media: 97.11539%
+KFold 9 / 10... 100%
+Precisao Media: 97.4359%
+KFold 10 / 10... 100%
+Precisao Media: 97.69231%
+Saved file wine-Matriz-MultiClasse-Confusao-M10NN.txt
+erro de CROSS VALIDATION: 2.307693%
+
+QNN
+KFold 1 / 10... 100%
+Precisao Media: 84.61539%
+KFold 2 / 10... 100%
+Precisao Media: 80.76923%
+KFold 3 / 10... 100%
+Precisao Media: 79.48718%
+KFold 4 / 10... 100%
+Precisao Media: 80.76923%
+KFold 5 / 10... 100%
+Precisao Media: 81.53847%
+KFold 6 / 10... 100%
+Precisao Media: 83.33334%
+KFold 7 / 10... 100%
+Precisao Media: 79.12088%
+KFold 8 / 10... 100%
+Precisao Media: 79.80769%
+KFold 9 / 10... 100%
+Precisao Media: 78.63248%
+KFold 10 / 10... 100%
+Precisao Media: 78.26923%
+Saved file wine-Matriz-MultiClasse-Confusao-QNN.txt
+erro de CROSS VALIDATION: 21.73077%
