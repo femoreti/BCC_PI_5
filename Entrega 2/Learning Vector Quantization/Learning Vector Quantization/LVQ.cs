@@ -36,15 +36,33 @@ namespace Learning_Vector_Quantization
         public void RunLVQ(List<List<Neuronio>> neurons, List<List<string>> dataset, float learningRate) 
         {
             // Itera no dataset pegando cada linha
-                // Para cada linha itera nos neoronios
-                    // Para cada neoronio pega a distancia entre os pesos e a linha do dataset
-            // Pega o neoronio com a menor distancia para a linha de entrada
-            // Se esse neoronio nao tiver classe coloca a classe da linha de entrada
-            // Atualiza os pesos
+            foreach (var line in dataset)
+            {
+                List<NewDistance> distances = new List<NewDistance>();
+				// Para cada linha itera nos neuronios
+                foreach (var neuronLine in neurons)
+                {
+					// Para cada neuronio pega a distancia entre os pesos e a linha do dataset
+                    foreach (var neuron in neuronLine)
+                    {
+                        distances.Add(new NewDistance(neuron, NewGetEuclideanDistance(line, neuron), line));
+                    }
+                }
+
+                // Pega o neuronio com a menor distancia para a linha de entrada
+                NewDistance closest = distances.OrderBy(item => item.distance).First();
+
+                // Se esse neuronio nao tiver classe coloca a classe da linha de entrada
+                if (string.IsNullOrEmpty(closest.neuron.currentClass))
+                    neurons[closest.neuron.row][closest.neuron.column].currentClass = closest.datasetRow.Last();
+                
+				// Atualiza os pesos
+                // TODO: Implementar metodo de atualizacao
+            }
         }
 
         /// <summary>
-        /// Ira carregar um CSV e transformalo em uma lista de colunas contida em uma lista de linhas
+        /// Ira carregar um CSV e transforma-lo em uma lista de colunas contida em uma lista de linhas
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
@@ -106,7 +124,7 @@ namespace Learning_Vector_Quantization
                 if (!double.TryParse(trainingLine[i], out Training))
                     Console.WriteLine("ERROR: Unable to cast string to double.");
                 
-                //distance += Math.Pow((Training - neuron.peso), 2);
+                distance += Math.Pow((Training - neuron.pesos[i]), 2);
             }
 
             return Math.Sqrt(distance);

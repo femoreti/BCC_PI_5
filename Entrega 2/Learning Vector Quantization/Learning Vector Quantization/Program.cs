@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Learning_Vector_Quantization
 {
-    public struct Neuronio
+    public class Neuronio
     {
         public string currentClass;
         public List<double> pesos;
+        public int row, column;
     }
 
     class Program
@@ -31,6 +32,8 @@ namespace Learning_Vector_Quantization
                 {
                     Neuronio neuron = new Neuronio();
                     neuron.pesos = new List<double>();
+                    neuron.row = i;
+                    neuron.column = j;
                     for (int k = 0; k < totalEntries; k++) 
                         neuron.pesos.Add(rnd.NextDouble());
 
