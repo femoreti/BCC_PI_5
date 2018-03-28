@@ -38,7 +38,9 @@ namespace Learning_Vector_Quantization
             // Itera no dataset pegando cada linha
                 // Para cada linha itera nos neoronios
                     // Para cada neoronio pega a distancia entre os pesos e a linha do dataset
-            // Pega o best matching unit
+            // Pega o neoronio com a menor distancia para a linha de entrada
+            // Se esse neoronio nao tiver classe coloca a classe da linha de entrada
+            // Atualiza os pesos
         }
 
         /// <summary>
