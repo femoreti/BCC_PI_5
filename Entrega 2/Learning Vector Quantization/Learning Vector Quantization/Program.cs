@@ -9,7 +9,7 @@ namespace Learning_Vector_Quantization
     public struct Neuronio
     {
         public string currentClass;
-        public double peso;
+        public List<double> pesos;
     }
 
     class Program
@@ -21,6 +21,7 @@ namespace Learning_Vector_Quantization
             List<List<Neuronio>> Neuronios = new List<List<Neuronio>>();
             
             int sizeOfNetwork = GetSizeOfNetwork(GetTotalDistinctClasses(Dataset)); //Define o tamanho N da rede neural
+            int totalEntries = Dataset[0].Count - 1;
 
             Random rnd = new Random();
             for (int i = 0; i < sizeOfNetwork; i++) //Inicia uma nova matriz de Neuronios NxN
@@ -28,9 +29,12 @@ namespace Learning_Vector_Quantization
                 Neuronios.Add(new List<Neuronio>());
                 for (int j = 0; j < sizeOfNetwork; j++)
                 {
-                    Neuronio neuronio = new Neuronio(); //Cria um novo neuronio
-                    neuronio.peso = rnd.NextDouble(); //Define um peso inicial aleatorio entre 0 e 1
-                    Neuronios[i].Add(neuronio);
+                    Neuronio neuron = new Neuronio();
+                    neuron.pesos = new List<double>();
+                    for (int k = 0; k < totalEntries; k++) 
+                        neuron.pesos.Add(rnd.NextDouble());
+
+                    Neuronios[i].Add(neuron);
                 }
             }
 
