@@ -18,8 +18,41 @@ namespace Learning_Vector_Quantization
         }
     }
 
+    public struct NewDistance {
+        public Neuronio neuron;
+        public double distance;
+        public List<string> datasetRow;
+
+        public NewDistance(Neuronio neuron, double distance, List<string> datasetRow) 
+        {
+            this.neuron = neuron;
+            this.distance = distance;
+            this.datasetRow = datasetRow;
+        }
+    }
+
     class LVQ
     {
+        public void RunLVQ(List<List<Neuronio>> neurons, List<List<string>> dataset, float learningRate) {
+            foreach (var data in dataset)
+            {
+                List<NewDistance> distances = new List<NewDistance>();
+                foreach (var row in neurons)
+                {
+                    foreach (var neuron in row)
+                    {
+                        distances.Add(new NewDistance(neuron, NewGetEuclideanDistance(data, neuron), data));
+                    }
+                }
+
+                // Escolhe o neoronio mais proximo
+                // Usar best matching unit? Caso sim rever o método.
+                NewDistance closest = distances.OrderBy(item => item.distance).Last();
+
+                // Atualiza o peso dos neuronios vizinhos
+            }
+        }
+
         /// <summary>
         /// Ira carregar um CSV e transformalo em uma lista de colunas contida em uma lista de linhas
         /// </summary>
@@ -68,6 +101,21 @@ namespace Learning_Vector_Quantization
                     Console.WriteLine("ERROR: Unable to cast string to double.");
                 }
                 distance += Math.Pow((Training - Testing), 2);
+            }
+
+            return Math.Sqrt(distance);
+        }
+
+        public double NewGetEuclideanDistance(List<string> trainingLine, Neuronio neuron)
+        {
+            double distance = 0;
+            for (int i = 0; i < trainingLine.Count - 1; i++)
+            {
+                double Training = 0;
+                if (!double.TryParse(trainingLine[i], out Training))
+                    Console.WriteLine("ERROR: Unable to cast string to double.");
+                
+                distance += Math.Pow((Training - neuron.peso), 2);
             }
 
             return Math.Sqrt(distance);

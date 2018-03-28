@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{8712B601-38B8-457C-A32B-0F10261CA2D5}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Learning Vector Quantization/LVQ.cs">
+    <Files>
+      <File FileName="Learning Vector Quantization/Program.cs" Line="37" Column="1" />
+      <File FileName="Learning Vector Quantization/LVQ.cs" Line="49" Column="69" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Learning_220Vector_220Quantization PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>

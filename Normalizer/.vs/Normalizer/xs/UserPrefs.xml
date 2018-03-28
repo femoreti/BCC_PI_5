@@ -1,0 +1,16 @@
+﻿<Properties StartupConfiguration="{60133F1E-440B-4CE1-BACA-6FE63FBF3D9E}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Normalizer/CrossValidation.cs">
+    <Files>
+      <File FileName="Normalizer/Program.cs" Line="152" Column="41" />
+      <File FileName="Normalizer/KNN.cs" Line="151" Column="14" />
+      <File FileName="Normalizer/CrossValidation.cs" Line="27" Column="13" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Normalizer PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -34,15 +34,17 @@ namespace Learning_Vector_Quantization
                 }
             }
 
-            for (int i = 1; i <= 4; i++) //Para os 4 tipos de R
-            {
+            _lvq.RunLVQ(Neuronios, Dataset, 10);
+
+            //for (int i = 1; i <= 4; i++) //Para os 4 tipos de R
+            //{
                 //inicializa as Constantes
-                float radius = GetRadius(i, sizeOfNetwork);
-                float dp = radius;
-                double T1 = (double)1000 / Math.Log10(dp);
-                float n0 = 0.1f;
-                int t2 = 1000;
-            }
+            //    float radius = GetRadius(i, sizeOfNetwork);
+            //    float dp = radius;
+            //    double T1 = (double)1000 / Math.Log10(dp);
+            //    float n0 = 0.1f;
+            //    int t2 = 1000;
+            //}
 
             Console.ReadLine();
         }
