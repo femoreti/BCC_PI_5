@@ -44,7 +44,7 @@ namespace Learning_Vector_Quantization
 
             
 
-            for (int i = 1; i <= 4; i++) //Executa os 4 tipos de R
+            for (int i = 1; i <= 1; i++) //Executa os 4 tipos de R
             {
                 //inicializa as Constantes
                 float radius = GetRadius(i, sizeOfNetwork);
@@ -55,10 +55,27 @@ namespace Learning_Vector_Quantization
 
                 for (int n = 0; n < 500; n++) //numero de iteraçoes para aprendizado
                 {
+                    Console.Write("\rIteracao {0} / {1}... {2}%", n, 500, Math.Round(((float)(n + 1) / (float)500) * 100));
+
                     double learningRate = n0 * Math.Pow(Math.E, ((double)-n / (double)t2));
                     double dp = initial_dp * Math.Pow(Math.E, ((double)-n / t1));
 
-                    _lvq.RunLVQ(Neuronios, Dataset, dp, learningRate);
+                    _lvq.RunLVQ(Neuronios, Dataset, radius, dp, learningRate);
+                }
+
+                Console.WriteLine("Finish i = " + i.ToString() + "\n");
+                //DEBUG
+                for (int q = 0; q < sizeOfNetwork; q++) //Linhas
+                {
+                    Console.Write(q + " | ");
+                    for (int j = 0; j < sizeOfNetwork; j++) //Colunas
+                    {
+                        Console.Write("[ ");
+                        for (int k = 0; k < totalEntries; k++)
+                            Console.Write(Neuronios[q][j].pesos[k] + " ");
+                        Console.Write("] ");
+                    }
+                    Console.Write("\n");
                 }
             }
 

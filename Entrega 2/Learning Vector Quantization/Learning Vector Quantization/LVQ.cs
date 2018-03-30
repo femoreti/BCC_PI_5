@@ -33,7 +33,7 @@ namespace Learning_Vector_Quantization
 
     class LVQ
     {
-        public void RunLVQ(List<List<Neuronio>> neurons, List<List<string>> dataset, double dp, double learningRate) 
+        public void RunLVQ(List<List<Neuronio>> neurons, List<List<string>> dataset, float radius, double dp, double learningRate) 
         {
             int StartIndex = 0;
             List<List<string>> trainingSet, testingSet;
@@ -59,7 +59,7 @@ namespace Learning_Vector_Quantization
                     NewDistance closest = distances.OrderBy(item => item.distance).First();
 
                     // Atualiza Neuronio
-                    updateWeight(closest.datasetRow, closest.neuron, ref neurons, 2, dp, learningRate);
+                    updateWeight(closest.datasetRow, closest.neuron, ref neurons, radius, dp, learningRate);
 
                     // Atualiza os pesos
                     // TODO: Implementar metodo de atualizacao
@@ -67,7 +67,7 @@ namespace Learning_Vector_Quantization
             }
         }
 
-        void updateWeight(List<string> DatasetRow, Neuronio winner, ref List<List<Neuronio>> neurons, int radius, double dp, double learningRate)
+        void updateWeight(List<string> DatasetRow, Neuronio winner, ref List<List<Neuronio>> neurons, float radius, double dp, double learningRate)
         {
             if (string.IsNullOrEmpty(winner.currentClass)) //se nao possuir classe, atribui classe do row
                 neurons[winner.row][winner.column].currentClass = DatasetRow.Last();
@@ -77,6 +77,7 @@ namespace Learning_Vector_Quantization
                 for (int j = 0; j < neurons[i].Count; j++) //Percorre coluna da matriz
                 {
                     double dist = getNeuronDistance(winner, neurons[i][j]); //Calcula a distancia para o neuronio i,j
+                    double gaussian = gaussianMath(dist, dp);
 
                     if (dist <= radius) //Se a distancia eh menor q o raio, deve-se atualizar os pesos
                     {
@@ -86,12 +87,13 @@ namespace Learning_Vector_Quantization
                             {
                                 double lastWeight = neurons[i][j].pesos[w];
                                 double X = double.Parse(DatasetRow[w]);
-                                neurons[i][j].pesos[w] = lastWeight + learningRate * gaussianMath(dist, dp) * (X - lastWeight);
+                                neurons[i][j].pesos[w] = lastWeight + learningRate * gaussian * (X - lastWeight);
                             }
                             else //Classe diferente, formula diferente
                             {
-                                //double lastWeight = neurons[i][j].pesos[w];
-                                //neurons[i][j].pesos[w] = lastWeight - learningRate * gaussianMath(dist, dp) * (double.Parse(DatasetRow[w]) - lastWeight);
+                                double lastWeight = neurons[i][j].pesos[w];
+                                double X = double.Parse(DatasetRow[w]);
+                                neurons[i][j].pesos[w] = lastWeight - learningRate * gaussian * (X - lastWeight);
                             }
                         }
                     }
