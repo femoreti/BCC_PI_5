@@ -25,10 +25,11 @@ namespace Learning_Vector_Quantization
             int totalEntries = Dataset[0].Count - 1;
 
             Random rnd = new Random();
-            for (int i = 0; i < sizeOfNetwork; i++) //Inicia uma nova matriz de Neuronios NxN
+            //Inicia uma nova matriz de Neuronios NxN
+            for (int i = 0; i < sizeOfNetwork; i++) //Linhas
             {
                 Neuronios.Add(new List<Neuronio>());
-                for (int j = 0; j < sizeOfNetwork; j++)
+                for (int j = 0; j < sizeOfNetwork; j++) //Colunas
                 {
                     Neuronio neuron = new Neuronio();
                     neuron.pesos = new List<double>();
@@ -43,15 +44,23 @@ namespace Learning_Vector_Quantization
 
             _lvq.RunLVQ(Neuronios, Dataset, 10);
 
-            //for (int i = 1; i <= 4; i++) //Para os 4 tipos de R
-            //{
+            for (int i = 1; i <= 4; i++) //Executa os 4 tipos de R
+            {
                 //inicializa as Constantes
-            //    float radius = GetRadius(i, sizeOfNetwork);
-            //    float dp = radius;
-            //    double T1 = (double)1000 / Math.Log10(dp);
-            //    float n0 = 0.1f;
-            //    int t2 = 1000;
-            //}
+                float radius = GetRadius(i, sizeOfNetwork);
+                float initial_dp = radius;
+                double t1 = (Math.Log10(initial_dp) != 0) ? (double)1000 / Math.Log10(initial_dp) : 1;
+                float n0 = 0.1f;
+                int t2 = 1000;
+
+                for (int n = 0; n < 500; n++) //numero de iteraçoes para aprendizado
+                {
+                    double learningRate = n0 * Math.Pow(Math.E, ((double)-n / (double)t2));
+                    double dp = initial_dp * Math.Pow(Math.E, ((double)-n / t1));
+
+                    Console.WriteLine(dp);
+                }
+            }
 
             Console.ReadLine();
         }
