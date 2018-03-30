@@ -81,12 +81,12 @@ namespace Learning_Vector_Quantization
 
                     if (dist <= radius) //Se a distancia eh menor q o raio, deve-se atualizar os pesos
                     {
-                        if (string.IsNullOrEmpty(neurons[i][j].currentClass)) //se nao possuir classe, atribui classe do row
-                            neurons[neurons[i][j].row][neurons[i][j].column].currentClass = DatasetRow.Last();
+                        //if (string.IsNullOrEmpty(neurons[i][j].currentClass)) //se nao possuir classe, atribui classe do row
+                        //    neurons[neurons[i][j].row][neurons[i][j].column].currentClass = DatasetRow.Last();
 
                         for (int w = 0; w < neurons[i][j].pesos.Count; w++)
                         {
-                            if (neurons[i][j].currentClass == DatasetRow.Last()) //Eh a mesma classe que a escolhida
+                            if (winner.currentClass == DatasetRow.Last()) //Eh a mesma classe que a escolhida
                             {
                                 double lastWeight = neurons[i][j].pesos[w];
                                 double X = double.Parse(DatasetRow[w]);
