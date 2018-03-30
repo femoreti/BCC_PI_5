@@ -44,8 +44,9 @@ namespace Learning_Vector_Quantization
 
             
 
-            for (int i = 1; i <= 1; i++) //Executa os 4 tipos de R
+            for (int i = 1; i <= 4; i++) //Executa os 4 tipos de R
             {
+                Console.Write("Iniciando, i = {0}\n", i.ToString());
                 //inicializa as Constantes
                 float radius = GetRadius(i, sizeOfNetwork);
                 float initial_dp = radius;
@@ -55,7 +56,7 @@ namespace Learning_Vector_Quantization
 
                 for (int n = 0; n < 500; n++) //numero de iteraçoes para aprendizado
                 {
-                    Console.Write("\rIteracao {0} / {1}... {2}%", n, 500, Math.Round(((float)(n + 1) / (float)500) * 100));
+                    Console.Write("\rIteracao {0} / {1}... {2}%", n+1, 500, Math.Round(((float)(n + 1) / (float)500) * 100));
 
                     double learningRate = n0 * Math.Pow(Math.E, ((double)-n / (double)t2));
                     double dp = initial_dp * Math.Pow(Math.E, ((double)-n / t1));
@@ -63,19 +64,19 @@ namespace Learning_Vector_Quantization
                     _lvq.RunLVQ(Neuronios, Dataset, radius, dp, learningRate);
                 }
 
-                Console.WriteLine("Finish i = " + i.ToString() + "\n");
+                Console.WriteLine("\nFinish R = {0}\n", radius);
                 //DEBUG
                 for (int q = 0; q < sizeOfNetwork; q++) //Linhas
                 {
                     Console.Write(q + " | ");
                     for (int j = 0; j < sizeOfNetwork; j++) //Colunas
                     {
-                        Console.Write("[ ");
-                        for (int k = 0; k < totalEntries; k++)
-                            Console.Write(Neuronios[q][j].pesos[k] + " ");
+                        Console.Write("[" + Neuronios[q][j].currentClass);
+                        //for (int k = 0; k < totalEntries; k++)
+                        //    Console.Write(Neuronios[q][j].pesos[k] + " ");
                         Console.Write("] ");
                     }
-                    Console.Write("\n");
+                    Console.Write("\n\n");
                 }
             }
 
