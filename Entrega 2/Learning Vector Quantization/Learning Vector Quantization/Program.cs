@@ -57,8 +57,6 @@ namespace Learning_Vector_Quantization
                 {
                     double learningRate = n0 * Math.Pow(Math.E, ((double)-n / (double)t2));
                     double dp = initial_dp * Math.Pow(Math.E, ((double)-n / t1));
-
-                    Console.WriteLine(dp);
                 }
             }
 
