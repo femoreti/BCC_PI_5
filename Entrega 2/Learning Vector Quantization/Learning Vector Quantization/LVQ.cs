@@ -109,7 +109,7 @@ namespace Learning_Vector_Quantization
         /// <returns></returns>
         double gaussianMath(double dist, double dp)
         {
-            return Math.Pow(Math.E, Math.Pow(dist, 2) / Math.Pow((2 * dp), 2));
+            return Math.Pow(Math.E, Math.Pow(dist, 2) / (2 * Math.Pow(dp, 2)));
         }
 
         public int GetDatasets(int StartIndex, List<List<string>> Dataset, out List<List<string>> testingSet, out List<List<String>> trainingSet) {
