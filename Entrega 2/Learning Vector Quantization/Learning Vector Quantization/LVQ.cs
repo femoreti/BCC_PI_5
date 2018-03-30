@@ -101,6 +101,17 @@ namespace Learning_Vector_Quantization
             return Math.Sqrt(Math.Pow(winner.row - neighbor.row, 2) + Math.Pow(winner.column - neighbor.column, 2));
         }
 
+        /// <summary>
+        /// Calcula a 
+        /// </summary>
+        /// <param name="dist"></param>
+        /// <param name="dp"></param>
+        /// <returns></returns>
+        double gaussianMath(double dist, double dp)
+        {
+            return Math.Pow(Math.E, Math.Pow(dist, 2) / Math.Pow((2 * dp), 2));
+        }
+
         public int GetDatasets(int StartIndex, List<List<string>> Dataset, out List<List<string>> testingSet, out List<List<String>> trainingSet) {
             testingSet = new List<List<string>>();
             trainingSet = new List<List<string>>();
