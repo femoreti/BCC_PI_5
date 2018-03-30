@@ -42,7 +42,7 @@ namespace Learning_Vector_Quantization
                 }
             }
 
-            _lvq.RunLVQ(Neuronios, Dataset, 10);
+            _lvq.RunLVQ(Neuronios, Dataset, 5, 10);
 
             for (int i = 1; i <= 4; i++) //Executa os 4 tipos de R
             {
