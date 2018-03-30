@@ -1,8 +1,9 @@
 ﻿<Properties StartupConfiguration="{8712B601-38B8-457C-A32B-0F10261CA2D5}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Learning Vector Quantization/LVQ.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Entrega 1/Normalizer/Program.cs">
     <Files>
-      <File FileName="Learning Vector Quantization/Program.cs" Line="9" Column="17" />
-      <File FileName="Learning Vector Quantization/LVQ.cs" Line="41" Column="56" />
+      <File FileName="Learning Vector Quantization/Program.cs" Line="45" Column="39" />
+      <File FileName="Learning Vector Quantization/LVQ.cs" Line="37" Column="10" />
+      <File FileName="../../Entrega 1/Normalizer/Program.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

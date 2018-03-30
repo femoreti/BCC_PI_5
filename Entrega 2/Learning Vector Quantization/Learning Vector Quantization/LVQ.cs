@@ -35,30 +35,55 @@ namespace Learning_Vector_Quantization
     {
         public void RunLVQ(List<List<Neuronio>> neurons, List<List<string>> dataset, float learningRate) 
         {
-            // Itera no dataset pegando cada linha
-            foreach (var line in dataset)
+            int StartIndex = 0;
+            List<List<string>> trainingSet, testingSet;
+            while (StartIndex < dataset.Count) 
             {
-                List<NewDistance> distances = new List<NewDistance>();
-				// Para cada linha itera nos neuronios
-                foreach (var neuronLine in neurons)
+                StartIndex = GetDatasets(StartIndex, dataset, out testingSet, out trainingSet);
+
+                // Itera no dataset pegando cada linha
+                foreach (var line in trainingSet)
                 {
-					// Para cada neuronio pega a distancia entre os pesos e a linha do dataset
-                    foreach (var neuron in neuronLine)
+                    List<NewDistance> distances = new List<NewDistance>();
+                    // Para cada linha itera nos neuronios
+                    foreach (var neuronLine in neurons)
                     {
-                        distances.Add(new NewDistance(neuron, NewGetEuclideanDistance(line, neuron), line));
+                        // Para cada neuronio pega a distancia entre os pesos e a linha do dataset
+                        foreach (var neuron in neuronLine)
+                        {
+                            distances.Add(new NewDistance(neuron, NewGetEuclideanDistance(line, neuron), line));
+                        }
                     }
+
+                    // Pega o neuronio com a menor distancia para a linha de entrada
+                    NewDistance closest = distances.OrderBy(item => item.distance).First();
+
+                    // Se esse neuronio nao tiver classe coloca a classe da linha de entrada
+                    if (string.IsNullOrEmpty(closest.neuron.currentClass))
+                        neurons[closest.neuron.row][closest.neuron.column].currentClass = closest.datasetRow.Last();
+
+                    // Atualiza os pesos
+                    // TODO: Implementar metodo de atualizacao
                 }
-
-                // Pega o neuronio com a menor distancia para a linha de entrada
-                NewDistance closest = distances.OrderBy(item => item.distance).First();
-
-                // Se esse neuronio nao tiver classe coloca a classe da linha de entrada
-                if (string.IsNullOrEmpty(closest.neuron.currentClass))
-                    neurons[closest.neuron.row][closest.neuron.column].currentClass = closest.datasetRow.Last();
-                
-				// Atualiza os pesos
-                // TODO: Implementar metodo de atualizacao
             }
+        }
+
+        public int GetDatasets(int StartIndex, List<List<string>> Dataset, out List<List<string>> testingSet, out List<List<String>> trainingSet) {
+            testingSet = new List<List<string>>();
+            trainingSet = new List<List<string>>();
+
+            // Guarda o numero do ultimo index a ser pego
+            int EndIndex = (Dataset.Count / 10) + StartIndex;
+            EndIndex = EndIndex > Dataset.Count ? Dataset.Count : EndIndex;
+
+            // Guarda o dataset de teste.
+            testingSet = Dataset.GetRange(StartIndex, EndIndex - StartIndex);
+
+            // Guarda o dataset de treino
+            if (StartIndex > 0) { trainingSet = Dataset.GetRange(0, StartIndex - 1); }
+            if (EndIndex < Dataset.Count) { trainingSet.AddRange(Dataset.GetRange((EndIndex + 1), (Dataset.Count - (EndIndex + 1)))); }
+
+            return StartIndex = EndIndex + 1;
         }
 
         /// <summary>
