@@ -33,7 +33,7 @@ namespace Learning_Vector_Quantization
 
     class LVQ
     {
-        public void RunLVQ(List<List<Neuronio>> neurons, List<List<string>> dataset, int N, double learningRate) 
+        public void RunLVQ(List<List<Neuronio>> neurons, List<List<string>> dataset, double dp, double learningRate) 
         {
             int StartIndex = 0;
             List<List<string>> trainingSet, testingSet;
@@ -59,7 +59,7 @@ namespace Learning_Vector_Quantization
                     NewDistance closest = distances.OrderBy(item => item.distance).First();
 
                     // Atualiza Neuronio
-                    neurons[closest.neuron.row][closest.neuron.column] = updateWeight(closest.datasetRow, closest.neuron, ref neurons, 2, N, learningRate);
+                    updateWeight(closest.datasetRow, closest.neuron, ref neurons, 2, dp, learningRate);
 
                     // Atualiza os pesos
                     // TODO: Implementar metodo de atualizacao
@@ -67,33 +67,36 @@ namespace Learning_Vector_Quantization
             }
         }
 
-        Neuronio updateWeight(List<string> DatasetRow, Neuronio winner, ref List<List<Neuronio>> neurons, int radius, int n, double learningRate)
+        void updateWeight(List<string> DatasetRow, Neuronio winner, ref List<List<Neuronio>> neurons, int radius, double dp, double learningRate)
         {
-            Neuronio neuronio = winner;
-            if (string.IsNullOrEmpty(neuronio.currentClass)) //se nao possuir classe, atribui classe do row
-                neuronio.currentClass = DatasetRow.Last();
+            if (string.IsNullOrEmpty(winner.currentClass)) //se nao possuir classe, atribui classe do row
+                neurons[winner.row][winner.column].currentClass = DatasetRow.Last();
 
             for (int i = 0; i < neurons.Count; i++) //Percorre linha da matriz
             {
                 for (int j = 0; j < neurons[i].Count; j++) //Percorre coluna da matriz
                 {
-                    double dist = getNeuronDistance(neuronio, neurons[i][j]); //Calcula a distancia para o neuronio i,j
+                    double dist = getNeuronDistance(winner, neurons[i][j]); //Calcula a distancia para o neuronio i,j
 
                     if (dist <= radius) //Se a distancia eh menor q o raio, deve-se atualizar os pesos
                     {
-                        if (neuronio.currentClass == DatasetRow.Last()) //Eh a mesma classe que a escolhida
+                        for (int w = 0; w < neurons[i][j].pesos.Count; w++)
                         {
-
-                        }
-                        else //Classe diferente, formula diferente
-                        {
-
+                            if (winner.currentClass == DatasetRow.Last()) //Eh a mesma classe que a escolhida
+                            {
+                                double lastWeight = neurons[i][j].pesos[w];
+                                double X = double.Parse(DatasetRow[w]);
+                                neurons[i][j].pesos[w] = lastWeight + learningRate * gaussianMath(dist, dp) * (X - lastWeight);
+                            }
+                            else //Classe diferente, formula diferente
+                            {
+                                //double lastWeight = neurons[i][j].pesos[w];
+                                //neurons[i][j].pesos[w] = lastWeight - learningRate * gaussianMath(dist, dp) * (double.Parse(DatasetRow[w]) - lastWeight);
+                            }
                         }
                     }
                 }
             }
-
-            return neuronio; //retorna neuronio atualizado
         }
 
         double getNeuronDistance(Neuronio winner, Neuronio neighbor)
