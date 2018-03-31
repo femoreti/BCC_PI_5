@@ -17,10 +17,17 @@ namespace Learning_Vector_Quantization
     {
         static void Main(string[] args)
         {
+            ExecuteLVQ(@"../../Raw Data/Normalized/iris-Normalized.csv");
+        }
+
+        static void ExecuteLVQ(string path)
+        {
+            string fileName = path.Split('/').Last().Split('-')[0];
+
             LVQ _lvq = new LVQ();
-            List<List<string>> Dataset = _lvq.LoadCSVData(@"../../Raw Data/Normalized/iris-Normalized.csv");
+            List<List<string>> Dataset = _lvq.LoadCSVData(path);
             List<List<Neuronio>> Neuronios = new List<List<Neuronio>>();
-            
+
             int sizeOfNetwork = GetSizeOfNetwork(GetTotalDistinctClasses(Dataset)); //Define o tamanho N da rede neural
             int totalEntries = Dataset[0].Count - 1;
 
@@ -28,62 +35,105 @@ namespace Learning_Vector_Quantization
             {
                 Console.Write("Iniciando, i = {0}\n", i.ToString());
 
-                Random rnd = new Random();
-                Neuronios.Clear();
-                //Inicia uma nova matriz de Neuronios NxN
-                for (int k = 0; k < sizeOfNetwork; k++) //Linhas
+                int StartIndex = 0;
+                List<List<string>> trainingSet, testingSet;
+                List<float> listOfErroAmostral = new List<float>();
+                int etapa = 1;
+                while (StartIndex < Dataset.Count) //REVER, acredito q esteja no local errado
                 {
-                    Neuronios.Add(new List<Neuronio>());
-                    for (int j = 0; j < sizeOfNetwork; j++) //Colunas
+                    StartIndex = _lvq.GetDatasets(StartIndex, Dataset, out testingSet, out trainingSet);
+
+                    Random rnd = new Random();
+                    Neuronios.Clear();
+                    //Inicia uma nova matriz de Neuronios NxN
+                    for (int k = 0; k < sizeOfNetwork; k++) //Linhas
                     {
-                        Neuronio neuron = new Neuronio();
-                        neuron.pesos = new List<double>();
-                        neuron.row = k;
-                        neuron.column = j;
-                        for (int l = 0; l < totalEntries; l++)
-                            neuron.pesos.Add(rnd.NextDouble());
+                        Neuronios.Add(new List<Neuronio>());
+                        for (int j = 0; j < sizeOfNetwork; j++) //Colunas
+                        {
+                            Neuronio neuron = new Neuronio();
+                            neuron.pesos = new List<double>();
+                            neuron.currentClass = string.Empty;
+                            neuron.row = k;
+                            neuron.column = j;
+                            for (int l = 0; l < totalEntries; l++)
+                                neuron.pesos.Add(rnd.NextDouble());
 
-                        Neuronios[k].Add(neuron);
+                            Neuronios[k].Add(neuron);
+                        }
                     }
-                }
 
-                //inicializa as Constantes
-                float radius = GetRadius(i, sizeOfNetwork);
-                float initial_dp = radius;
-                double t1 = (Math.Log10(initial_dp) != 0) ? (double)1000 / Math.Log10(initial_dp) : 1;
-                float n0 = 0.1f;
-                int t2 = 1000;
+                    //inicializa as Constantes
+                    float radius = GetRadius(i, sizeOfNetwork);
+                    float initial_dp = radius;
+                    double t1 = (Math.Log10(initial_dp) != 0) ? (double)1000 / Math.Log10(initial_dp) : 1;
+                    float n0 = 0.1f;
+                    int t2 = 1000;
 
-                for (int n = 0; n < 500; n++) //numero de iteraçoes para aprendizado
-                {
-                    Console.Write("\rIteracao {0} / {1}... {2}%", n+1, 500, Math.Round(((float)(n + 1) / (float)500) * 100));
-
-                    double learningRate = n0 * Math.Pow(Math.E, ((double)-n / (double)t2));
-                    if (learningRate < 0.01f)
-                        learningRate = 0.01f;
-                    double dp = initial_dp * Math.Pow(Math.E, ((double)-n / t1));
-
-                    _lvq.RunLVQ(Neuronios, Dataset, radius, dp, learningRate);
-                }
-
-                Console.WriteLine("\nFinish R = {0}\n", radius);
-                //DEBUG
-                for (int q = 0; q < sizeOfNetwork; q++) //Linhas
-                {
-                    Console.Write(q + " | ");
-                    for (int j = 0; j < sizeOfNetwork; j++) //Colunas
+                    for (int n = 0; n < 500; n++) //numero de iteraçoes para aprendizado
                     {
-                        if(!string.IsNullOrEmpty(Neuronios[q][j].currentClass))
-                            Console.Write("[" + Neuronios[q][j].currentClass);
-                        else
-                            Console.Write("[ ");
-                        //for (int k = 0; k < totalEntries; k++)
-                        //    Console.Write(Neuronios[q][j].pesos[k] + " ");
-                        Console.Write("] ");
+                        Console.Write("\retapa {0} Iteracao {1} / {2}... {3}%", etapa, n + 1, 500, Math.Round(((float)(n + 1) / (float)500) * 100));
+
+                        double learningRate = n0 * Math.Pow(Math.E, ((double)-n / (double)t2));
+                        if (learningRate < 0.01f)
+                            learningRate = 0.01f;
+                        double dp = initial_dp * Math.Pow(Math.E, ((double)-n / t1));
+
+                        _lvq.RunLVQ(Neuronios, Dataset, radius, dp, learningRate);
                     }
-                    Console.Write("\n");
+
+
+                    List<string> predictions = new List<string>();
+                    for (int x = 0; x < testingSet.Count; x++)
+                    {
+                        string result = string.Empty;
+
+                        NewDistance prediction = _lvq.BMU(Neuronios, testingSet[x]);
+
+                        predictions.Add(prediction.neuron.currentClass);
+                    }
+
+                    // Guarda erro amostral da linha
+                    listOfErroAmostral.Add(CrossValidation.erroAmostral(testingSet, predictions));
+                    CrossValidation.prepareConfusionMatrix(Dataset, testingSet, predictions);
+
+                    if (etapa == 10)
+                    {
+                        string heatmap = string.Empty;
+                        Console.WriteLine("Para R = {0}\n", radius);
+                        //DEBUG
+                        heatmap += "HEATMAP\n";
+                        for (int q = 0; q < sizeOfNetwork; q++) //Linhas
+                        {
+                            for (int j = 0; j < sizeOfNetwork; j++) //Colunas
+                            {
+                                if (!string.IsNullOrEmpty(Neuronios[q][j].currentClass))
+                                    heatmap += ("" + Neuronios[q][j].currentClass);
+                                else
+                                    heatmap += (" ");
+                                //for (int k = 0; k < totalEntries; k++)
+                                //    Console.Write(Neuronios[q][j].pesos[k] + " ");
+                                heatmap += ("\t");
+                            }
+                            heatmap += ("\n");
+                        }
+                        heatmap += ("\n");
+                        Console.WriteLine(heatmap);
+                        FileSystem.SaveFileContents(heatmap, @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Heatmap-" + i.ToString() + ".txt");
+                    }
+                    etapa++;
                 }
-                Console.Write("\n");
+
+                if (CrossValidation.binaryConfusionMatrix.Count > 0) //Se for matriz binaria ira salvar os dados aqui
+                {
+                    FileSystem.SaveFileContents(CrossValidation.GeraMatrizBinaria(), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Matriz-Binaria-Confusao-" + i.ToString() + ".txt");
+                }
+                if (CrossValidation.multiClassConfusionMatrix.Count > 0) //Se for matriz multi-classe irá salvar aqui
+                {
+                    FileSystem.SaveFileContents(CrossValidation.GeraMatrizMultiClasse(), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Matriz-MultiClasse-Confusao-" + i.ToString() + ".txt");
+                }
+
+                CrossValidation.erroDeValidacaoCruzada(listOfErroAmostral);
             }
 
             Console.ReadLine();

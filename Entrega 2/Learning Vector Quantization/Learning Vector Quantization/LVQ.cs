@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Learning_Vector_Quantization
 {
-    public struct Distance
-    {
-        public List<string> codebook;
-        public double dist;
+    //public struct Distance
+    //{
+    //    public List<string> codebook;
+    //    public double dist;
 
-        public Distance(List<string> a, double b)
-        {
-            codebook = a;
-            dist = b;
-        }
-    }
+    //    public Distance(List<string> a, double b)
+    //    {
+    //        codebook = a;
+    //        dist = b;
+    //    }
+    //}
 
     public struct NewDistance {
         public Neuronio neuron;
@@ -33,13 +33,13 @@ namespace Learning_Vector_Quantization
 
     class LVQ
     {
-        public void RunLVQ(List<List<Neuronio>> neurons, List<List<string>> dataset, float radius, double dp, double learningRate) 
+        public void RunLVQ(List<List<Neuronio>> neurons, List<List<string>> trainingSet, float radius, double dp, double learningRate) 
         {
-            int StartIndex = 0;
-            List<List<string>> trainingSet, testingSet;
+            //int StartIndex = 0;
+            //List<List<string>> trainingSet, testingSet;
             //while (StartIndex < dataset.Count) //REVER, acredito q esteja no local errado
             //{
-            StartIndex = GetDatasets(StartIndex, dataset, out testingSet, out trainingSet);
+            //StartIndex = GetDatasets(StartIndex, dataset, out testingSet, out trainingSet);
 
             // Itera no dataset pegando cada linha
                 foreach (List<string> line in trainingSet)
@@ -56,7 +56,13 @@ namespace Learning_Vector_Quantization
             //}
         }
 
-        NewDistance BMU(List<List<Neuronio>> neurons, List<string> line)
+        /// <summary>
+        /// Calcula a distancia entre os neuronios e encontra o que mais se aproxima
+        /// </summary>
+        /// <param name="neurons"></param>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        public NewDistance BMU(List<List<Neuronio>> neurons, List<string> line)
         {
             List<NewDistance> distances = new List<NewDistance>();
             // Para cada linha itera nos neuronios
