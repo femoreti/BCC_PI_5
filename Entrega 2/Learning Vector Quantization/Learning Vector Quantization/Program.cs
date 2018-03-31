@@ -73,7 +73,10 @@ namespace Learning_Vector_Quantization
                     Console.Write(q + " | ");
                     for (int j = 0; j < sizeOfNetwork; j++) //Colunas
                     {
-                        Console.Write("[" + Neuronios[q][j].currentClass);
+                        if(!string.IsNullOrEmpty(Neuronios[q][j].currentClass))
+                            Console.Write("[" + Neuronios[q][j].currentClass);
+                        else
+                            Console.Write("[ ");
                         //for (int k = 0; k < totalEntries; k++)
                         //    Console.Write(Neuronios[q][j].pesos[k] + " ");
                         Console.Write("] ");

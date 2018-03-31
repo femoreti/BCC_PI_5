@@ -37,26 +37,15 @@ namespace Learning_Vector_Quantization
         {
             int StartIndex = 0;
             List<List<string>> trainingSet, testingSet;
-            while (StartIndex < dataset.Count) 
-            {
-                StartIndex = GetDatasets(StartIndex, dataset, out testingSet, out trainingSet);
+            //while (StartIndex < dataset.Count) //REVER, acredito q esteja no local errado
+            //{
+            StartIndex = GetDatasets(StartIndex, dataset, out testingSet, out trainingSet);
 
-                // Itera no dataset pegando cada linha
-                foreach (var line in trainingSet)
+            // Itera no dataset pegando cada linha
+                foreach (List<string> line in trainingSet)
                 {
-                    List<NewDistance> distances = new List<NewDistance>();
-                    // Para cada linha itera nos neuronios
-                    foreach (var neuronLine in neurons)
-                    {
-                        // Para cada neuronio pega a distancia entre os pesos e a linha do dataset
-                        foreach (var neuron in neuronLine)
-                        {
-                            distances.Add(new NewDistance(neuron, NewGetEuclideanDistance(line, neuron), line));
-                        }
-                    }
-
                     // Pega o neuronio com a menor distancia para a linha de entrada / BMU
-                    NewDistance closest = distances.OrderBy(item => item.distance).First();
+                    NewDistance closest = BMU(neurons, line);
 
                     // Atualiza Neuronio
                     updateWeight(closest.datasetRow, closest.neuron, ref neurons, radius, dp, learningRate);
@@ -64,7 +53,24 @@ namespace Learning_Vector_Quantization
                     // Atualiza os pesos
                     // TODO: Implementar metodo de atualizacao
                 }
+            //}
+        }
+
+        NewDistance BMU(List<List<Neuronio>> neurons, List<string> line)
+        {
+            List<NewDistance> distances = new List<NewDistance>();
+            // Para cada linha itera nos neuronios
+            foreach (var neuronLine in neurons)
+            {
+                // Para cada neuronio pega a distancia entre os pesos e a linha do dataset
+                foreach (var neuron in neuronLine)
+                {
+                    distances.Add(new NewDistance(neuron, NewGetEuclideanDistance(line, neuron), line));
+                }
             }
+
+            // Pega o neuronio com a menor distancia para a linha de entrada / BMU
+            return distances.OrderBy(item => item.distance).First();
         }
 
         void updateWeight(List<string> DatasetRow, Neuronio winner, ref List<List<Neuronio>> neurons, float radius, double dp, double learningRate)
