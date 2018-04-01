@@ -98,18 +98,18 @@ namespace Learning_Vector_Quantization
 
                         for (int w = 0; w < neurons[i][j].pesos.Count; w++)
                         {
-                            if (winner.currentClass == DatasetRow.Last()) //Eh a mesma classe que a escolhida
-                            {
+                            //if (winner.currentClass == DatasetRow.Last()) //Eh a mesma classe que a escolhida
+                            //{
                                 double lastWeight = neurons[i][j].pesos[w];
                                 double X = double.Parse(DatasetRow[w]);
                                 neurons[i][j].pesos[w] = lastWeight + learningRate * gaussian * (X - lastWeight);
-                            }
-                            else //Classe diferente, formula diferente
-                            {
-                                double lastWeight = neurons[i][j].pesos[w];
-                                double X = double.Parse(DatasetRow[w]);
-                                neurons[i][j].pesos[w] = lastWeight - learningRate * gaussian * (X - lastWeight);
-                            }
+                            //}
+                            //else //Classe diferente, formula diferente
+                            //{
+                            //    double lastWeight = neurons[i][j].pesos[w];
+                            //    double X = double.Parse(DatasetRow[w]);
+                            //    neurons[i][j].pesos[w] = lastWeight - learningRate * gaussian * (X - lastWeight);
+                            //}
                         }
                     }
                 }
