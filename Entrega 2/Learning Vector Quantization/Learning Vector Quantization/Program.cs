@@ -11,13 +11,19 @@ namespace Learning_Vector_Quantization
         public string currentClass;
         public List<double> pesos;
         public int row, column;
+        public int color, totalColorsSet;
     }
 
     class Program
     {
         static void Main(string[] args)
         {
-            ExecuteLVQ(@"../../Raw Data/Normalized/iris-Normalized.csv");
+            //ExecuteLVQ(@"../../Raw Data/Normalized/abalone-Normalized.csv");
+            //ExecuteLVQ(@"../../Raw Data/Normalized/adult-Normalized.csv");
+            //ExecuteLVQ(@"../../Raw Data/Normalized/iris-Normalized.csv");
+            ExecuteLVQ(@"../../Raw Data/Normalized/wdbc-Normalized.csv");
+            //ExecuteLVQ(@"../../Raw Data/Normalized/wine-Normalized.csv");
+            //ExecuteLVQ(@"../../Raw Data/Normalized/winequality-red-Normalized.csv");
         }
 
         static void ExecuteLVQ(string path)
@@ -31,6 +37,28 @@ namespace Learning_Vector_Quantization
             int sizeOfNetwork = GetSizeOfNetwork(GetTotalDistinctClasses(Dataset)); //Define o tamanho N da rede neural
             int totalEntries = Dataset[0].Count - 1;
 
+            Random rnd = new Random();
+            Neuronios.Clear();
+            //Inicia uma nova matriz de Neuronios NxN
+            for (int k = 0; k < sizeOfNetwork; k++) //Linhas
+            {
+                Neuronios.Add(new List<Neuronio>());
+                for (int j = 0; j < sizeOfNetwork; j++) //Colunas
+                {
+                    Neuronio neuron = new Neuronio();
+                    neuron.pesos = new List<double>();
+                    neuron.currentClass = string.Empty;
+                    neuron.row = k;
+                    neuron.column = j;
+                    neuron.totalColorsSet = 1;
+                    for (int l = 0; l < totalEntries; l++)
+                        neuron.pesos.Add(rnd.NextDouble());
+
+                    Neuronios[k].Add(neuron);
+                }
+            }
+
+            string CrossValidationErrors = string.Empty;
             for (int i = 1; i <= 4; i++) //Executa os 4 tipos de R
             {
                 Console.Write("Iniciando, i = {0}\n", i.ToString());
@@ -42,26 +70,6 @@ namespace Learning_Vector_Quantization
                 while (StartIndex < Dataset.Count) //REVER, acredito q esteja no local errado
                 {
                     StartIndex = _lvq.GetDatasets(StartIndex, Dataset, out testingSet, out trainingSet);
-
-                    Random rnd = new Random();
-                    Neuronios.Clear();
-                    //Inicia uma nova matriz de Neuronios NxN
-                    for (int k = 0; k < sizeOfNetwork; k++) //Linhas
-                    {
-                        Neuronios.Add(new List<Neuronio>());
-                        for (int j = 0; j < sizeOfNetwork; j++) //Colunas
-                        {
-                            Neuronio neuron = new Neuronio();
-                            neuron.pesos = new List<double>();
-                            neuron.currentClass = string.Empty;
-                            neuron.row = k;
-                            neuron.column = j;
-                            for (int l = 0; l < totalEntries; l++)
-                                neuron.pesos.Add(rnd.NextDouble());
-
-                            Neuronios[k].Add(neuron);
-                        }
-                    }
 
                     //inicializa as Constantes
                     float radius = GetRadius(i, sizeOfNetwork);
@@ -99,8 +107,8 @@ namespace Learning_Vector_Quantization
 
                     if (etapa == 10)
                     {
-                        string heatmap = string.Empty;
                         Console.WriteLine("Para R = {0}\n", radius);
+                        string heatmap = string.Empty;
                         //DEBUG
                         heatmap += "HEATMAP\n";
                         for (int q = 0; q < sizeOfNetwork; q++) //Linhas
@@ -119,7 +127,7 @@ namespace Learning_Vector_Quantization
                         }
                         heatmap += ("\n");
                         Console.WriteLine(heatmap);
-                        FileSystem.SaveFileContents(heatmap, @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Heatmap-" + i.ToString() + ".txt");
+                        FileSystem.SaveFileContents(GenerateHeatmap(Dataset, Neuronios, _lvq), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Heatmap-" + i.ToString() + ".txt");
                     }
                     etapa++;
                 }
@@ -133,10 +141,41 @@ namespace Learning_Vector_Quantization
                     FileSystem.SaveFileContents(CrossValidation.GeraMatrizMultiClasse(), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Matriz-MultiClasse-Confusao-" + i.ToString() + ".txt");
                 }
 
-                CrossValidation.erroDeValidacaoCruzada(listOfErroAmostral);
+                CrossValidationErrors += "Erro de validação cruzada para R = " + GetRadius(i, sizeOfNetwork).ToString() + "\t" + (CrossValidation.erroDeValidacaoCruzada(listOfErroAmostral) * 100) + "%\n";
             }
 
+            FileSystem.SaveFileContents(CrossValidationErrors, @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-CROSSVALIDATION REPORT.txt");
+
             Console.ReadLine();
+        }
+
+        static string GenerateHeatmap(List<List<string>> Dataset, List<List<Neuronio>> neuronios, LVQ lvq)
+        {
+            for (int p = 0; p < Dataset.Count; p++)
+            {
+                Neuronio bmu = lvq.BMU(neuronios, Dataset[p]).neuron;
+                int line = bmu.row;
+                int column = bmu.column;
+                neuronios[line][column].color += int.Parse(Dataset[p].Last()) + 1;
+                neuronios[line][column].totalColorsSet++;
+            }
+
+            string heatmap = string.Empty;
+            heatmap += "HEATMAP\n";
+            for (int q = 0; q < neuronios.Count; q++) //Linhas
+            {
+                for (int j = 0; j < neuronios[q].Count; j++) //Colunas
+                {
+                    heatmap += ("" + (float)neuronios[q][j].color / (float)neuronios[q][j].totalColorsSet);
+                    heatmap += ("\t");
+                }
+                heatmap += ("\n");
+            }
+            heatmap += ("\n");
+
+            heatmap = heatmap.Replace('.', ',');
+
+            return heatmap;
         }
 
         static int GetTotalDistinctClasses(List<List<string>> Dataset)

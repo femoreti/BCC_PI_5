@@ -89,27 +89,35 @@ namespace Learning_Vector_Quantization
                 for (int j = 0; j < neurons[i].Count; j++) //Percorre coluna da matriz
                 {
                     double dist = getNeuronDistance(winner, neurons[i][j]); //Calcula a distancia para o neuronio i,j
-                    double gaussian = gaussianMath(dist, dp);
 
                     if (dist <= radius) //Se a distancia eh menor q o raio, deve-se atualizar os pesos
                     {
                         //if (string.IsNullOrEmpty(neurons[i][j].currentClass)) //se nao possuir classe, atribui classe do row
                         //    neurons[neurons[i][j].row][neurons[i][j].column].currentClass = DatasetRow.Last();
 
+                        double gaussian = gaussianMath(dist, dp);
                         for (int w = 0; w < neurons[i][j].pesos.Count; w++)
                         {
-                            //if (winner.currentClass == DatasetRow.Last()) //Eh a mesma classe que a escolhida
-                            //{
-                                double lastWeight = neurons[i][j].pesos[w];
-                                double X = double.Parse(DatasetRow[w]);
-                                neurons[i][j].pesos[w] = lastWeight + learningRate * gaussian * (X - lastWeight);
-                            //}
-                            //else //Classe diferente, formula diferente
-                            //{
-                            //    double lastWeight = neurons[i][j].pesos[w];
-                            //    double X = double.Parse(DatasetRow[w]);
-                            //    neurons[i][j].pesos[w] = lastWeight - learningRate * gaussian * (X - lastWeight);
-                            //}
+                            double lastWeight = neurons[i][j].pesos[w];
+                            double X = double.Parse(DatasetRow[w]);
+                            double newWeight = 0;
+
+                            if (winner.currentClass == DatasetRow.Last()) //Eh a mesma classe que a escolhida
+                            {
+                                newWeight = lastWeight + learningRate * gaussian * (X - lastWeight);
+                            }
+                            else //Classe diferente, formula diferente
+                            {
+                                newWeight = lastWeight - learningRate * gaussian * (X - lastWeight);
+                            }
+
+                            if (double.IsInfinity(newWeight) || double.IsNaN(newWeight))
+                            {
+                                newWeight = 0;
+                            }
+                            else if (newWeight > 1) newWeight = 1;
+                            else if (newWeight < 0) newWeight = -1;
+                            neurons[i][j].pesos[w] = newWeight;
                         }
                     }
                 }
@@ -129,7 +137,9 @@ namespace Learning_Vector_Quantization
         /// <returns></returns>
         double gaussianMath(double dist, double dp)
         {
-            return Math.Pow(Math.E, Math.Pow(dist, 2) / (2 * Math.Pow(dp, 2)));
+            double d = Math.Pow(dist, 2);
+            double newDP = 2 * Math.Pow(dp, 2);
+            return (d == 0) ? 1 : Math.Pow(Math.E, -d / newDP);
         }
 
         public int GetDatasets(int StartIndex, List<List<string>> Dataset, out List<List<string>> testingSet, out List<List<String>> trainingSet) {
