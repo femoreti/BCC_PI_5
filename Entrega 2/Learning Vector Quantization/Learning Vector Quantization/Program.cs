@@ -20,8 +20,8 @@ namespace Learning_Vector_Quantization
         {
             //ExecuteLVQ(@"../../Raw Data/Normalized/abalone-Normalized.csv");
             //ExecuteLVQ(@"../../Raw Data/Normalized/adult-Normalized.csv");
-            //ExecuteLVQ(@"../../Raw Data/Normalized/iris-Normalized.csv");
-            ExecuteLVQ(@"../../Raw Data/Normalized/wdbc-Normalized.csv");
+            ExecuteLVQ(@"../../Raw Data/Normalized/iris-Normalized.csv");
+            //ExecuteLVQ(@"../../Raw Data/Normalized/wdbc-Normalized.csv");
             //ExecuteLVQ(@"../../Raw Data/Normalized/wine-Normalized.csv");
             //ExecuteLVQ(@"../../Raw Data/Normalized/winequality-red-Normalized.csv");
         }
@@ -107,26 +107,26 @@ namespace Learning_Vector_Quantization
 
                     if (etapa == 10)
                     {
-                        Console.WriteLine("Para R = {0}\n", radius);
-                        string heatmap = string.Empty;
-                        //DEBUG
-                        heatmap += "HEATMAP\n";
-                        for (int q = 0; q < sizeOfNetwork; q++) //Linhas
-                        {
-                            for (int j = 0; j < sizeOfNetwork; j++) //Colunas
-                            {
-                                if (!string.IsNullOrEmpty(Neuronios[q][j].currentClass))
-                                    heatmap += ("" + Neuronios[q][j].currentClass);
-                                else
-                                    heatmap += (" ");
-                                //for (int k = 0; k < totalEntries; k++)
-                                //    Console.Write(Neuronios[q][j].pesos[k] + " ");
-                                heatmap += ("\t");
-                            }
-                            heatmap += ("\n");
-                        }
-                        heatmap += ("\n");
-                        Console.WriteLine(heatmap);
+                        //Console.WriteLine("Para R = {0}\n", radius);
+                        //string heatmap = string.Empty;
+                        ////DEBUG
+                        //heatmap += "HEATMAP\n";
+                        //for (int q = 0; q < sizeOfNetwork; q++) //Linhas
+                        //{
+                        //    for (int j = 0; j < sizeOfNetwork; j++) //Colunas
+                        //    {
+                        //        if (!string.IsNullOrEmpty(Neuronios[q][j].currentClass))
+                        //            heatmap += ("" + Neuronios[q][j].currentClass);
+                        //        else
+                        //            heatmap += (" ");
+                        //        //for (int k = 0; k < totalEntries; k++)
+                        //        //    Console.Write(Neuronios[q][j].pesos[k] + " ");
+                        //        heatmap += ("\t");
+                        //    }
+                        //    heatmap += ("\n");
+                        //}
+                        //heatmap += ("\n");
+                        //Console.WriteLine(heatmap);
                         FileSystem.SaveFileContents(GenerateHeatmap(Dataset, Neuronios, _lvq), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Heatmap-" + i.ToString() + ".txt");
                     }
                     etapa++;
@@ -156,8 +156,8 @@ namespace Learning_Vector_Quantization
                 Neuronio bmu = lvq.BMU(neuronios, Dataset[p]).neuron;
                 int line = bmu.row;
                 int column = bmu.column;
-                neuronios[line][column].color += int.Parse(Dataset[p].Last()) + 1;
-                neuronios[line][column].totalColorsSet++;
+                neuronios[line][column].color += int.Parse(Dataset[p].Last()) + 1; //incrementa a cor de acordo com a classe
+                neuronios[line][column].totalColorsSet++; //soma quantas vezes foi modificado
             }
 
             string heatmap = string.Empty;
@@ -166,7 +166,7 @@ namespace Learning_Vector_Quantization
             {
                 for (int j = 0; j < neuronios[q].Count; j++) //Colunas
                 {
-                    heatmap += ("" + (float)neuronios[q][j].color / (float)neuronios[q][j].totalColorsSet);
+                    heatmap += ("" + (float)neuronios[q][j].color / (float)neuronios[q][j].totalColorsSet); //aqui faz o valor ser proximo de qual classe deve pertencer
                     heatmap += ("\t");
                 }
                 heatmap += ("\n");
