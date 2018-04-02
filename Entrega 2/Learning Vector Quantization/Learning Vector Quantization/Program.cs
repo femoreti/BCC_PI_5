@@ -37,31 +37,31 @@ namespace Learning_Vector_Quantization
             int sizeOfNetwork = GetSizeOfNetwork(GetTotalDistinctClasses(Dataset)); //Define o tamanho N da rede neural
             int totalEntries = Dataset[0].Count - 1;
 
-            Random rnd = new Random();
-            Neuronios.Clear();
-            //Inicia uma nova matriz de Neuronios NxN
-            for (int k = 0; k < sizeOfNetwork; k++) //Linhas
-            {
-                Neuronios.Add(new List<Neuronio>());
-                for (int j = 0; j < sizeOfNetwork; j++) //Colunas
-                {
-                    Neuronio neuron = new Neuronio();
-                    neuron.pesos = new List<double>();
-                    neuron.currentClass = string.Empty;
-                    neuron.row = k;
-                    neuron.column = j;
-                    neuron.totalColorsSet = 1;
-                    for (int l = 0; l < totalEntries; l++)
-                        neuron.pesos.Add(rnd.NextDouble());
-
-                    Neuronios[k].Add(neuron);
-                }
-            }
-
             string CrossValidationErrors = string.Empty;
             for (int i = 1; i <= 4; i++) //Executa os 4 tipos de R
             {
                 Console.Write("Iniciando, i = {0}\n", i.ToString());
+
+                Random rnd = new Random();
+                Neuronios.Clear();
+                //Inicia uma nova matriz de Neuronios NxN
+                for (int k = 0; k < sizeOfNetwork; k++) //Linhas
+                {
+                    Neuronios.Add(new List<Neuronio>());
+                    for (int j = 0; j < sizeOfNetwork; j++) //Colunas
+                    {
+                        Neuronio neuron = new Neuronio();
+                        neuron.pesos = new List<double>();
+                        neuron.currentClass = string.Empty;
+                        neuron.row = k;
+                        neuron.column = j;
+                        neuron.totalColorsSet = 1;
+                        for (int l = 0; l < totalEntries; l++)
+                            neuron.pesos.Add(rnd.NextDouble());
+
+                        Neuronios[k].Add(neuron);
+                    }
+                }
 
                 int StartIndex = 0;
                 List<List<string>> trainingSet, testingSet;

@@ -25,6 +25,7 @@ namespace Learning_Vector_Quantization
                 erro += deltaDeKronecker(TestSet[i].Last(), predictions[i]);
             }
 
+            Console.WriteLine("\nTaxa de Erro amostral: {0}", erro / (float)TestSet.Count);
             return erro / (float)TestSet.Count;
         }
 
