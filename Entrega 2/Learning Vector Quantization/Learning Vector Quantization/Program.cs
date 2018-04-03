@@ -18,12 +18,16 @@ namespace Learning_Vector_Quantization
     {
         static void Main(string[] args)
         {
-            //ExecuteLVQ(@"../../Raw Data/Normalized/abalone-Normalized.csv");
             //ExecuteLVQ(@"../../Raw Data/Normalized/adult-Normalized.csv");
             ExecuteLVQ(@"../../Raw Data/Normalized/iris-Normalized.csv");
-            //ExecuteLVQ(@"../../Raw Data/Normalized/wdbc-Normalized.csv");
-            //ExecuteLVQ(@"../../Raw Data/Normalized/wine-Normalized.csv");
-            //ExecuteLVQ(@"../../Raw Data/Normalized/winequality-red-Normalized.csv");
+            ExecuteLVQ(@"../../Raw Data/Normalized/wdbc-Normalized.csv");
+            ExecuteLVQ(@"../../Raw Data/Normalized/wine-Normalized.csv");
+            ExecuteLVQ(@"../../Raw Data/Normalized/winequality-red-Normalized.csv");
+            ExecuteLVQ(@"../../Raw Data/Normalized/abalone-Normalized.csv");
+
+            //System.Diagnostics.Process.Start("Shutdown", "-s -t 10"); //Desliga o windows
+
+            Console.ReadLine();
         }
 
         static void ExecuteLVQ(string path)
@@ -147,8 +151,6 @@ namespace Learning_Vector_Quantization
             }
 
             FileSystem.SaveFileContents(CrossValidationErrors, @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-CROSSVALIDATION REPORT.txt");
-
-            Console.ReadLine();
         }
 
         static string GenerateHeatmap(List<List<string>> Dataset, List<List<Neuronio>> neuronios, LVQ lvq)
