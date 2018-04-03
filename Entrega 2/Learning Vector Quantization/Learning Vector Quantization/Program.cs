@@ -113,27 +113,27 @@ namespace Learning_Vector_Quantization
 
                     if (etapa == 10)
                     {
-                        //Console.WriteLine("Para R = {0}\n", radius);
-                        //string heatmap = string.Empty;
-                        ////DEBUG
-                        //heatmap += "HEATMAP\n";
-                        //for (int q = 0; q < sizeOfNetwork; q++) //Linhas
-                        //{
-                        //    for (int j = 0; j < sizeOfNetwork; j++) //Colunas
-                        //    {
-                        //        if (!string.IsNullOrEmpty(Neuronios[q][j].currentClass))
-                        //            heatmap += ("" + Neuronios[q][j].currentClass);
-                        //        else
-                        //            heatmap += (" ");
-                        //        //for (int k = 0; k < totalEntries; k++)
-                        //        //    Console.Write(Neuronios[q][j].pesos[k] + " ");
-                        //        heatmap += ("\t");
-                        //    }
-                        //    heatmap += ("\n");
-                        //}
-                        //heatmap += ("\n");
-                        //Console.WriteLine(heatmap);
-                        FileSystem.SaveFileContents(GenerateHeatmap(Dataset, Neuronios, _lvq), @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Heatmap-" + i.ToString() + ".txt");
+                        Console.WriteLine("Para R = {0}\n", radius);
+                        string heatmap = string.Empty;
+                        //DEBUG
+                        heatmap += "HEATMAP\n";
+                        for (int q = 0; q < sizeOfNetwork; q++) //Linhas
+                        {
+                            for (int j = 0; j < sizeOfNetwork; j++) //Colunas
+                            {
+                                if (!string.IsNullOrEmpty(Neuronios[q][j].currentClass))
+                                    heatmap += ("" + Neuronios[q][j].currentClass);
+                                else
+                                    heatmap += (" ");
+                                //for (int k = 0; k < totalEntries; k++)
+                                //    Console.Write(Neuronios[q][j].pesos[k] + " ");
+                                heatmap += ("\t");
+                            }
+                            heatmap += ("\n");
+                        }
+                        heatmap += ("\n");
+                        Console.WriteLine(heatmap);
+                        FileSystem.SaveFileContents(heatmap, @"../../Raw Data/Normalized/output/" + fileName + "/", fileName + "-Heatmap-" + i.ToString() + ".txt");
                     }
                     etapa++;
                 }
