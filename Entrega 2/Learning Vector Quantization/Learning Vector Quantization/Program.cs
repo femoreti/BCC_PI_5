@@ -93,7 +93,7 @@ namespace Learning_Vector_Quantization
                             learningRate = 0.01f;
                         double dp = initial_dp * Math.Pow(Math.E, ((double)-n* t1));
 
-                        _lvq.RunLVQ(Neuronios, Dataset, radius, dp, learningRate);
+                        _lvq.RunLVQ(Neuronios, trainingSet, radius, dp, learningRate);
                     }
 
 
