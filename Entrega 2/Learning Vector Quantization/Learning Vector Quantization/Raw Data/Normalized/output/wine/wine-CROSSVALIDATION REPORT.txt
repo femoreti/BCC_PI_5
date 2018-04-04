@@ -1,4 +1,4 @@
-Erro de validação cruzada para R = 1	3.910257%
-Erro de validação cruzada para R = 3	40.96154%
-Erro de validação cruzada para R = 3	46.21795%
-Erro de validação cruzada para R = 6	53.71795%
+Erro de validação cruzada para R = 1	4.615385%
+Erro de validação cruzada para R = 3	24.67949%
+Erro de validação cruzada para R = 3	22.3718%
+Erro de validação cruzada para R = 6	45.70513%
