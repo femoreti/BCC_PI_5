@@ -115,8 +115,8 @@ namespace Learning_Vector_Quantization
                             {
                                 newWeight = 0;
                             }
-                            else if (newWeight > 1) newWeight = 1;
-                            else if (newWeight < 0) newWeight = -1;
+                            //else if (newWeight > 1) newWeight = 1;
+                            //else if (newWeight < 0) newWeight = -1;
                             neurons[i][j].pesos[w] = newWeight;
                         }
                     }
