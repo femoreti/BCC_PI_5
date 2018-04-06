@@ -12,3 +12,10 @@ C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Entrega 2\Learning Vector Quantizatio
 C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\obj\Debug\Learning Vector Quantization.exe
 C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\obj\Debug\Learning Vector Quantization.pdb
 C:\Users\Casa Not\Desktop\Senac\Pi 5\trunk\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\obj\Debug\Learning Vector Quantization.csprojResolveAssemblyReference.cache
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\bin\Debug\Learning Vector Quantization.exe.config
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\bin\Debug\Learning Vector Quantization.exe
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\bin\Debug\Learning Vector Quantization.pdb
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\obj\Debug\Learning Vector Quantization.csprojResolveAssemblyReference.cache
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\obj\Debug\Learning Vector Quantization.csproj.CoreCompileInputs.cache
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\obj\Debug\Learning Vector Quantization.exe
+C:\Users\Caio Rosa\Desktop\Dev\BCC_PI5\Entrega 2\Learning Vector Quantization\Learning Vector Quantization\obj\Debug\Learning Vector Quantization.pdb

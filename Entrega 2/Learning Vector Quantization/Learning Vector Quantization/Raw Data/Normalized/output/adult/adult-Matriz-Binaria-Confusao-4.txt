@@ -1,8 +1,8 @@
-True Positive	0
-False Positive	0
-False Negative	4333
-True Negative	14045
-Sensibilidade	0
-Especificidade	1
-Precisão	NaN
-Revocação	0
+True Positive	1463
+False Positive	3203
+False Negative	2870
+True Negative	10842
+Sensibilidade	0.3376414
+Especificidade	0.7719473
+Precisão	0.3135448
+Revocação	0.3376414
