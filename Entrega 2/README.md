@@ -5,7 +5,7 @@ Integrantes: Caio Rosa, Felipe Moreti
 
 ## [Videos aula](https://www.youtube.com/playlist?list=PLbbFJ2MmYjeOcPXXvZkRj-ouaIboUX2mH) para consulta
 
-## [HEATMAP](https://docs.google.com/spreadsheets/d/1McOhQ1tJ4XeUGrBa-8moHUqsvTcv5Hc4ZIj-UIoi__k/edit?usp=sharing) dos Datasets
+## [Planilha de DADOS](https://docs.google.com/spreadsheets/d/1McOhQ1tJ4XeUGrBa-8moHUqsvTcv5Hc4ZIj-UIoi__k/edit?usp=sharing) dos Datasets
 
 ## [Relatório](https://docs.google.com/document/d/133zXVY0KyyZODfoOrK4zy2SfBYmJC3M1qlbfsNzwXBo/edit#)
 
