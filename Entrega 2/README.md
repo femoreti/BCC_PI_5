@@ -7,5 +7,7 @@ Integrantes: Caio Rosa, Felipe Moreti
 
 ## [HEATMAP](https://docs.google.com/spreadsheets/d/1McOhQ1tJ4XeUGrBa-8moHUqsvTcv5Hc4ZIj-UIoi__k/edit?usp=sharing) dos Datasets
 
+## [Relatório](https://docs.google.com/document/d/133zXVY0KyyZODfoOrK4zy2SfBYmJC3M1qlbfsNzwXBo/edit#)
+
 ### Referencias
 https://machinelearningmastery.com/implement-learning-vector-quantization-scratch-python/
