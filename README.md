@@ -9,3 +9,5 @@ Integrantes: Caio Rosa, Felipe Moreti
 > Devem ser entregues:
 >
 > - Código-fonte do algoritmo LVQ com o Cross Validation implementado.
+
+## [parte 3](https://docs.google.com/document/u/1/d/1TiNI9U3-oFYvIiOzYUoI9l9zlxYeXS8x3HObV_HeymE/edit?usp=sharing)
