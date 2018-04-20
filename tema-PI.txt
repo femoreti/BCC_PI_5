@@ -1,0 +1,14 @@
+Descrição do problema
+
+Caio Rosa
+Felipe Moreti
+
+Reconhecer desenhos feitos em uma folha de papel pela webcam do computador, similar a maneira que
+é feita pelo Google-QuickDraw.
+
+Exemplos:
+https://quickdraw.withgoogle.com/
+https://www.tensorflow.org/tutorials/image_recognition
+https://www.youtube.com/watch?v=qaQofXTxkSo
+https://www.youtube.com/watch?v=KTeVOb8gaD4
+
