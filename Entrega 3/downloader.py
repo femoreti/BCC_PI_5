@@ -8,7 +8,7 @@ jsonData = json.load(open(fileName))
 
 for category in jsonData["categories"]:
     for i in range(0, category["total"]):
-        fileName = "img-"+ category["name"] + "-" + str(len(os.listdir(os.getcwd() + "/assets"))) + ".jpg"
+        fileName = category["name"] + "-" + str(len(os.listdir(os.getcwd() + "/assets/raw"))) + ".jpg"
         print("Starting download...")
         DownloadImage(category["name"], fileName)
-        time.sleep(2)
+        time.sleep(3)
