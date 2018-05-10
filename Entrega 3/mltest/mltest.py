@@ -5,26 +5,32 @@ import os
 
 
 def get_image_label(filename):
-    category = filename.split('-')[0]
+    category = filename.split('_')[0]
     if category == "car":
-        return np.array([1, 0])
-    elif category == "bike":
-        return np.array([0, 1])
+        return np.array([1, 0, 0, 0])
+    elif category == "motorbike":
+        return np.array([0, 1, 0, 0])
+    elif category == "boat":
+        return np.array([0, 0, 1, 0])
+    elif category == "plane":
+        return np.array([0, 0, 0, 1])
 
 
 def preprocess_data():
-    images = os.listdir('../assets/raw')
+    img_paths = os.listdir('../assets')
     training_data = []
-    for img in images:
-        print("Processing", img)
-        path = "../assets/raw/" + img
-        imgData = cv2.imread(path, 0)
-        imgData = cv2.resize(imgData, (25, 25))
-        training_data.append([np.array(imgData), get_image_label(img)])
+    for category in img_paths:
+        for img in os.listdir("../assets/" + category):
+            print("Processing", img)
+            path = "../assets/" + category + "/" + img
+            imgData = cv2.imread(path, 0)
+            imgData = cv2.resize(imgData, (25, 25))
+            training_data.append([np.array(imgData), get_image_label(img)])
 
     shuffle(training_data)
-    np.save('train-set.npy', training_data[:6])
-    np.save('test-set.npy', training_data[6:])
+    mid = len(training_data) / 2
+    np.save('train-set.npy', training_data[:int(mid)])
+    np.save('test-set.npy', training_data[int(mid):])
 
 
 preprocess_data()
