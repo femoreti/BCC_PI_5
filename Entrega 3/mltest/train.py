@@ -5,18 +5,20 @@ from tflearn.layers.estimator import regression
 import tensorflow as tf
 import numpy as np
 
+imgSize = 50
+
 train = np.load("train-set.npy")
-train_data = np.array([i[0] for i in train]).reshape(-1, 25, 25, 1)
+train_data = np.array([i[0] for i in train]).reshape(-1, imgSize, imgSize, 1)
 train_labels = [i[1] for i in train]
 
 test = np.load("test-set.npy")
-test_data = np.array([i[0] for i in test]).reshape(-1, 25, 25, 1)
+test_data = np.array([i[0] for i in test]).reshape(-1, imgSize, imgSize, 1)
 test_labels = [i[1] for i in test]
 
 def cnn():
     tf.reset_default_graph()
 
-    convnet = input_data([None, 25, 25, 1], name="input")
+    convnet = input_data([None, imgSize, imgSize, 1], name="input")
 
     # First hidden layer
     convnet = conv_2d(convnet, 32, 5, activation="relu")
@@ -35,14 +37,14 @@ def cnn():
     convnet = max_pool_2d(convnet, 5)
 
     # Sixth hidden layer
-    convnet = conv_2d(convnet, 32, 5, activation="relu")
-    convnet = max_pool_2d(convnet, 5)
+#    convnet = conv_2d(convnet, 32, 5, activation="relu")
+#    convnet = max_pool_2d(convnet, 5)
 
     # First fully connected layer
     convnet = fully_connected(convnet, 1024, activation="relu")
 
     # Second fully connected layer
-    convnet = fully_connected(convnet, 2, activation="softmax")
+    convnet = fully_connected(convnet, 4, activation="softmax")
     convnet = regression(convnet, optimizer="adam", loss="categorical_crossentropy", name="targets")
 
     model = tflearn.DNN(convnet)
