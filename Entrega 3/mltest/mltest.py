@@ -28,7 +28,7 @@ def preprocess_data():
             training_data.append([np.array(imgData), get_image_label(img)])
 
     shuffle(training_data)
-    mid = len(training_data) / 4
+    mid = len(training_data) / 5
     np.save('train-set.npy', training_data[int(mid):])
     np.save('test-set.npy', training_data[:int(mid)])
 
