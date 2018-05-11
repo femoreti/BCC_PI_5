@@ -24,11 +24,11 @@ def preprocess_data():
             print("Processing", img)
             path = "../assets/" + category + "/" + img
             imgData = cv2.imread(path, 0)
-            imgData = cv2.resize(imgData, (50, 50))
+            imgData = cv2.resize(imgData, (64, 64))
             training_data.append([np.array(imgData), get_image_label(img)])
 
     shuffle(training_data)
-    mid = len(training_data) / 5
+    mid = len(training_data) / 4
     np.save('train-set.npy', training_data[int(mid):])
     np.save('test-set.npy', training_data[:int(mid)])
 
