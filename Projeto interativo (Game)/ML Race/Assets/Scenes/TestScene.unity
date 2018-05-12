@@ -112,6 +112,81 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &476914937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 476914938}
+  m_Layer: 0
+  m_Name: Obstacles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &476914938
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 476914937}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.334103, y: -18.279423, z: 33.27832}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1474078767
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4923164165713700, guid: 847364caba962374fabb2d47f347ce6c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923164165713700, guid: 847364caba962374fabb2d47f347ce6c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923164165713700, guid: 847364caba962374fabb2d47f347ce6c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923164165713700, guid: 847364caba962374fabb2d47f347ce6c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923164165713700, guid: 847364caba962374fabb2d47f347ce6c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923164165713700, guid: 847364caba962374fabb2d47f347ce6c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923164165713700, guid: 847364caba962374fabb2d47f347ce6c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923164165713700, guid: 847364caba962374fabb2d47f347ce6c, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 54834367055237126, guid: 847364caba962374fabb2d47f347ce6c,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 847364caba962374fabb2d47f347ce6c, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1675350061
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,13 +261,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1675350061}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.24503434, y: -0, z: -0, w: 0.9695144}
+  m_LocalPosition: {x: 0, y: 7.66, z: -7.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 28.368002, y: 0, z: 0}
 --- !u!114 &1675350066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,9 +279,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d15767193db2d94b859d5a6ed093582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockPrefab: {fileID: 1745022655805250, guid: 01f25e34b15174547b358882fd484d89,
-    type: 2}
-  initialBlocks: 4
+  blockPrefabs:
+  - {fileID: 1456403992825832, guid: c624986e18feca046b50916def9aff87, type: 2}
+  - {fileID: 1912212268313308, guid: ede11350e7b6d7444b8144a027c8097a, type: 2}
+  - {fileID: 1395576147650538, guid: e05a5863570574448a06119d3454f3ef, type: 2}
+  - {fileID: 1772104102547540, guid: 97263b8cee3513a4cb336cbeb964bcf0, type: 2}
+  initialBlocks: 5
+  Obstacles: {fileID: 476914937}
 --- !u!1 &1824141451
 GameObject:
   m_ObjectHideFlags: 0

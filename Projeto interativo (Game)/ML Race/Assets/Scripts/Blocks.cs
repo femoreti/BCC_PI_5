@@ -6,7 +6,7 @@ public class Blocks : MonoBehaviour {
 
     public float speed = 10;
     public InsertNextBlock controlBlockRef;
-    public Transform otherBlockPos;
+    public Transform endBlock, otherBlockPos;
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +21,11 @@ public class Blocks : MonoBehaviour {
         {
             transform.Translate(Vector3.forward * -speed * Time.deltaTime);
         }
-        if (transform.position.z < -20)
+
+        float posY = Camera.main.WorldToScreenPoint(endBlock.position).y;
+        //Debug.Log(posY);
+
+        if (posY < -20)
             controlBlockRef.RemoveBlockFromList(gameObject);
 
     }

@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class InsertNextBlock : MonoBehaviour {
 
-    public GameObject blockPrefab;
+    public static InsertNextBlock Instance;
+
+    public List<GameObject> blockPrefabs;
     public int initialBlocks = 2;
 
     private GameObject lastBlock;
     private List<GameObject> _currBlocks = new List<GameObject>();
 
+    public GameObject Obstacles;
+
 	// Use this for initialization
-	void Start ()
+	void Awake()
     {
-	}
+        Instance = this;
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -26,10 +32,10 @@ public class InsertNextBlock : MonoBehaviour {
 
 		while(_currBlocks.Count < initialBlocks)
         {
-            GameObject go = Instantiate(blockPrefab);
+            GameObject go = Instantiate(blockPrefabs[Random.Range(0, blockPrefabs.Count)]);
             go.GetComponent<Blocks>().controlBlockRef = this;
             if(lastBlock != null)
-                go.GetComponent<Blocks>().otherBlockPos = lastBlock.transform.GetChild(0).GetChild(0).transform;
+                go.GetComponent<Blocks>().otherBlockPos = lastBlock.GetComponent<Blocks>().endBlock;
 
             if (_currBlocks.Count == 0)
             {
@@ -37,7 +43,7 @@ public class InsertNextBlock : MonoBehaviour {
             }
             else
             {
-                go.transform.position = lastBlock.transform.GetChild(0).GetChild(0).transform.position;
+                go.transform.position = lastBlock.GetComponent<Blocks>().endBlock.position;
             }
 
             lastBlock = go;
