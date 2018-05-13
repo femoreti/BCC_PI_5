@@ -6,11 +6,13 @@ public class ObstacleCar : MonoBehaviour {
     private float speed = 5;
 	// Use this for initialization
 	void Start () {
-        
+        speed = Random.Range(1, speed);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        //transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        if (GameController.Instance.PAUSE)
+            return;
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 }

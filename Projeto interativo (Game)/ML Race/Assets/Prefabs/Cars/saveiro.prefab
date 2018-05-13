@@ -38,10 +38,8 @@ GameObject:
   - component: {fileID: 4783053211665730}
   - component: {fileID: 33955155955128114}
   - component: {fileID: 23062632935559388}
-  - component: {fileID: 114583882559404752}
   - component: {fileID: 65958601567039080}
   - component: {fileID: 54466524880026382}
-  - component: {fileID: 114446686870976260}
   m_Layer: 0
   m_Name: saveiro
   m_TagString: Cars
@@ -401,26 +399,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.1594007, y: 2.7077725, z: 5.3768573}
   m_Center: {x: 0, y: 1.1929729, z: 0}
---- !u!114 &114446686870976260
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1181254741038252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef5e434ee15aad84faa384bb8df74c19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114583882559404752
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1181254741038252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f0cea3f4eff0394295ecf75088ecb6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chance: 0.3

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Blocks : MonoBehaviour {
 
     public float speed = 10;
-    public InsertNextBlock controlBlockRef;
+    public GameController controlBlockRef;
     public Transform endBlock, otherBlockPos;
 
 	// Use this for initialization
@@ -14,12 +14,12 @@ public class Blocks : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update ()
-    {        
+    {
         if(otherBlockPos != null)
             transform.position = otherBlockPos.position;
         else
         {
-            transform.Translate(Vector3.forward * -speed * Time.deltaTime);
+            transform.Translate(Vector3.forward * -GameController.Instance.gameSpeed * Time.deltaTime);
         }
 
         float posY = Camera.main.WorldToScreenPoint(endBlock.position).y;
