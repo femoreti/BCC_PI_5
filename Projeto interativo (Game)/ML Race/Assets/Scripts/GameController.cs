@@ -28,6 +28,8 @@ public class GameController : MonoBehaviour {
     {
         Instance = this;
 
+        Application.targetFrameRate = 60;
+
         initialSpeed = maxSpeed;
 
         Reset();
@@ -136,6 +138,8 @@ public class GameController : MonoBehaviour {
     {
         PAUSE = true;
         finalAccTime = Time.time + 1;
+
+        UIController.instance.OnGameOver(score);
         Debug.Log("GameOver");
     }
 
@@ -149,7 +153,8 @@ public class GameController : MonoBehaviour {
         }
 
         InsertInitialRoad();
-        
+
+        UIController.instance._gameOverScreen.SetActive(false);
 
         Player.Reset();
         maxSpeed = initialSpeed;

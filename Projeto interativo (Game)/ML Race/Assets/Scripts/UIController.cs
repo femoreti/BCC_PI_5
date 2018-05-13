@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour {
     public static UIController instance;
-    public Text score;
+
+    public GameObject _gameOverScreen;
+    public Text score, GameOverScore;
 
 	// Use this for initialization
 	void Awake () {
@@ -20,5 +22,11 @@ public class UIController : MonoBehaviour {
     public void updateScore(int scoreValue)
     {
         score.text = scoreValue.ToString() + "m";
+    }
+
+    public void OnGameOver(int scoreValue)
+    {
+        _gameOverScreen.SetActive(true);
+        GameOverScore.text = scoreValue.ToString() + "m";
     }
 }
