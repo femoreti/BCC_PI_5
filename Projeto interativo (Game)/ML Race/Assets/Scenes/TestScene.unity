@@ -249,6 +249,16 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 65085010136673144, guid: 7670cfefbd897534c85203ef0a5e3e6c,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1.5486915
+      objectReference: {fileID: 0}
+    - target: {fileID: 65085010136673144, guid: 7670cfefbd897534c85203ef0a5e3e6c,
+        type: 2}
+      propertyPath: m_Center.x
+      value: -0.03201568
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7670cfefbd897534c85203ef0a5e3e6c, type: 2}
   m_IsPrefabParent: 0
