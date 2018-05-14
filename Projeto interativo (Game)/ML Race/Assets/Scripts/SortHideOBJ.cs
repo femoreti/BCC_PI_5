@@ -22,7 +22,7 @@ public class SortHideOBJ : MonoBehaviour
             if (movingObj)
             {
                 go.AddComponent<ObstacleCar>();
-                go.GetComponent<Rigidbody>().isKinematic = true;
+                //go.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
 	}
