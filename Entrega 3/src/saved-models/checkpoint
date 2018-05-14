@@ -1,2 +1,2 @@
-model_checkpoint_path: "/Users/caiorosa/Desktop/Dev/Desktop/BCC PI 5/Entrega 3/src/saved-models/mlgame.tflearn"
-all_model_checkpoint_paths: "/Users/caiorosa/Desktop/Dev/Desktop/BCC PI 5/Entrega 3/src/saved-models/mlgame.tflearn"
+model_checkpoint_path: "C:\\Users\\Casa Not\\Desktop\\Senac\\Pi 5\\trunk\\Entrega 3\\src\\saved-models\\mlgame.tflearn"
+all_model_checkpoint_paths: "C:\\Users\\Casa Not\\Desktop\\Senac\\Pi 5\\trunk\\Entrega 3\\src\\saved-models\\mlgame.tflearn"

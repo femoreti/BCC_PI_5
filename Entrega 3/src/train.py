@@ -7,7 +7,7 @@ import numpy as np
 import cv2
 
 imgSize = 64
-imgFilterSize = 8
+imgFilterSize = 5
 
 train = np.load("./data/train-set.npy")
 train_data = np.array([i[0] for i in train]).reshape(-1, imgSize, imgSize, 1)
@@ -71,3 +71,4 @@ def PredictInput(imgPath):
     return model.predict(np.array(img).reshape(-1, 64, 64, 1))
 
 #TrainModel()
+print(PredictInput("../assets/TEST1.jpg")   )
