@@ -73,7 +73,7 @@ def PredictInput(imgPath):
 def PrintPredicted(imgPath):
     result = PredictInput(imgPath)
     highIndex = -1
-    for x in range(0,3):
+    for x in range(0,4):
         if(highIndex == -1):
             highIndex = 0
         if(result[0][x] > result[0][highIndex]):
@@ -89,7 +89,11 @@ def PrintPredicted(imgPath):
     elif(highIndex == 3):
         obj = "Avião"
 
+    print(result[0])
     print("Isso é um:",obj," com %.2f" % (result[0][highIndex] * 100),"% de certeza.")
 
 #TrainModel()
+PrintPredicted("../testes/car.jpg")
+PrintPredicted("../testes/plane.jpg")
 PrintPredicted("../testes/boat.jpg")
+PrintPredicted("../testes/bike.jpg")
