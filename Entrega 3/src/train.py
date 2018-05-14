@@ -55,8 +55,11 @@ def GetModel():
 
     return tflearn.DNN(convnet)
 
+model = GetModel()
+
 def TrainModel():
-    model = GetModel()
+    #model = GetModel()
+
     model.fit({"input": train_data}, {"targets": train_labels}, n_epoch=10,
               validation_set=({"input": test_data}, {"targets": test_labels}),
               snapshot_epoch=True, show_metric=True)
@@ -64,7 +67,7 @@ def TrainModel():
     model.save('./saved-models/mlgame.tflearn')
 
 def PredictInput(imgPath):
-    model = GetModel()
+    ##model = GetModel()
     model.load('./saved-models/mlgame.tflearn')
     img = cv2.imread(imgPath, 0)
     img = cv2.resize(img, (imgSize, imgSize))
