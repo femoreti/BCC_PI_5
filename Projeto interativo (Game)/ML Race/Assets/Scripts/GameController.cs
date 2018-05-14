@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour {
 
     public ControlPlayer Player;
     public List<GameObject> blockPrefabs;
-    public int initialBlocks = 2;
+    public int totalBlocks = 10;
 
     private GameObject lastBlock;
     private List<GameObject> _currBlocks = new List<GameObject>();
@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour {
 
     private float initialTime, finalAccTime;
     private int score = 0, scoreLimit = 1000;
-    private int initialSpeed;
+    private int initialSpeed, initialBlocks;
 
     [HideInInspector]
     public bool PAUSE;
@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour {
         Application.targetFrameRate = 60;
 
         initialSpeed = maxSpeed;
+        initialBlocks = totalBlocks;
 
         Reset();
     }
@@ -80,9 +81,11 @@ public class GameController : MonoBehaviour {
             return;
         }
 
-		while(_currBlocks.Count < initialBlocks)
+		while(_currBlocks.Count < totalBlocks)
         {
-            GameObject go = Instantiate(blockPrefabs[Random.Range(1, blockPrefabs.Count)], roadContainer);
+            int blockIndex = (Random.value > 0.05f) ? Random.Range(1, blockPrefabs.Count) : 0;
+
+            GameObject go = Instantiate(blockPrefabs[blockIndex], roadContainer);
             go.GetComponent<Blocks>().controlBlockRef = this;
             if(lastBlock != null)
                 go.GetComponent<Blocks>().otherBlockPos = lastBlock.GetComponent<Blocks>().endBlock;
@@ -117,7 +120,7 @@ public class GameController : MonoBehaviour {
             maxSpeed += 5;
             scoreLimit *= 2;
             if (maxSpeed % 20 == 0)
-                initialBlocks += 5;
+                totalBlocks += 5;
             finalAccTime = Time.time + 1;
         }
         UIController.instance.updateScore(score);
@@ -160,6 +163,7 @@ public class GameController : MonoBehaviour {
         maxSpeed = initialSpeed;
         gameSpeed = 0;
 
+        totalBlocks = initialBlocks;
         initialTime = Time.time;
         finalAccTime = Time.time + 1f;
         PAUSE = false;

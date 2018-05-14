@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 8
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -613,8 +613,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 659036125}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 286, y: 161, z: 0}
-  m_LocalScale: {x: 0.4472222, y: 0.4472222, z: 0.4472222}
+  m_LocalPosition: {x: 327, y: 184, z: 0}
+  m_LocalScale: {x: 0.51111114, y: 0.51111114, z: 0.51111114}
   m_Children:
   - {fileID: 46461204}
   - {fileID: 732077068}
@@ -1163,7 +1163,7 @@ MonoBehaviour:
   - {fileID: 1912212268313308, guid: ede11350e7b6d7444b8144a027c8097a, type: 2}
   - {fileID: 1395576147650538, guid: e05a5863570574448a06119d3454f3ef, type: 2}
   - {fileID: 1772104102547540, guid: 97263b8cee3513a4cb336cbeb964bcf0, type: 2}
-  initialBlocks: 10
+  totalBlocks: 10
   roadContainer: {fileID: 920265501}
   gameSpeed: 0
   maxSpeed: 30
