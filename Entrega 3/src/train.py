@@ -70,5 +70,26 @@ def PredictInput(imgPath):
     img = cv2.resize(img, (imgSize, imgSize))
     return model.predict(np.array(img).reshape(-1, 64, 64, 1))
 
+def PrintPredicted(imgPath):
+    result = PredictInput(imgPath)
+    highIndex = -1
+    for x in range(0,3):
+        if(highIndex == -1):
+            highIndex = 0
+        if(result[0][x] > result[0][highIndex]):
+            highIndex = x
+
+    obj = ""
+    if(highIndex == 0):
+        obj = "Carro"
+    elif(highIndex == 1):
+        obj = "Moto"
+    elif(highIndex == 2):
+        obj = "Barco"
+    elif(highIndex == 3):
+        obj = "Avião"
+
+    print("Isso é um:",obj," com %.2f" % (result[0][highIndex] * 100),"% de certeza.")
+
 #TrainModel()
-print(PredictInput("../assets/TEST1.jpg")   )
+PrintPredicted("../testes/boat.jpg")
