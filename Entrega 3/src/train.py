@@ -68,6 +68,6 @@ def PredictInput(imgPath):
     model.load('./saved-models/mlgame.tflearn')
     img = cv2.imread(imgPath, 0)
     img = cv2.resize(img, (imgSize, imgSize))
-    return model.predict(np.array(img).resize(-1, imgSize. imgSize, 1))
+    return model.predict(np.array(img).reshape(-1, 64, 64, 1))
 
-TrainModel()
+#TrainModel()

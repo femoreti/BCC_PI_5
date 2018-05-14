@@ -1,8 +1,8 @@
 import os
 from flask import Flask
 from flask import request
-
-from src.train import PredictInput
+import train
+import numpy as np
 
 app = Flask(__name__)
 
@@ -12,12 +12,13 @@ def health_check():
 
 @app.route("/predict")
 def predict_input():
-    path = request.args.get("q")
+    imgName = request.args.get("q")
+    path = "../assets/"+ imgName
     if not os.path.exists(path):
         return "404"
 
-    test = PredictInput(path)
-    return test
+    predictions = train.PredictInput(path)
+    return np.array_str(predictions)
 
 if __name__ == "__main__":
     app.run()
