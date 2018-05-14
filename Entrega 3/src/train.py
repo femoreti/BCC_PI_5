@@ -55,10 +55,10 @@ def GetModel():
 
     return tflearn.DNN(convnet)
 
-model = GetModel()
+#model = GetModel()
 
 def TrainModel():
-    #model = GetModel()
+    model = GetModel()
 
     model.fit({"input": train_data}, {"targets": train_labels}, n_epoch=10,
               validation_set=({"input": test_data}, {"targets": test_labels}),
@@ -67,7 +67,7 @@ def TrainModel():
     model.save('./saved-models/mlgame.tflearn')
 
 def PredictInput(imgPath):
-    ##model = GetModel()
+    model = GetModel()
     model.load('./saved-models/mlgame.tflearn')
     img = cv2.imread(imgPath, 0)
     img = cv2.resize(img, (imgSize, imgSize))
@@ -93,10 +93,12 @@ def PrintPredicted(imgPath):
         obj = "Avião"
 
     print(result[0])
-    print("Isso é um:",obj," com %.2f" % (result[0][highIndex] * 100),"% de certeza.")
+    print("Isso é um:",obj,"com %.2f" % (result[0][highIndex] * 100),"% de certeza.")
+
+    return highIndex
 
 #TrainModel()
-PrintPredicted("../testes/car.jpg")
-PrintPredicted("../testes/plane.jpg")
-PrintPredicted("../testes/boat.jpg")
-PrintPredicted("../testes/bike.jpg")
+PrintPredicted("../testes/4.jpg")
+#PrintPredicted("../testes/plane1.jpg")
+#PrintPredicted("../testes/boat1.jpg")
+#Prin#tPredicted("../testes/bike1.jpg")

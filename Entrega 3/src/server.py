@@ -13,12 +13,12 @@ def health_check():
 @app.route("/predict")
 def predict_input():
     imgName = request.args.get("q")
-    path = "../assets/"+ imgName
+    path = "../predictions/"+ imgName
     if not os.path.exists(path):
         return "404"
 
-    predictions = train.PredictInput(path)
-    return np.array_str(predictions)
+    predictions = train.PrintPredicted(path)
+    return str(predictions)
 
 if __name__ == "__main__":
     app.run()
