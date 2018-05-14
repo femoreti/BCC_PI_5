@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1307222000144576}
+  m_IsPrefabParent: 1
+--- !u!1 &1307222000144576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4711033520374694}
+  - component: {fileID: 114564422185155820}
+  m_Layer: 0
+  m_Name: AddObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4711033520374694
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1307222000144576}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.55, y: 0, z: 20.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114564422185155820
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1307222000144576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0cea3f4eff0394295ecf75088ecb6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chance: 0.3
+  randomCars:
+  - {fileID: 1181254741038252, guid: 7381fd1ae9de7394a8a79fa9cf9383c5, type: 2}
+  - {fileID: 1934457244007806, guid: fe1000a176a6ca041a5d8c1f1631ee7f, type: 2}
+  - {fileID: 1305873403025566, guid: 1da26569387f8f545b5642b5a97ec5cd, type: 2}
+  - {fileID: 1260194827067560, guid: 3f6b8122dcde0e84a9e9d3c9f0ef0afd, type: 2}
+  - {fileID: 1325703756804660, guid: b1c816977bab8a34bbe5f63c00e2a91a, type: 2}
+  - {fileID: 1114291979759784, guid: 082089f69cc8abc4494c9b62d5e2a8b1, type: 2}
+  - {fileID: 1043498805631726, guid: 641c5dfe48f31194cb016e47a320a730, type: 2}
+  - {fileID: 1946048338516638, guid: af1a0f614cbbf544abe85dfa08246477, type: 2}
+  - {fileID: 1951212343543330, guid: 1a96e5486babfd144b7405ae32e97f57, type: 2}
+  - {fileID: 1753960750430992, guid: f5e37392c8af16a4b9d1a66f0588e576, type: 2}
+  - {fileID: 1328557167888026, guid: 8f9ddda4a651cd24fa3052dd737b2a8f, type: 2}
+  movingObj: 0
