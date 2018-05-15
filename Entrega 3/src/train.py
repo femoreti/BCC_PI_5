@@ -17,10 +17,6 @@ test = np.load("./data/test-set.npy")
 test_data = np.array([i[0] for i in test]).reshape(-1, imgSize, imgSize, 1)
 test_labels = [i[1] for i in test]
 
-#test_car = cv2.imread("../assets/TEST1.jpg", 0)
-#test_car = cv2.resize(test_car, (imgSize, imgSize))
-#test_car = np.array(test_car).reshape(-1, imgSize, imgSize, 1)
-
 def GetModel():
     tf.reset_default_graph()
 
@@ -42,10 +38,6 @@ def GetModel():
     convnet = conv_2d(convnet, 64, imgFilterSize, activation="relu")
     convnet = max_pool_2d(convnet, 8)
 
-    # Sixth hidden layer
-    #convnet = conv_2d(convnet, 32, imgFilterSize, activation="relu")
-    #convnet = max_pool_2d(convnet, 5)
-
     # First fully connected layer
     convnet = fully_connected(convnet, 1024, activation="relu")
 
@@ -54,8 +46,6 @@ def GetModel():
     convnet = regression(convnet, optimizer="adam", loss="categorical_crossentropy", name="targets")
 
     return tflearn.DNN(convnet)
-
-#model = GetModel()
 
 def TrainModel():
     model = GetModel()
@@ -73,7 +63,7 @@ def PredictInput(imgPath):
     img = cv2.resize(img, (imgSize, imgSize))
     return model.predict(np.array(img).reshape(-1, 64, 64, 1))
 
-def PrintPredicted(imgPath):
+def	GetPrediction(imgPath):
     result = PredictInput(imgPath)
     highIndex = -1
     for x in range(0,4):
@@ -97,8 +87,3 @@ def PrintPredicted(imgPath):
 
     return highIndex
 
-#TrainModel()
-PrintPredicted("../testes/4.jpg")
-#PrintPredicted("../testes/plane1.jpg")
-#PrintPredicted("../testes/boat1.jpg")
-#Prin#tPredicted("../testes/bike1.jpg")

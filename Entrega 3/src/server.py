@@ -17,7 +17,7 @@ def predict_input():
     if not os.path.exists(path):
         return "404"
 
-    predictions = train.PrintPredicted(path)
+    predictions = train.GetPrediction(path)
     return str(predictions)
 
 if __name__ == "__main__":
