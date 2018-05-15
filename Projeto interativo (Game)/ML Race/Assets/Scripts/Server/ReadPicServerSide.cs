@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ReadPicServerSide : MonoBehaviour {
+public class ReadPicServerSide : MonoBehaviour
+{
 
 	// Use this for initialization
 	void Update () {

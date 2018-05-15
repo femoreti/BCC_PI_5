@@ -7,13 +7,11 @@ using UnityEngine.UI;
 public class ControlWebcam : MonoBehaviour {
     public RawImage rawImage;
     private WebCamTexture webcamTexture;
-
-    public RawImage pic; 
-
     // Use this for initialization
-    void Start () {
-        pic.gameObject.SetActive(false);
-
+    void Start ()
+    {
+        if (WebCamTexture.devices.Length == 0)
+            return;
         webcamTexture = new WebCamTexture();
         rawImage.texture = webcamTexture;
         webcamTexture.Play();
@@ -31,30 +29,27 @@ public class ControlWebcam : MonoBehaviour {
 
     public void OnTakePic()
     {
-        RenderTexture rt = new RenderTexture(webcamTexture.width, webcamTexture.height, 24);
+        int width = 100, height = 100;
+
+        if(webcamTexture != null)
+        {
+            width = webcamTexture.width;
+            height = webcamTexture.height;
+        }
+
+        RenderTexture rt = new RenderTexture(width, height, 24);
         Camera.main.targetTexture = rt;
 
-        Texture2D screenShot = new Texture2D(webcamTexture.width, webcamTexture.height, TextureFormat.RGB24, false);
+        Texture2D screenShot = new Texture2D(width, height, TextureFormat.RGB24, false);
         Camera.main.Render();
         RenderTexture.active = rt;
-        screenShot.ReadPixels(new Rect(0, 0, webcamTexture.width, webcamTexture.height), 0, 0);
+        screenShot.ReadPixels(new Rect(0, 0, width, height), 0, 0);
         Camera.main.targetTexture = null;
+        RenderTexture.active = null;
         Destroy(rt);
 
         File.WriteAllBytes(Application.dataPath + "/../../../Entrega 3/predictions/SavedScreen.jpg", screenShot.EncodeToJPG());
-        return;
 
-        Texture2D snap = new Texture2D(webcamTexture.width, webcamTexture.height);
-        snap.SetPixels(webcamTexture.GetPixels());
-        snap.Apply();
-
-        //Color[] c = mTexture.GetPixels(0, 0, 200, 200);
-        //Texture2D m2Texture = new Texture2D(200, 200);
-        //m2Texture.SetPixels(c);
-        //m2Texture.Apply();
-
-        File.WriteAllBytes(Application.dataPath + "/../SavedScreen.jpg", snap.EncodeToJPG());
-
-        Destroy(snap);
+        Debug.Log(Application.dataPath + "/../../../Entrega 3/predictions/SavedScreen.jpg");
     }
 }
