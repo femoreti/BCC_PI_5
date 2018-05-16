@@ -2,7 +2,9 @@ import os
 from flask import Flask
 from flask import request
 import train
+import json
 import numpy as np
+import live_training
 
 app = Flask(__name__)
 
@@ -19,6 +21,18 @@ def predict_input():
 
     predictions = train.GetPrediction(path)
     return str(predictions)
+
+@app.route("/update/<int:itemPath>")
+def update_dataset(itemPath):
+	with open("./datasetReport.json", "r+") as f:
+		data = json.load(f)
+		data['categories'][itemPath] += 1
+		f.seek(0)
+		f.truncate()
+		json.dump(data, f)
+		return "OK"
+
+	live_training.watch_dataset_changes()
 
 if __name__ == "__main__":
     app.run()
