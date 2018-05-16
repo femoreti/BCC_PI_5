@@ -18,3 +18,12 @@ def retrain_model():
 def watch_dataset_changes():
 	if get_total_new_files() > 10:
 		retrain_model()
+		reset_dataset_report()
+
+def reset_dataset_report():
+	with open("./datasetReport.json") as f:
+		data = json.load(f)
+		for i in range(0, 4):
+			data["categories"][i] = 0
+
+
