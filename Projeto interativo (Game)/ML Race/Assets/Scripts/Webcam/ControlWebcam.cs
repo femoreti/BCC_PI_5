@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ControlWebcam : MonoBehaviour {
     private RawImage rawImage;
     private WebCamTexture webcamTexture;
+    public Texture2D lastPicture;
 
     private void Awake()
     {
@@ -102,8 +103,26 @@ public class ControlWebcam : MonoBehaviour {
         RenderTexture.active = null;
         Destroy(rt);
 
+        if(lastPicture == null)
+        {
+            lastPicture = new Texture2D(screenShot.width, screenShot.height);
+            lastPicture.SetPixels(screenShot.GetPixels());
+        }
+        //lastPicture = screenShot;
         File.WriteAllBytes(Application.dataPath + "/../../../Entrega 3/predictions/SavedScreen.jpg", screenShot.EncodeToJPG());
+        Destroy(screenShot);
 
         Debug.Log(Application.dataPath + "/../../../Entrega 3/predictions/SavedScreen.jpg");
+    }
+
+    public void SaveLastImg(string path, string fileName)
+    {
+        if (lastPicture == null)
+        {
+            Debug.LogError("Last Pic não setada");
+            return;
+        }
+        File.WriteAllBytes(path + "/" + fileName + ".jpg", lastPicture.EncodeToJPG());
+        Debug.Log(path + "/" + fileName + ".jpg");
     }
 }

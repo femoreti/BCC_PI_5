@@ -1,17 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameSelectionScreen : MonoBehaviour
 {
-    public GameObject webCamBars, resultObj;
+    public GameObject webCamBars, resultObj, wrongPred;
     public ControlWebcam controlWebcam;
     public ReadPicServerSide server;
-
+    public ObjModels models;
     public Text contador, textResult;
+    //public RawImage _wrongPredImg;
+
     private float initialTimer;
     private bool canTookPic = false;
+
+    private int predictedObj = -1;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +27,9 @@ public class GameSelectionScreen : MonoBehaviour
     {
         controlWebcam.ResumeWebcam();
 
+        models.TurnModelsOff();
         webCamBars.SetActive(true);
+        wrongPred.SetActive(false);
         resultObj.SetActive(false);
         controlWebcam.StartCam();
 
@@ -35,6 +42,8 @@ public class GameSelectionScreen : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
             OnPreparePicture();
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            OnCorrectPrediction();
 
         if (!canTookPic)
             return;
@@ -47,25 +56,35 @@ public class GameSelectionScreen : MonoBehaviour
         {
             if(canTookPic)
             {
-                contador.text = "";
-
-                controlWebcam.OnTakePic();
-                controlWebcam.PauseWebcam();
-
-                server.callback = CallbackServer;
-                server.OnReadPic();
+                StartCoroutine(tookPicture());
                 canTookPic = false;
             }
         }
 	}
+
+    private IEnumerator tookPicture()
+    {
+        contador.text = "";
+
+        controlWebcam.OnTakePic();
+        controlWebcam.PauseWebcam();
+
+        //yield return new WaitForSecondsRealtime(2f);
+
+        server.callback = CallbackServer;
+        server.OnReadPic();
+
+        yield break;
+        
+    }
 
     public void CallbackServer(object param)
     {
         Debug.Log(param);
 
         string str = "";
-        int result = (int)param;
-        switch (result)
+        predictedObj = (int)param;
+        switch (predictedObj)
         {
             case 0:
                 str = "um: CARRO";
@@ -83,7 +102,74 @@ public class GameSelectionScreen : MonoBehaviour
                 break;
         }
 
+        models.TurnModelOn(predictedObj);
+        controlWebcam.StopWebcam();
         resultObj.SetActive(true);
         textResult.text = "Acredito que é " + str;
+    }
+
+    public void OnWrongPrediction()
+    {
+        resultObj.SetActive(false);
+        wrongPred.SetActive(true);
+
+        //_wrongPredImg.texture = controlWebcam.lastPicture;
+    }
+
+    public void OnCorrectPrediction()
+    {
+        string str = "";
+        switch (predictedObj)
+        {
+            case 0:
+                str = "car";
+                break;
+            case 1:
+                str = "motorbike";
+                break;
+
+            case 2:
+                str = "boat";
+                break;
+
+            case 3:
+                str = "plane";
+                break;
+        }
+
+        string path = Application.dataPath + "/../../../Entrega 3/assets/" + str;
+
+        string[] files = Directory.GetFiles(path);
+
+        controlWebcam.SaveLastImg(path, str + "_ ("+ (files.Length + 1) +")");
+        Debug.Log("Inicia Jogo, ID: " + predictedObj);
+    }
+
+    public void SelectCorretImg(int index)
+    {
+        string str = "";
+        switch (index)
+        {
+            case 0:
+                str = "car";
+                break;
+            case 1:
+                str = "motorbike";
+                break;
+
+            case 2:
+                str = "boat";
+                break;
+
+            case 3:
+                str = "plane";
+                break;
+        }
+
+        string path = Application.dataPath + "/../../../Entrega 3/assets/" + str;
+
+        string[] files = Directory.GetFiles(path);
+
+        controlWebcam.SaveLastImg(path, str + "_ (" + (files.Length + 1) + ")");
     }
 }
