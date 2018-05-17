@@ -30,10 +30,10 @@ def update_dataset(itemPath):
 		f.seek(0)
 		f.truncate()
 		json.dump(data, f)
-		return "OK"
 
 	live_training.watch_dataset_changes()
-
+	return "OK"
+	
 if __name__ == "__main__":
     app.run()
 

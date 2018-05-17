@@ -33,4 +33,4 @@ def preprocess_data():
     np.save('./data/test-set.npy', training_data[:int(mid)])
 
 
-preprocess_data()
+#preprocess_data()
