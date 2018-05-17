@@ -11,6 +11,7 @@ public class GameSelectionScreen : MonoBehaviour
     public ReadPicServerSide server;
     public ObjModels models;
     public Text contador, textResult;
+    public int CamTimer = 10;
     //public RawImage _wrongPredImg;
 
     private float initialTimer;
@@ -34,7 +35,7 @@ public class GameSelectionScreen : MonoBehaviour
         controlWebcam.StartCam();
 
         canTookPic = true;
-        initialTimer = Time.time + 5;
+        initialTimer = Time.time + CamTimer;
     }
 	
 	// Update is called once per frame
@@ -142,6 +143,9 @@ public class GameSelectionScreen : MonoBehaviour
         string[] files = Directory.GetFiles(path);
 
         controlWebcam.SaveLastImg(path, str + "_ ("+ (files.Length + 1) +")");
+
+        server.OnUpdate(predictedObj);
+
         Debug.Log("Inicia Jogo, ID: " + predictedObj);
     }
 
@@ -171,5 +175,7 @@ public class GameSelectionScreen : MonoBehaviour
         string[] files = Directory.GetFiles(path);
 
         controlWebcam.SaveLastImg(path, str + "_ (" + (files.Length + 1) + ")");
+
+        server.OnUpdate(index);
     }
 }

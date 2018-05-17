@@ -103,11 +103,11 @@ public class ControlWebcam : MonoBehaviour {
         RenderTexture.active = null;
         Destroy(rt);
 
-        if(lastPicture == null)
-        {
+        //if(lastPicture == null)
+        //{
             lastPicture = new Texture2D(screenShot.width, screenShot.height);
             lastPicture.SetPixels(screenShot.GetPixels());
-        }
+        //}
         //lastPicture = screenShot;
         File.WriteAllBytes(Application.dataPath + "/../../../Entrega 3/predictions/SavedScreen.jpg", screenShot.EncodeToJPG());
         Destroy(screenShot);

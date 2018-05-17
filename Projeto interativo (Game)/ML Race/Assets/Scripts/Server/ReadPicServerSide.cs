@@ -50,4 +50,30 @@ public class ReadPicServerSide : MonoBehaviour
         //yield return new WaitForSecondsRealtime(1f);
         //}
     }
+
+    public void OnUpdate(int index)
+    {
+        StartCoroutine(UpdateDataset(index));
+    }
+
+    private IEnumerator UpdateDataset(int index)
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get("http://127.0.0.1:5000/update/" + index);
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.isHttpError || webRequest.isNetworkError || webRequest.downloadHandler.text == "404")
+        {
+            Debug.LogError("OH NOES");
+        }
+        else
+        {
+            Debug.Log("Result = " + webRequest.downloadHandler.text);
+            // int result = int.Parse(webRequest.downloadHandler.text);
+            //if (callback != null)
+            //{
+            //    callback(result);
+            //    callback = null;
+            //}
+        }
+    }
 }
