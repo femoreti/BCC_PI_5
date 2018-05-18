@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct GameBlocks
+{
+    public List<GameObject> gameBlocks;
+}
 public class GameController : MonoBehaviour {
 
     public static GameController Instance;
 
     public ControlPlayer Player;
-    public List<GameObject> blockPrefabs;
+    
+    public List<GameBlocks> GameBlocks = new List<GameBlocks>();
     public int totalBlocks = 10;
 
     private GameObject lastBlock;
@@ -42,7 +48,7 @@ public class GameController : MonoBehaviour {
 
         while (_currBlocks.Count < 5)
         {
-            GameObject go = Instantiate(blockPrefabs[0], roadContainer);
+            GameObject go = Instantiate(GameBlocks[Global.Predicted].gameBlocks[0], roadContainer);
             //go.transform.position = Vector3.zero;
             go.GetComponent<Blocks>().controlBlockRef = this;
             if (lastBlock != null)
@@ -83,9 +89,9 @@ public class GameController : MonoBehaviour {
 
 		while(_currBlocks.Count < totalBlocks)
         {
-            int blockIndex = (Random.value > 0.05f) ? Random.Range(1, blockPrefabs.Count) : 0;
+            int blockIndex = (Random.value > 0.05f) ? Random.Range(1, GameBlocks[Global.Predicted].gameBlocks.Count) : 0;
 
-            GameObject go = Instantiate(blockPrefabs[blockIndex], roadContainer);
+            GameObject go = Instantiate(GameBlocks[Global.Predicted].gameBlocks[blockIndex], roadContainer);
             go.GetComponent<Blocks>().controlBlockRef = this;
             if(lastBlock != null)
                 go.GetComponent<Blocks>().otherBlockPos = lastBlock.GetComponent<Blocks>().endBlock;

@@ -18,12 +18,12 @@ public class ObstacleCar : MonoBehaviour {
         if (GameController.Instance.PAUSE)
             return;
 
-        if (transform.position.y > -1)
-        {
+        //if (transform.position.y > -1)
+        //{
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
             //    GetComponent<Rigidbody>().velocity = Vector3.zero;
             //    transform.localPosition = Vector3.zero;
             //    transform.localEulerAngles = Vector3.zero;
-        }
+        //}
     }
 }

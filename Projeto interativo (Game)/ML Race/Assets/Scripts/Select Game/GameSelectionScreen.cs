@@ -146,6 +146,8 @@ public class GameSelectionScreen : MonoBehaviour
 
         server.OnUpdate(predictedObj);
 
+        Global.Predicted = predictedObj;
+
         Debug.Log("Inicia Jogo, ID: " + predictedObj);
     }
 
@@ -177,5 +179,7 @@ public class GameSelectionScreen : MonoBehaviour
         controlWebcam.SaveLastImg(path, str + "_ (" + (files.Length + 1) + ")");
 
         server.OnUpdate(index);
+
+        Global.Predicted = index;
     }
 }

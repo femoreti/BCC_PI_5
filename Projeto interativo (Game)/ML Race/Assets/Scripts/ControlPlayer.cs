@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class ControlPlayer : MonoBehaviour
 {
+    public List<GameObject> models = new List<GameObject>();
     public List<Transform> positions = new List<Transform>();
     private int currIndex = 2;
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
-        transform.position = new Vector3(positions[currIndex].position.x, transform.position.y, transform.position.z);	
+        transform.position = new Vector3(positions[currIndex].position.x, transform.position.y, transform.position.z);
+
+        GameObject go = Instantiate(models[Global.Predicted]);
+        go.transform.SetParent(transform);
+        go.transform.localPosition = Vector3.zero;
 	}
 	
 	// Update is called once per frame

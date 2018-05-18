@@ -25,6 +25,15 @@ public class SortHideOBJ : MonoBehaviour
                 //go.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
+        else
+        {
+            if (movingObj && gameObject.activeSelf)
+            {
+                gameObject.AddComponent<ObstacleCar>();
+                Destroy(this);
+                //go.GetComponent<Rigidbody>().isKinematic = true;
+            }
+        }
 	}
 	
 	// Update is called once per frame
