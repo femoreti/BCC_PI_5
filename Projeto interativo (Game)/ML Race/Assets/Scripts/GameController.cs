@@ -26,6 +26,10 @@ public class GameController : MonoBehaviour {
     private int score = 0, scoreLimit = 1000;
     private int initialSpeed, initialBlocks;
 
+    public Shader replacement;
+    [Range(-0.01f,0.01f)]
+    public float curve = 0;
+
     [HideInInspector]
     public bool PAUSE;
 
@@ -38,6 +42,8 @@ public class GameController : MonoBehaviour {
 
         initialSpeed = maxSpeed;
         initialBlocks = totalBlocks;
+
+        Camera.main.SetReplacementShader(replacement, "RenderType");
 
         Reset();
     }
@@ -73,6 +79,8 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
             Reset();
+
+        Shader.SetGlobalFloat("_climb", curve);
 
         if (PAUSE)
         {
