@@ -11,7 +11,12 @@ public class ControlPlayer : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
     {
-        transform.position = new Vector3(positions[currIndex].position.x, transform.position.y, transform.position.z);
+        transform.position = new Vector3(positions[currIndex].position.x, 0, 3);
+
+        if (Global.Predicted == 3)
+            GetComponent<Rigidbody>().useGravity = false;
+        else
+            GetComponent<Rigidbody>().useGravity = true;
 
         GameObject go = Instantiate(models[Global.Predicted]);
         go.transform.SetParent(transform);
@@ -48,7 +53,8 @@ public class ControlPlayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Cars")
         {
-            Debug.Log("colidiu");
+            GetComponent<Rigidbody>().useGravity = true;
+            //GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 100f));
             GameController.Instance.GameOver();
         }
     }

@@ -27,8 +27,14 @@ public class GameController : MonoBehaviour {
     private int initialSpeed, initialBlocks;
 
     public Shader replacement;
-    [Range(-0.01f,0.01f)]
+    [Range(-0.01f, 0.01f)]
     public float curve = 0;
+    [Range(-0.01f, 0.01f)]
+    public float climb = 0;
+
+    private float timeToTestCurve;
+    private float randomCurves = 0.3f;
+    private bool isInCurve = false;
 
     [HideInInspector]
     public bool PAUSE;
@@ -73,6 +79,84 @@ public class GameController : MonoBehaviour {
             _currBlocks.Add(go);
         }
     }
+
+    private int curveState = 0;
+    public float CurveLimit = 0.003f;
+    private int randomDirection = 1;
+
+    private void DoCurve()
+    {
+        if(isInCurve)
+        {
+            if (curveState == 0)
+            {
+                curve = Mathf.Lerp(curve, (CurveLimit + 0.0005f) * randomDirection, 0.1f * Time.deltaTime);
+                //curve = Delta * 0.005f;
+                if(randomDirection == 1)
+                {
+                    if (curve >= CurveLimit)
+                    {
+                        curve = CurveLimit;
+                        curveState = 1;
+                    }
+                }
+                else
+                {
+                    if (curve <= (CurveLimit * randomDirection))
+                    {
+                        curve = CurveLimit * randomDirection;
+                        curveState = 1;
+                    }
+                }
+            }
+            else if(curveState == 1)
+            {
+                curve = Mathf.Lerp(curve, -0.009f * randomDirection, 0.05f * Time.deltaTime);
+                //curve = (1 - Delta) * 0.005f;
+                if(randomDirection == 1)
+                {
+                    if (curve <= 0f)
+                    {
+                        curve = 0f;
+                        isInCurve = false;
+                        timeToTestCurve = Time.time + 3f;
+                    }
+                }
+                else
+                {
+                    if (curve >= 0f)
+                    {
+                        curve = 0f;
+                        isInCurve = false;
+                        timeToTestCurve = Time.time + 3f;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if(Time.time > timeToTestCurve)
+            {
+                if (Random.value <= randomCurves)
+                {
+                    isInCurve = true;
+                    curve = 0f;
+                    curveState = 0;
+
+                    if(Random.value >= 0.5f)
+                    {
+                        randomDirection = 1;
+                    }
+                    else
+                    {
+                        randomDirection = -1;
+                    }
+                }
+                else
+                    timeToTestCurve = Time.time + 3f;
+            }
+        }
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -80,22 +164,26 @@ public class GameController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha1))
             Reset();
 
-        Shader.SetGlobalFloat("_climb", curve);
+        Shader.SetGlobalFloat("_climb", climb);
+        Shader.SetGlobalFloat("_curve", curve);
 
         if (PAUSE)
         {
 
             if (gameSpeed > 0)
             {
-                float delta = CubicEaseIn(Time.time / finalAccTime);
-                gameSpeed = gameSpeed - delta;
+                //float delta = CubicEaseIn(Time.time / finalAccTime);
+                //gameSpeed = gameSpeed - delta;
+                gameSpeed -= Time.deltaTime * 15f;
             }
             else
                 gameSpeed = 0;
             return;
         }
 
-		while(_currBlocks.Count < totalBlocks)
+        DoCurve();
+
+        while (_currBlocks.Count < totalBlocks)
         {
             int blockIndex = (Random.value > 0.05f) ? Random.Range(1, GameBlocks[Global.Predicted].gameBlocks.Count) : 0;
 
@@ -142,7 +230,8 @@ public class GameController : MonoBehaviour {
 
     private static float CubicEaseIn(float t)
     {
-        return 1f * (t /= 1f) * t * t;
+        float result = 1f * (t /= 1f) * t * t;
+        return (result < 1) ? result : 1;
     }
 
     public void RemoveBlockFromList(GameObject go)
@@ -176,6 +265,12 @@ public class GameController : MonoBehaviour {
         Player.Reset();
         maxSpeed = initialSpeed;
         gameSpeed = 0;
+
+        timeToTestCurve = Time.time + 10f;
+        isInCurve = false;
+        curve = 0;
+
+        //climb = 0;
 
         totalBlocks = initialBlocks;
         initialTime = Time.time;

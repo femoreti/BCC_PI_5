@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameSelectionScreen : MonoBehaviour
 {
-    public GameObject webCamBars, resultObj, wrongPred;
+    public GameObject menu, webCamBars, resultObj, wrongPred, Loading;
     public ControlWebcam controlWebcam;
     public ReadPicServerSide server;
     public ObjModels models;
@@ -20,23 +20,43 @@ public class GameSelectionScreen : MonoBehaviour
 
     private int predictedObj = -1;
 
-	// Use this for initialization
-	void Start () {
-        contador.text = "5";
-	}
+    private void Awake()
+    {
+        LoadFiles.LoadXML();
+    }
+
+    // Use this for initialization
+    void Start () {
+        contador.text = "";
+        menu.SetActive(true);
+        webCamBars.SetActive(false);
+        wrongPred.SetActive(false);
+        resultObj.SetActive(false);
+        showroom.SetActive(false);
+        Loading.SetActive(false);
+        showroomBGImage.SetActive(true);
+    }
 
     public void OnPreparePicture()
+    {
+        StartCoroutine(OnPreparePictureRoutine());
+    }
+
+    private IEnumerator OnPreparePictureRoutine()
     {
         controlWebcam.ResumeWebcam();
 
         models.TurnModelsOff();
         webCamBars.SetActive(true);
+        menu.SetActive(false);
         wrongPred.SetActive(false);
         resultObj.SetActive(false);
         showroom.SetActive(false);
         showroomBGImage.SetActive(false);
+        Loading.SetActive(false);
         controlWebcam.StartCam();
 
+        yield return new WaitForSeconds(1f);
         canTookPic = true;
         initialTimer = Time.time + CamTimer;
     }
@@ -76,6 +96,9 @@ public class GameSelectionScreen : MonoBehaviour
         //yield return new WaitForSecondsRealtime(2f);
 
         server.callback = CallbackServer;
+
+
+        Loading.SetActive(true);
         server.OnReadPic();
 
         yield break;
@@ -85,6 +108,7 @@ public class GameSelectionScreen : MonoBehaviour
     public void CallbackServer(object param)
     {
         Debug.Log(param);
+        Loading.SetActive(false);
 
         string str = "";
         predictedObj = (int)param;
@@ -111,7 +135,7 @@ public class GameSelectionScreen : MonoBehaviour
         showroomBGImage.SetActive(true);
         controlWebcam.StopWebcam();
         resultObj.SetActive(true);
-        textResult.text = "Acredito que é " + str;
+        textResult.text = "Acho que é " + str;
     }
 
     public void OnWrongPrediction()
@@ -143,7 +167,7 @@ public class GameSelectionScreen : MonoBehaviour
                 break;
         }
 
-        string path = Application.dataPath + "/../../../Entrega 3/assets/" + str;
+        string path = LoadFiles.globalPaths.imageAssetsPath + str;
 
         string[] files = Directory.GetFiles(path);
 
@@ -177,7 +201,7 @@ public class GameSelectionScreen : MonoBehaviour
                 break;
         }
 
-        string path = Application.dataPath + "/../../../Entrega 3/assets/" + str;
+        string path = LoadFiles.globalPaths.imageAssetsPath + str;
 
         string[] files = Directory.GetFiles(path);
 
@@ -186,5 +210,10 @@ public class GameSelectionScreen : MonoBehaviour
         server.OnUpdate(index);
 
         Global.Predicted = index;
+    }
+
+    public void onRestart()
+    {
+        Start();
     }
 }

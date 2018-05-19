@@ -3,5 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Global : MonoBehaviour {
-    public static int Predicted = 1;
+    public static int Predicted = 3;
 }

@@ -81,7 +81,7 @@ public class ControlWebcam : MonoBehaviour {
         int newHeight = height;
 
         float x = 0;
-        float y = 0;
+        //float y = 0;
 
         if (ratio > targetRatio)
         {
@@ -102,17 +102,13 @@ public class ControlWebcam : MonoBehaviour {
         Camera.main.targetTexture = null;
         RenderTexture.active = null;
         Destroy(rt);
+        
+        lastPicture = new Texture2D(screenShot.width, screenShot.height);
+        lastPicture.SetPixels(screenShot.GetPixels());
 
-        //if(lastPicture == null)
-        //{
-            lastPicture = new Texture2D(screenShot.width, screenShot.height);
-            lastPicture.SetPixels(screenShot.GetPixels());
-        //}
-        //lastPicture = screenShot;
-        File.WriteAllBytes(Application.dataPath + "/../../../Entrega 3/predictions/SavedScreen.jpg", screenShot.EncodeToJPG());
+        //File.WriteAllBytes(Application.dataPath + "/../../../Entrega 3/predictions/SavedScreen.jpg", screenShot.EncodeToJPG());
+        File.WriteAllBytes(LoadFiles.globalPaths.predictionsFolderPath + "SavedScreen.jpg", screenShot.EncodeToJPG());
         Destroy(screenShot);
-
-        Debug.Log(Application.dataPath + "/../../../Entrega 3/predictions/SavedScreen.jpg");
     }
 
     public void SaveLastImg(string path, string fileName)

@@ -6,7 +6,7 @@ public class SortHideOBJ : MonoBehaviour
 {
     public float chance = 0.3f;
     public List<GameObject> randomCars = new List<GameObject>();
-    public bool movingObj = false;
+    public bool movingObj = false, removeGravity = false;
 	// Use this for initialization
 	void Start () {
         gameObject.SetActive((Random.value <= chance));
@@ -24,6 +24,10 @@ public class SortHideOBJ : MonoBehaviour
                 go.AddComponent<ObstacleCar>();
                 //go.GetComponent<Rigidbody>().isKinematic = true;
             }
+
+
+            if (removeGravity)
+                go.GetComponent<Rigidbody>().useGravity = false;
         }
         else
         {

@@ -383,6 +383,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4855581778358682}
+  - component: {fileID: 95059624024899816}
   m_Layer: 0
   m_Name: Propeller
   m_TagString: Untagged
@@ -579,7 +580,7 @@ Transform:
   m_GameObject: {fileID: 1696276851104098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4550322286872302}
   m_Father: {fileID: 0}
@@ -1786,3 +1787,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1786066640581922}
   m_Mesh: {fileID: 4300020, guid: b97ed7d22b518d44d83e13bfe36266e7, type: 3}
+--- !u!95 &95059624024899816
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1790932440911238}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f34ce14695cc86047a467445fcde4754, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
