@@ -13,6 +13,7 @@ public class GameSelectionScreen : MonoBehaviour
     public Text contador, textResult;
     public int CamTimer = 10;
     //public RawImage _wrongPredImg;
+    public GameObject showroom, showroomBGImage;
 
     private float initialTimer;
     private bool canTookPic = false;
@@ -32,6 +33,8 @@ public class GameSelectionScreen : MonoBehaviour
         webCamBars.SetActive(true);
         wrongPred.SetActive(false);
         resultObj.SetActive(false);
+        showroom.SetActive(false);
+        showroomBGImage.SetActive(false);
         controlWebcam.StartCam();
 
         canTookPic = true;
@@ -104,6 +107,8 @@ public class GameSelectionScreen : MonoBehaviour
         }
 
         models.TurnModelOn(predictedObj);
+        showroom.SetActive(true);
+        showroomBGImage.SetActive(true);
         controlWebcam.StopWebcam();
         resultObj.SetActive(true);
         textResult.text = "Acredito que é " + str;
