@@ -13,10 +13,6 @@ public class ControlPlayer : MonoBehaviour
     {
         transform.position = new Vector3(positions[currIndex].position.x, 0, 3);
 
-        if (Global.Predicted == 3)
-            GetComponent<Rigidbody>().useGravity = false;
-        else
-            GetComponent<Rigidbody>().useGravity = true;
 
         GameObject go = Instantiate(models[Global.Predicted]);
         go.transform.SetParent(transform);
@@ -62,6 +58,12 @@ public class ControlPlayer : MonoBehaviour
     public void Reset()
     {
         currIndex = 2;
+
+        if (Global.Predicted == 3)
+            GetComponent<Rigidbody>().useGravity = false;
+        else
+            GetComponent<Rigidbody>().useGravity = true;
+
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.localEulerAngles = Vector3.zero;
         transform.position = new Vector3(positions[currIndex].position.x, positions[currIndex].position.y, positions[currIndex].position.z);

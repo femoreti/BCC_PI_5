@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public struct GameBlocks
@@ -276,5 +277,10 @@ public class GameController : MonoBehaviour {
         initialTime = Time.time;
         finalAccTime = Time.time + 1f;
         PAUSE = false;
+    }
+
+    public void ClickMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }

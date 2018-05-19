@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameSelectionScreen : MonoBehaviour
@@ -177,7 +178,7 @@ public class GameSelectionScreen : MonoBehaviour
 
         Global.Predicted = predictedObj;
 
-        Debug.Log("Inicia Jogo, ID: " + predictedObj);
+        OnGoToGame();
     }
 
     public void SelectCorretImg(int index)
@@ -210,6 +211,23 @@ public class GameSelectionScreen : MonoBehaviour
         server.OnUpdate(index);
 
         Global.Predicted = index;
+        OnGoToGame();
+    }
+
+    public void OnGoToGame()
+    {
+        StartCoroutine(LoadYourAsyncScene());
+    }
+
+    IEnumerator LoadYourAsyncScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Game");
+
+        while (!asyncLoad.isDone)
+        {
+            Loading.SetActive(true);
+            yield return null;
+        }
     }
 
     public void onRestart()

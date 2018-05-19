@@ -52,5 +52,5 @@ Shader "Custom/CurvedWorld" {
          }
          ENDCG
      }
-     // FallBack "Diffuse"
+     //FallBack "Diffuse"
  }
