@@ -134,6 +134,7 @@ public class GameSelectionScreen : MonoBehaviour
         models.TurnModelOn(predictedObj);
         showroom.SetActive(true);
         showroomBGImage.SetActive(true);
+        webCamBars.SetActive(false);
         controlWebcam.StopWebcam();
         resultObj.SetActive(true);
         textResult.text = "Acho que é " + str;
