@@ -6,3 +6,5 @@ Integrantes: Caio Rosa, Felipe Moreti
 ## [parte 2](https://github.com/femoreti/BCC_PI_5/tree/master/Entrega%202) do projeto
 
 ## [parte 3](https://docs.google.com/document/u/1/d/1TiNI9U3-oFYvIiOzYUoI9l9zlxYeXS8x3HObV_HeymE/edit?usp=sharing) do projeto
+
+## [Relatório final](https://docs.google.com/document/d/1W12GhL_VGtteb5n3IkspaZ9_4j11z8at25WKUNdoxiU/edit?usp=sharing) do projeto
