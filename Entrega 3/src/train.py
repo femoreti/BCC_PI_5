@@ -9,11 +9,11 @@ import cv2
 imgSize = 64
 imgFilterSize = 5
 
-train = np.load("./data/train-set.npy")
+train = np.load("./data/train-set.npy", allow_pickle=True)
 train_data = np.array([i[0] for i in train]).reshape(-1, imgSize, imgSize, 1)
 train_labels = [i[1] for i in train]
 
-test = np.load("./data/test-set.npy")
+test = np.load("./data/test-set.npy", allow_pickle=True)
 test_data = np.array([i[0] for i in test]).reshape(-1, imgSize, imgSize, 1)
 test_labels = [i[1] for i in test]
 
