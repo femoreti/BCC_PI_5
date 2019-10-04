@@ -9,6 +9,7 @@ Integrantes: Caio Rosa, Felipe Moreti
 
 ## [Relatório final](https://docs.google.com/document/d/1W12GhL_VGtteb5n3IkspaZ9_4j11z8at25WKUNdoxiU/edit?usp=sharing) do projeto
 
+
 # Tutorial para rodar o projeto
 
 Necessario **Python3** e **PIP**
