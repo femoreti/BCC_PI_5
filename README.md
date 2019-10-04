@@ -12,7 +12,7 @@ Integrantes: Caio Rosa, Felipe Moreti
 
 # Tutorial para rodar o projeto
 
-Necessario **Python3** e **PIP**
+Necessario **Python3.7 x64** e **PIP**
 
 ```
 1. Abrir pasta BCC_PI_5/Entrega 3/ e rodar o **installer.bat**
